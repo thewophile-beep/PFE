@@ -1,6 +1,5 @@
 
 rm(list=ls())
-par(mfrow=c(1,1))
 
 data <- read.table("data/weatherAUS.csv", header=T, sep=",", na.string="NA", dec=".", quote="")
 data$Date <- as.Date(data$Date)
