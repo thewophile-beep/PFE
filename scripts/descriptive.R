@@ -30,12 +30,13 @@ print(statbase)
 unique(data$Location)
 
 # Example with Albury
-data_Albury <- data[data$Location=="Albury",]
-plot_Albury_Rainfall_Year <- ggplot(data_Albury, aes(x=Day, y=Rainfall, na.rm=T, color=Year)) +
-  geom_bar(stat = "identity") +
-  facet_wrap( ~ Year)
-plot_Albury_Rainfall_Year
+# data_Albury <- data[data$Location=="Albury",]
+# plot_Albury_Rainfall_Year <- ggplot(data_Albury, aes(x=Day, y=Rainfall, na.rm=T, color=Year)) +
+#   geom_bar(stat = "identity") +
+#   facet_wrap( ~ Year)
+# plot_Albury_Rainfall_Year
+# 
+# plot_Albury_Rainfall_Daily <- ggplot(data_Albury, aes(x=Day, y=MinTemp, group=Day, color=Day, na.rm=T)) +
+#   geom_point()  
+# plot_Albury_Rainfall_Daily
 
-plot_Albury_Rainfall_Daily <- ggplot(data_Albury, aes(x=Day, y=MinTemp, group=Day, color=Day, na.rm=T)) +
-  geom_point()  
-plot_Albury_Rainfall_Daily
