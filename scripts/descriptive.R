@@ -1,12 +1,3 @@
-rm(list=ls())
-library(ggplot2)
-library(lubridate)
-
-data <- read.table("data/weatherAUS.csv", header=T, sep=",", na.string="NA", dec=".", quote="")
-data$Date <- as.Date(data$Date)
-data$Day <- yday(data$Date)
-data$Year=format(data$Date, format="%Y")
-
 str(data)
 
 statbase <- NULL
