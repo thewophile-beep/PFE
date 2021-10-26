@@ -17,3 +17,7 @@ data <- read.table("data/weatherAUS.csv", header=T, sep=",", na.string="NA", dec
 data$Date <- as.Date(data$Date)
 data$Day <- yday(data$Date)
 data$Year=format(data$Date, format="%Y")
+data$Month=format(data$Date, format="%m")
+cities = levels(data$Location)
+
+plots_path <- "Rapport/Images/Plots/"
