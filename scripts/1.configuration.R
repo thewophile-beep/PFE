@@ -13,7 +13,7 @@ library(ozmaps)
 library(dplyr)
 library(ggspatial)
 
-data <- read.table("data/weatherAUS.csv", header=T, sep=",", na.string="NA", dec=".", quote="")
+data <- read.table("Data/weatherAUS.csv", header=T, sep=",", na.string="NA", dec=".", quote="")
 data$Date <- as.Date(data$Date)
 data$Day <- yday(data$Date)
 data$Year=format(data$Date, format="%Y")
