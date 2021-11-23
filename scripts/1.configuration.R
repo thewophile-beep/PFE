@@ -12,6 +12,7 @@ library(tools)
 library(ozmaps)
 library(dplyr)
 library(ggspatial)
+library(Amelia)
 
 data <- read.table("Data/weatherAUS.csv", header=T, sep=",", na.string="NA", dec=".", quote="")
 data$Date <- as.Date(data$Date)
@@ -19,5 +20,7 @@ data$Day <- yday(data$Date)
 data$Year=format(data$Date, format="%Y")
 data$Month=format(data$Date, format="%m")
 cities = levels(data$Location)
+coords <- read.table("Data/coords.txt", sep=",", header=T)
+coords <- st_as_sf(coords, coords = c("Latitude", "Longitude"), remove = FALSE, crs = 4326, agr = "constant")
 
 plots_path <- "Rapport/Images/Plots/"

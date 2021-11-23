@@ -1,8 +1,5 @@
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
-coords <- read.table("data/coords.txt", sep=",", header=T)
-coords <- st_as_sf(coords, coords = c("Latitude", "Longitude"), remove = FALSE, crs = 4326, agr = "constant")
-
 states <- st_as_sf(ozmap("states", quiet=T))
 
 {
