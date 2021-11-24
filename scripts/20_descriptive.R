@@ -1,5 +1,6 @@
 str(data)
 
+# statbse of numerical and factorial variables ----
 statbase <- NULL
 numeric_names <- c()
 other_names <- c()
@@ -22,6 +23,8 @@ for (i in other_names) {
   lvls[i] <- list(as.matrix(summary(data[[i]])))
 }
 
+# Nb of obs per cities & missmap ----
+
 cities_obs <- data.frame(lvls$Location, check.names=T)
 pdf(paste(plots_path,"hist_observations_cities.pdf"), width=15, height=8)
 ggplot(data, aes(x=Location)) + 
@@ -36,6 +39,13 @@ dev.off()
 unique(data$Location)
 
 missmap(data)
+
+# if we drop evaporation, sunshine and clouds we have :
+dropped_data <- drop_na(data[c(-6:-7,-18:-19)])
+sprintf("En retirant les nuages, l'évaporation et le soleil, on se retrouve avec %.1f%% des observations, soit %i observations", (dim(dropped_data)[1] / dim(data)[1]*100), dim(dropped_data)[1])
+missmap(data[c(-6:-7,-18:-19)])
+
+
 # Example with Albury
 # data_Albury <- data[data$Location=="Albury",]
 # plot_Albury_Rainfall_Year <- ggplot(data_Albury, aes(x=Day, y=Rainfall, na.rm=T, color=Year)) +
@@ -46,4 +56,10 @@ missmap(data)
 # plot_Albury_Rainfall_Daily <- ggplot(data_Albury, aes(x=Day, y=MinTemp, group=Day, color=Day, na.rm=T)) +
 #   geom_point()  
 # plot_Albury_Rainfall_Daily
+
+# Correlation between variables ----
+pdf(paste(plots_path,"corr.pdf"),width=8,height=8)
+correlations <- cor(data[numeric_names],use="na.or.complete")
+ggcorrplot(correlations,method="circle",title="Corrélations entre les différentes variables",colors=c("darkcyan","white","brown4"))
+dev.off()  
 

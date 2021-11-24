@@ -20,3 +20,13 @@ states <- st_as_sf(ozmap("states", quiet=T))
   )
   dev.off()
 }
+
+world <- ne_countries(scale = "small", returnclass = "sf")
+for (i in 1:dim(coords)[1])
+  print(ggplot(data = world) +
+    geom_sf(fill="antiquewhite1") +
+    geom_point(data=coords[i,], aes(x=Longitude, y=Latitude), size=2, shape=23, fill="darkred")+
+    geom_text_repel(data = coords[i,], aes(x = Longitude, y = Latitude, label = Ville), fontface = "bold") +
+    coord_sf(xlim = c(112, 170), ylim = c(-47, -8), expand = T) +
+    theme(panel.grid.major = element_line(color = gray(0.5), linetype = "dashed", size = 0.5), panel.background = element_rect(fill = "aliceblue"))
+  )
