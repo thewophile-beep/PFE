@@ -58,8 +58,18 @@ missmap(data[c(-6:-7,-18:-19)])
 # plot_Albury_Rainfall_Daily
 
 # Correlation between variables ----
-pdf(paste(plots_path,"corr.pdf"),width=8,height=8)
 correlations <- cor(data[numeric_names],use="na.or.complete")
-ggcorrplot(correlations,method="circle",title="Corrélations entre les différentes variables",colors=c("darkcyan","white","brown4"))
+pdf(paste(plots_path,"corr.pdf"),width=8,height=8)
+ggcorrplot(
+  correlations,
+  method="circle",
+  title="Corrélations entre les différentes variables",
+  colors=c("darkcyan","white","brown4"),
+  typ="upper",
+  lab=T,
+  lab_size=2
+)
 dev.off()  
 
+ggplot(data, aes(x=WindGustDir)) +
+  geom_bar()
