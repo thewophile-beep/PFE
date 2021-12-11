@@ -28,7 +28,7 @@ Nhil,-35.4713087,141.3062355,tempere
 NorahHead,-33.28334426879883,151.5661163330078,tempere
 NorfolkIsland,-29.0289575,167.9587289,subtropical
 Nuriootpa,-34.4693354,138.9939006,tempere
-PearceRAAF,-31.6739604,116.0175435,tropical
+PearceRAAF,-31.6739604,116.0175435,subtropical
 Penrith,-33.7510792,150.6941684,tempere
 Perth,-31.9527121,115.8604796,subtropical
 PerthAirport,-31.9406095,115.9676077,subtropical

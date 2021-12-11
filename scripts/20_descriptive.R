@@ -1,12 +1,12 @@
-str(data)
+str(data.raw)
 
 # statbse of numerical and factorial variables ----
 statbase <- NULL
 numeric_names <- c()
 other_names <- c()
-for (i in names(data)) {
-  if (class(data[[i]]) %in% c("numeric", "integer")) {
-    statbase <- cbind(statbase, c(round(summary(data[[i]]), 2), "sd"=round(sd(data[[i]],na.rm=T), 2)))
+for (i in names(data.raw)) {
+  if (class(data.raw[[i]]) %in% c("numeric", "integer")) {
+    statbase <- cbind(statbase, c(round(summary(data.raw[[i]]), 2), "sd"=round(sd(data.raw[[i]],na.rm=T), 2)))
     numeric_names <- c(numeric_names, i)
   }
   else {
@@ -20,14 +20,14 @@ print(statbase)
 
 lvls <- list()
 for (i in other_names) {
-  lvls[i] <- list(as.matrix(summary(data[[i]])))
+  lvls[i] <- list(as.matrix(summary(data.raw[[i]])))
 }
 
 # Nb of obs per cities & missmap ----
 
 cities_obs <- data.frame(lvls$Location, check.names=T)
 pdf(paste(plots_path,"hist_observations_cities.pdf"), width=15, height=8)
-ggplot(data, aes(x=Location)) + 
+ggplot(data.raw, aes(x=Location)) + 
   geom_bar(stat='count',aes(fill=..count..)) + 
   scale_fill_gradient(low="midnightblue", high="lightslateblue") +
   geom_text(stat='count', aes(label=..count..), angle=90, hjust=1.5, color="white") + 
@@ -36,29 +36,33 @@ ggplot(data, aes(x=Location)) +
   labs(title="Nombre d'observations par ville",y="Nombre d'observations",x="Ville")
 dev.off()
 # Cities observed
-unique(data$Location)
+summary(data.raw %>% filter(Location == "Uluru") %>% select(Date))
+summary(data.raw %>% filter(Location == "Katherine") %>% select(Date))
+summary(data.raw %>% filter(Location == "Nhil") %>% select(Date))
 
-missmap(data)
+# Direction du vent
+ggplot(data.raw, aes(x=WindGustDir)) +
+  geom_bar()
+ggplot(data.raw, aes(x=WindDir9am)) +
+  geom_bar()
+ggplot(data.raw, aes(x=WindDir3pm)) +
+  geom_bar()
+
+ggplot() +
+  geom_line(data = data.raw %>% filter(RainToday == "Yes"), aes(x=Date, y=..count.., color=RainToday))
+
+ggplot(data.raw, aes(x=Date)) + 
+  stat_bin(data=data.raw[which(is.na(data.raw$RainToday)),], aes(y=cumsum(..count..)), geom="line") 
+ggplot(data.raw, aes(x=Date))+
+  stat_bin(data=data.raw[which(is.na(data.raw$RainTomorrow)),], aes(y=cumsum(..count..)), geom="line") 
 
 # if we drop evaporation, sunshine and clouds we have :
-dropped_data <- drop_na(data[c(-6:-7,-18:-19)])
-sprintf("En retirant les nuages, l'évaporation et le soleil, on se retrouve avec %.1f%% des observations, soit %i observations", (dim(dropped_data)[1] / dim(data)[1]*100), dim(dropped_data)[1])
-missmap(data[c(-6:-7,-18:-19)])
-
-
-# Example with Albury
-# data_Albury <- data[data$Location=="Albury",]
-# plot_Albury_Rainfall_Year <- ggplot(data_Albury, aes(x=Day, y=Rainfall, na.rm=T, color=Year)) +
-#   geom_bar(stat = "identity") +
-#   facet_wrap( ~ Year)
-# plot_Albury_Rainfall_Year
-# 
-# plot_Albury_Rainfall_Daily <- ggplot(data_Albury, aes(x=Day, y=MinTemp, group=Day, color=Day, na.rm=T)) +
-#   geom_point()  
-# plot_Albury_Rainfall_Daily
+dropped_data <- drop_na(data.raw[c(-6:-7,-18:-19)])
+sprintf("En retirant les nuages, l'évaporation et le soleil, on se retrouve avec %.1f%% des observations, soit %i observations", (dim(dropped_data)[1] / dim(data.raw)[1]*100), dim(dropped_data)[1])
+missmap(data.raw[c(-6:-7,-18:-19)])
 
 # Correlation between variables ----
-correlations <- cor(data[numeric_names],use="na.or.complete")
+correlations <- cor(data.raw[numeric_names],use="na.or.complete")
 pdf(paste(plots_path,"corr.pdf"),width=8,height=8)
 ggcorrplot(
   correlations,
@@ -71,5 +75,3 @@ ggcorrplot(
 )
 dev.off()  
 
-ggplot(data, aes(x=WindGustDir)) +
-  geom_bar()
