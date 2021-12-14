@@ -16,4 +16,4 @@ data.completed$Pressure9am[which(is.na(data.completed$Pressure9am))] <- mean(dat
 
 data.completed$Pressure3pm[which(is.na(data.completed$Pressure3pm))] <- mean(data.completed$Pressure3pm, na.rm=T)
 
-missmap(data.completed, main="data.completed")
+# missmap(data.completed, main="data.completed")

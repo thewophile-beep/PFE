@@ -47,16 +47,26 @@ for (var in c("Cloud9am", "Cloud3pm", "Evaporation", "Sunshine")) {
           geom_sf(fill="antiquewhite1") +
           geom_sf(data=states,fill=NA) +
           
-          geom_point(data=coords, aes(x=Longitude, y=Latitude, fill=climates$Climat), size=3, shape=23)+
+          geom_point(data=segments_cities, aes(x=x, y=y, fill="blue"), size=3, shape=23) +
+          geom_point(data=segments_cities, aes(x=xend, y=yend, fill="red"), size=2, shape=24) +
+          
           coord_sf(xlim = c(112, 155), ylim = c(-47, -8), expand = T) +
           
           annotation_scale(location = "bl", width_hint = 0.2) +
           annotation_north_arrow(location = "bl", which_north = "true", pad_x = unit(0.1, "in"), pad_y = unit(0.3, "in"), style = north_arrow_fancy_orienteering) +
+          
           theme(panel.grid.major = element_line(color = gray(0.5), linetype = "dashed", size = 0.5), 
                 panel.background = element_rect(fill = "aliceblue"),
                 text=element_text(size=20)) +
-          labs(fill="Climats") +
-          geom_curve(data = segments_cities, mapping = aes(x, y, xend=xend, yend=yend), curvature = 0.8, angle=100, arrow=arrow(length=unit(0.35,"centimetres")), size=0.6, color="black")
+          
+          scale_fill_discrete(name = "Villes des données", labels = c("Départ", "Arrivée")) +
+          guides(fill = guide_legend(override.aes = list(shape = c(23,24), size = c(3, 2)))) +
+          
+          ggtitle(paste("Variable :",var)) + 
+          xlab("Longitude") + 
+          ylab("Latitude") +
+        
+          geom_segment(data = segments_cities, mapping = aes(x, y, xend=xend, yend=yend), size=0.6, color="black")
   )
 }
 dev.off()
