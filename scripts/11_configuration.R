@@ -17,4 +17,4 @@ data.raw$WindGustDir <- c(data.raw$WindGustDir)
 data.raw$WindDir9am <- c(data.raw$WindDir9am)
 data.raw$WindDir3pm <- c(data.raw$WindDir3pm)
 
-plots_path <- "Rapport/Images/Plots/"
+plots_path <- "Rapport/Images/"

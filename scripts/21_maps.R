@@ -3,7 +3,7 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 states <- st_as_sf(ozmap("states", quiet=T))
 
 {
-  png(paste(plots_path, "Australia_full_map.png"),width=1000,height=800)
+  png(paste(plots_path, "Australia_full_map.png", sep=""),width=1000,height=800)
   print(ggplot(data = world) +
     geom_sf(fill="antiquewhite1") +
 
@@ -30,7 +30,7 @@ ggplot(data = world) +
   coord_sf(xlim = c(min(coords$Longitude), max(coords$Longitude)), ylim = c(min(coords$Latitude), max(coords$Latitude)), expand = F)
 
 {
-  png(paste(plots_path, "Australia_climates.png"),width=1000,height=800)
+  png(paste(plots_path, "Australia_climates.png", sep=""),width=1000,height=800)
   print(ggplot(data = world) +
           geom_sf(fill="antiquewhite1") +
           geom_sf(data=states,fill=NA) +

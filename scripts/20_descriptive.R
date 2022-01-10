@@ -26,7 +26,7 @@ for (i in other_names) {
 # Nb of obs per cities & missmap ----
 
 cities_obs <- data.frame(lvls$Location, check.names=T)
-pdf(paste(plots_path,"hist_observations_cities.pdf"), width=15, height=8)
+pdf(paste(plots_path,"hist_observations_cities.pdf",sep=""), width=15, height=8)
 ggplot(data.raw, aes(x=Location)) + 
   geom_bar(stat='count',aes(fill=..count..)) + 
   scale_fill_gradient(low="midnightblue", high="lightslateblue") +
@@ -63,7 +63,7 @@ missmap(data.raw[c(-6:-7,-18:-19)])
 
 # Correlation between variables ----
 correlations <- cor(data.raw[numeric_names],use="na.or.complete")
-pdf(paste(plots_path,"corr.pdf"),width=8,height=8)
+pdf(paste(plots_path,"corr.pdf",sep=""),width=8,height=8)
 ggcorrplot(
   correlations,
   method="circle",

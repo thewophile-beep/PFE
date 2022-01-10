@@ -1,5 +1,5 @@
-couples.var <- list(Cloud9am=list(), Cloud3pm=list(), Evaporation=list(), Sunshine=list())
-for (var in c("Cloud9am", "Cloud3pm", "Evaporation", "Sunshine")) {
+couples.var <- list(Cloud9am=list(), Cloud3pm=list(), Evaporation=list(), Sunshine=list(), WindGustDir=list(), WindGustSpeed=list())
+for (var in varlist) {
   couples <- c()
   for (city in to.complete[[var]]) {
     city.position <- climates[climates$Ville==city,c(2,3)]
@@ -26,8 +26,8 @@ for (var in c("Cloud9am", "Cloud3pm", "Evaporation", "Sunshine")) {
 }
 
 # Après avoir trouvé les villes les plus proches pour compléter
-pdf(paste(plots_path,"Australia_map_segments_complete.pdf"),width=10,height=8)
-for (var in c("Cloud9am", "Cloud3pm", "Evaporation", "Sunshine")) {
+pdf(paste(plots_path,"Australia_map_segments_complete.pdf",sep=""),width=10,height=8)
+for (var in varlist) {
   x=c()
   y=c()
   xend=c()
