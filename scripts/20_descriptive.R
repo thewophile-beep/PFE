@@ -31,11 +31,6 @@ ggplot(data.raw, aes(x=Date)) +
 ggplot(data.raw, aes(x=Date))+
   stat_bin(data=data.raw[which(is.na(data.raw$RainTomorrow)),], aes(y=cumsum(..count..)), geom="line") 
 
-# if we drop evaporation, sunshine and clouds we have :
-dropped_data <- drop_na(data.raw[c(-6:-7,-18:-19)])
-sprintf("En retirant les nuages, l'évaporation et le soleil, on se retrouve avec %.1f%% des observations, soit %i observations", (dim(dropped_data)[1] / dim(data.raw)[1]*100), dim(dropped_data)[1])
-missmap(data.raw[c(-6:-7,-18:-19)])
-
 # Correlation between variables ----
 correlations <- cor(data.raw[numeric_names],use="na.or.complete")
 pdf(paste(plots_path,"corr.pdf",sep=""),width=8,height=8)

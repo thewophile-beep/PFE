@@ -1,11 +1,11 @@
-pdf(paste(plots_path,"missing_per_cities.pdf",sep=""))
-for (i in cities) {
-  tmp.data_city <- data.raw %>%
-    filter(Location == i) %>%
-    select(Sunshine, Evaporation, Cloud9am, Cloud3pm, WindGustDir, WindGustSpeed)
-  missmap(tmp.data_city, main=i)
-}
-dev.off()
+# pdf(paste(plots_path,"missing_per_cities.pdf",sep=""))
+# for (i in cities) {
+#   tmp.data_city <- data.raw %>%
+#     filter(Location == i) %>%
+#     select(Sunshine, Evaporation, Cloud9am, Cloud3pm, WindGustDir, WindGustSpeed)
+#   missmap(tmp.data_city, main=i)
+# }
+# dev.off()
 
 percent_na_cities <- data.frame()
 for (i in cities) {

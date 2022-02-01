@@ -33,6 +33,6 @@ data.raw = data.read %>%
     WindDir9am = as.numeric(WindDir9am),
     WindDir3pm = as.numeric(WindDir3pm)
   ) %>%
-  select(-c(Month, Date))
+  select(-c(Month))
 
 plots_path <- "Rapport/Images/"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.1)  1 FEB 2022 17:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.1)  1 FEB 2022 18:36
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -837,10 +837,10 @@ File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Linu
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 (Font)              scaled to size 10.0pt on input line 39.
-<./Ressources/logoINSARouen.png, id=48, 2547.5175pt x 552.0625pt>
-File: ./Ressources/logoINSARouen.png Graphic file (type png)
-<use ./Ressources/logoINSARouen.png>
-Package pdftex.def Info: ./Ressources/logoINSARouen.png  used on input line 42.
+<./Images/logoINSARouen.png, id=48, 2547.5175pt x 552.0625pt>
+File: ./Images/logoINSARouen.png Graphic file (type png)
+<use ./Images/logoINSARouen.png>
+Package pdftex.def Info: ./Images/logoINSARouen.png  used on input line 42.
 (pdftex.def)             Requested size: 152.84445pt x 33.12231pt.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/sc' will be
 (Font)              scaled to size 10.0pt on input line 44.
@@ -866,7 +866,7 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/sc' will be
 (Font)              scaled to size 12.0pt on input line 62.
  [1
 
-{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Ressources/logoINSARouen.png>]
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Images/logoINSARouen.png>]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 14.4pt on input line 73.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
@@ -898,68 +898,68 @@ LaTeX Font Info:    Font shape `TS1/LinuxLibertineT-TLF/m/n' will be
  [2]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 142.
-<Ressources/hist_observations_cities.pdf, id=85, 1084.05pt x 578.16pt>
-File: Ressources/hist_observations_cities.pdf Graphic file (type pdf)
-<use Ressources/hist_observations_cities.pdf>
-Package pdftex.def Info: Ressources/hist_observations_cities.pdf  used on input line 148.
+<Images/hist_observations_cities.pdf, id=85, 1084.05pt x 578.16pt>
+File: Images/hist_observations_cities.pdf Graphic file (type pdf)
+<use Images/hist_observations_cities.pdf>
+Package pdftex.def Info: Images/hist_observations_cities.pdf  used on input line 148.
 (pdftex.def)             Requested size: 345.0pt x 184.00044pt.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/sc' will be
 (Font)              scaled to size 10.0pt on input line 149.
- [3 <./Ressources/hist_observations_cities.pdf>] [4]
-<Ressources/Cartographie/Longitude.png, id=110, 331.2375pt x 331.2375pt>
-File: Ressources/Cartographie/Longitude.png Graphic file (type png)
-<use Ressources/Cartographie/Longitude.png>
-Package pdftex.def Info: Ressources/Cartographie/Longitude.png  used on input line 248.
+ [3 <./Images/hist_observations_cities.pdf>] [4]
+<Images/Cartographie/Longitude.png, id=110, 331.2375pt x 331.2375pt>
+File: Images/Cartographie/Longitude.png Graphic file (type png)
+<use Images/Cartographie/Longitude.png>
+Package pdftex.def Info: Images/Cartographie/Longitude.png  used on input line 256.
 (pdftex.def)             Requested size: 103.50105pt x 103.50134pt.
-<Ressources/Cartographie/Latitude.png, id=112, 451.6875pt x 396.48125pt>
-File: Ressources/Cartographie/Latitude.png Graphic file (type png)
-<use Ressources/Cartographie/Latitude.png>
-Package pdftex.def Info: Ressources/Cartographie/Latitude.png  used on input line 249.
+<Images/Cartographie/Latitude.png, id=112, 451.6875pt x 396.48125pt>
+File: Images/Cartographie/Latitude.png Graphic file (type png)
+<use Images/Cartographie/Latitude.png>
+Package pdftex.def Info: Images/Cartographie/Latitude.png  used on input line 257.
 (pdftex.def)             Requested size: 103.50105pt x 90.84998pt.
- [5 <./Ressources/Cartographie/Longitude.png> <./Ressources/Cartographie/Latitude.png>]
-<Ressources/Australia_full_map.png, id=125, 1003.75pt x 803.0pt>
-File: Ressources/Australia_full_map.png Graphic file (type png)
-<use Ressources/Australia_full_map.png>
-Package pdftex.def Info: Ressources/Australia_full_map.png  used on input line 275.
+ [5] [6 <./Images/Cartographie/Longitude.png> <./Images/Cartographie/Latitude.png>]
+<Images/Cartographie/Australia_full_map.png, id=131, 1003.75pt x 803.0pt>
+File: Images/Cartographie/Australia_full_map.png Graphic file (type png)
+<use Images/Cartographie/Australia_full_map.png>
+Package pdftex.def Info: Images/Cartographie/Australia_full_map.png  used on input line 283.
 (pdftex.def)             Requested size: 276.00105pt x 220.79504pt.
- [6]
-<Ressources/Australia_climates.png, id=132, 1003.75pt x 803.0pt>
-File: Ressources/Australia_climates.png Graphic file (type png)
-<use Ressources/Australia_climates.png>
-Package pdftex.def Info: Ressources/Australia_climates.png  used on input line 287.
+<Images/Cartographie/Australia_climates.png, id=132, 1003.75pt x 803.0pt>
+File: Images/Cartographie/Australia_climates.png Graphic file (type png)
+<use Images/Cartographie/Australia_climates.png>
+Package pdftex.def Info: Images/Cartographie/Australia_climates.png  used on input line 297.
 (pdftex.def)             Requested size: 276.00105pt x 220.79504pt.
- [7 <./Ressources/Australia_full_map.png (PNG copy)>]
-<Ressources/Temp_and_Rainfall.pdf, id=138, page=1, 505.89pt x 505.89pt>
-File: Ressources/Temp_and_Rainfall.pdf Graphic file (type pdf)
-<use Ressources/Temp_and_Rainfall.pdf, page 1>
-Package pdftex.def Info: Ressources/Temp_and_Rainfall.pdf , page1 used on input line 310.
+ [7 <./Images/Cartographie/Australia_full_map.png (PNG copy)>]
+<Images/Temp_and_Rainfalldesert.pdf, id=138, page=1, 505.89pt x 505.89pt>
+File: Images/Temp_and_Rainfalldesert.pdf Graphic file (type pdf)
+<use Images/Temp_and_Rainfalldesert.pdf, page 1>
+Package pdftex.def Info: Images/Temp_and_Rainfalldesert.pdf , page1 used on input line 321.
 (pdftex.def)             Requested size: 155.24895pt x 155.24954pt.
-<Ressources/Temp_and_Rainfall.pdf, id=139, page=11, 505.89pt x 505.89pt>
-File: Ressources/Temp_and_Rainfall.pdf Graphic file (type pdf)
-<use Ressources/Temp_and_Rainfall.pdf, page 11>
-Package pdftex.def Info: Ressources/Temp_and_Rainfall.pdf , page11 used on input line 311.
+<Images/Temp_and_Rainfallplaine.pdf, id=139, page=1, 505.89pt x 505.89pt>
+File: Images/Temp_and_Rainfallplaine.pdf Graphic file (type pdf)
+<use Images/Temp_and_Rainfallplaine.pdf, page 1>
+Package pdftex.def Info: Images/Temp_and_Rainfallplaine.pdf , page1 used on input line 322.
 (pdftex.def)             Requested size: 155.24895pt x 155.24954pt.
-<Ressources/Temp_and_Rainfall.pdf, id=140, page=14, 505.89pt x 505.89pt>
-File: Ressources/Temp_and_Rainfall.pdf Graphic file (type pdf)
-<use Ressources/Temp_and_Rainfall.pdf, page 14>
-Package pdftex.def Info: Ressources/Temp_and_Rainfall.pdf , page14 used on input line 312.
+<Images/Temp_and_Rainfallsubtropical.pdf, id=140, page=1, 505.89pt x 505.89pt>
+File: Images/Temp_and_Rainfallsubtropical.pdf Graphic file (type pdf)
+<use Images/Temp_and_Rainfallsubtropical.pdf, page 1>
+Package pdftex.def Info: Images/Temp_and_Rainfallsubtropical.pdf , page1 used on input line 323.
 (pdftex.def)             Requested size: 155.24895pt x 155.24954pt.
-<Ressources/Temp_and_Rainfall.pdf, id=141, page=49, 505.89pt x 505.89pt>
-File: Ressources/Temp_and_Rainfall.pdf Graphic file (type pdf)
-<use Ressources/Temp_and_Rainfall.pdf, page 49>
-Package pdftex.def Info: Ressources/Temp_and_Rainfall.pdf , page49 used on input line 313.
+<Images/Temp_and_Rainfalltempere.pdf, id=141, page=1, 505.89pt x 505.89pt>
+File: Images/Temp_and_Rainfalltempere.pdf Graphic file (type pdf)
+<use Images/Temp_and_Rainfalltempere.pdf, page 1>
+Package pdftex.def Info: Images/Temp_and_Rainfalltempere.pdf , page1 used on input line 324.
 (pdftex.def)             Requested size: 155.24895pt x 155.24954pt.
-<Ressources/Temp_and_Rainfall.pdf, id=142, page=32, 505.89pt x 505.89pt>
-File: Ressources/Temp_and_Rainfall.pdf Graphic file (type pdf)
-<use Ressources/Temp_and_Rainfall.pdf, page 32>
-Package pdftex.def Info: Ressources/Temp_and_Rainfall.pdf , page32 used on input line 314.
+<Images/Temp_and_Rainfalltropical.pdf, id=142, page=1, 505.89pt x 505.89pt>
+File: Images/Temp_and_Rainfalltropical.pdf Graphic file (type pdf)
+<use Images/Temp_and_Rainfalltropical.pdf, page 1>
+Package pdftex.def Info: Images/Temp_and_Rainfalltropical.pdf , page1 used on input line 325.
 (pdftex.def)             Requested size: 155.24895pt x 155.24954pt.
- [8 <./Ressources/Australia_climates.png (PNG copy)>] [9 <./Ressources/Temp_and_Rainfall.pdf> <./Ressources/Temp_and_Rainfall.pdf> <./Ressources/Temp_and_Rainfall.pdf> <./Ressources/Temp_and_Rainfall.pdf> <./Ressources/Temp_and_Rainfall.pdf>]
-<Ressources/missmap.png, id=160, 513.41812pt x 526.96875pt>
-File: Ressources/missmap.png Graphic file (type png)
-<use Ressources/missmap.png>
-Package pdftex.def Info: Ressources/missmap.png  used on input line 332.
-(pdftex.def)             Requested size: 276.00105pt x 283.28842pt.
+ [8 <./Images/Cartographie/Australia_climates.png (PNG copy)>] [9 <./Images/Temp_and_Rainfalldesert.pdf> <./Images/Temp_and_Rainfallplaine.pdf> <./Images/Temp_and_Rainfallsubtropical.pdf> <./Images/Temp_and_Rainfalltempere.pdf> <./Images/Temp_and_Rainfalltropical.pdf>]
+<Images/missmap.png, id=179, 547.2947pt x 398.99063pt>
+File: Images/missmap.png Graphic file (type png)
+<use Images/missmap.png>
+Package pdftex.def Info: Images/missmap.png  used on input line 364.
+(pdftex.def)             Requested size: 276.00105pt x 201.21167pt.
+ [10]
 \openout4 = `main.pyg'.
 
  (./_minted-main/default.pygstyle) (./_minted-main/BAE173C9437D1CD52CB095BF95EFE593582FCEF3F1330378E83A89C03A544711.pygtex
@@ -974,54 +974,55 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineMonoT-TLF/regular/n' will be
 )
 \openout4 = `main.pyg'.
 
- (./_minted-main/BAE173C9437D1CD52CB095BF95EFE593582FCEF3F1330378E83A89C03A544711.pygtex) [10 <./Ressources/missmap.png (PNG copy)>]
-<Ressources/Australia_map_segments_complete-1.jpg, id=168, 2007.5pt x 1606.0pt>
-File: Ressources/Australia_map_segments_complete-1.jpg Graphic file (type jpg)
-<use Ressources/Australia_map_segments_complete-1.jpg>
-Package pdftex.def Info: Ressources/Australia_map_segments_complete-1.jpg  used on input line 344.
+ (./_minted-main/BAE173C9437D1CD52CB095BF95EFE593582FCEF3F1330378E83A89C03A544711.pygtex)
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg, id=184, 2007.5pt x 1606.0pt>
+File: Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg Graphic file (type jpg)
+<use Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg>
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg  used on input line 376.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Ressources/Australia_map_segments_complete-2.jpg, id=169, 2007.5pt x 1606.0pt>
-File: Ressources/Australia_map_segments_complete-2.jpg Graphic file (type jpg)
-<use Ressources/Australia_map_segments_complete-2.jpg>
-Package pdftex.def Info: Ressources/Australia_map_segments_complete-2.jpg  used on input line 345.
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg, id=185, 2007.5pt x 1606.0pt>
+File: Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg Graphic file (type jpg)
+<use Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg>
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg  used on input line 377.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Ressources/Australia_map_segments_complete-3.jpg, id=170, 2007.5pt x 1606.0pt>
-File: Ressources/Australia_map_segments_complete-3.jpg Graphic file (type jpg)
-<use Ressources/Australia_map_segments_complete-3.jpg>
-Package pdftex.def Info: Ressources/Australia_map_segments_complete-3.jpg  used on input line 346.
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg, id=186, 2007.5pt x 1606.0pt>
+File: Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg Graphic file (type jpg)
+<use Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg>
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg  used on input line 378.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Ressources/Australia_map_segments_complete-4.jpg, id=171, 2007.5pt x 1606.0pt>
-File: Ressources/Australia_map_segments_complete-4.jpg Graphic file (type jpg)
-<use Ressources/Australia_map_segments_complete-4.jpg>
-Package pdftex.def Info: Ressources/Australia_map_segments_complete-4.jpg  used on input line 347.
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg, id=187, 2007.5pt x 1606.0pt>
+File: Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg Graphic file (type jpg)
+<use Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg>
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg  used on input line 379.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
- [11 <./Ressources/Australia_map_segments_complete-1.jpg> <./Ressources/Australia_map_segments_complete-2.jpg> <./Ressources/Australia_map_segments_complete-3.jpg> <./Ressources/Australia_map_segments_complete-4.jpg>]
-<Ressources/Australia_map_segments_complete-5.jpg, id=177, 2007.5pt x 1606.0pt>
-File: Ressources/Australia_map_segments_complete-5.jpg Graphic file (type jpg)
-<use Ressources/Australia_map_segments_complete-5.jpg>
-Package pdftex.def Info: Ressources/Australia_map_segments_complete-5.jpg  used on input line 357.
+ [11 <./Images/missmap.png (PNG copy)>]
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg, id=195, 2007.5pt x 1606.0pt>
+File: Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg Graphic file (type jpg)
+<use Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg>
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg  used on input line 389.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Ressources/Australia_map_segments_complete-6.jpg, id=178, 2007.5pt x 1606.0pt>
-File: Ressources/Australia_map_segments_complete-6.jpg Graphic file (type jpg)
-<use Ressources/Australia_map_segments_complete-6.jpg>
-Package pdftex.def Info: Ressources/Australia_map_segments_complete-6.jpg  used on input line 358.
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg, id=196, 2007.5pt x 1606.0pt>
+File: Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg Graphic file (type jpg)
+<use Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg>
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg  used on input line 390.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Ressources/completed_hist_observations_cities.png, id=179, 1003.75pt x 501.875pt>
-File: Ressources/completed_hist_observations_cities.png Graphic file (type png)
-<use Ressources/completed_hist_observations_cities.png>
-Package pdftex.def Info: Ressources/completed_hist_observations_cities.png  used on input line 366.
+ [12 <./Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg>]
+<Images/completed_hist_observations_cities.png, id=203, 1003.75pt x 501.875pt>
+File: Images/completed_hist_observations_cities.png Graphic file (type png)
+<use Images/completed_hist_observations_cities.png>
+Package pdftex.def Info: Images/completed_hist_observations_cities.png  used on input line 398.
 (pdftex.def)             Requested size: 345.0pt x 172.50378pt.
- [12 <./Ressources/Australia_map_segments_complete-5.jpg> <./Ressources/Australia_map_segments_complete-6.jpg> <./Ressources/completed_hist_observations_cities.png (PNG copy)>]
-Overfull \hbox (4.48967pt too wide) in paragraph at lines 374--374
+ [13 <./Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg> <./Images/completed_hist_observations_cities.png (PNG copy)>]
+Overfull \hbox (4.48967pt too wide) in paragraph at lines 406--406
 \T1/LinuxLibertineMonoT-TLF/regular/n/10 wikipedia . org / w / index . php ? title = Latitude & oldid =
  []
 
 
-Overfull \hbox (0.799pt too wide) in paragraph at lines 374--374
+Overfull \hbox (0.799pt too wide) in paragraph at lines 406--406
 \T1/LinuxLibertineT-TLF/m/it/10 pé-die libre\T1/LinuxLibertineT-TLF/m/n/10 . [En ligne ; Page dis-po-nible le 9-avril-2021]. 2021. \T1/LinuxLibertineT-TLF/m/sc/10 url \T1/LinuxLibertineT-TLF/m/n/10 : [][]$\T1/LinuxLibertineMonoT-TLF/regular/n/10 https :
  []
 
-[13] (./main.aux)
+[14] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 266C56C79DA56A11E29047382703E345;1954.
 runsystem(rm main.pyg)...executed.
@@ -1031,18 +1032,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 27047 strings out of 478287
- 488558 string characters out of 5846765
+ 27065 strings out of 478287
+ 490214 string characters out of 5846765
  1238956 words of memory out of 5000000
- 44809 multiletter control sequences out of 15000+600000
+ 44821 multiletter control sequences out of 15000+600000
  555981 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  74i,10n,117p,779b,1850s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_dhi6qf.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_omcwp2.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineMT.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on main.pdf (14 pages, 1815324 bytes).
+Output written on main.pdf (15 pages, 1816803 bytes).
 PDF statistics:
- 262 PDF objects out of 1000 (max. 8388607)
- 202 compressed objects within 3 object streams
- 46 named destinations out of 1000 (max. 500000)
+ 285 PDF objects out of 1000 (max. 8388607)
+ 220 compressed objects within 3 object streams
+ 47 named destinations out of 1000 (max. 500000)
  184 words of extra memory for PDF output out of 10000 (max. 10000000)
 

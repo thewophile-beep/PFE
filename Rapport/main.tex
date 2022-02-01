@@ -39,7 +39,7 @@
   \begin{sffamily}
   \begin{center}
     \hfill
-    \includegraphics[scale=0.06]{./Ressources/logoINSARouen.png}~\\[1.5cm]
+    \includegraphics[scale=0.06]{./Images/logoINSARouen.png}~\\[1.5cm]
 
     \textsc{\LARGE INSA ROUEN}\\[1cm]
 
@@ -145,7 +145,7 @@ Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, v
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Ressources/hist_observations_cities.pdf}
+    \includegraphics[width=\textwidth]{Images/hist_observations_cities.pdf}
     \caption{Nombre d'observations pour chaque ville}
 \end{figure}
 
@@ -222,10 +222,18 @@ Enfin, nous avons les deux dernières variables :
     \end{tabular}
     \caption{Variable RainTomorrow}
 \end{table}
-      
+
+Maintenant que nous connaissons nos variables, nous allons pouvoir les "simplifier" afin de les rendre plus facilement utilisables. 
+
+Dans un premier temps, nous allons transformer les valeurs des points cardinaux des directions de vent avec une valeur de 1 à 16 pour chaque niveau. Au vu de la distribution de ces 16 variables différentes, nous devons toutes les garder. 
+
+Nous allons ensuite remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Ainsi, nous utiliserons la localisation géographique des lieux à la place de leur nom. 
+
+Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. 
+
 \section{Cartographie}
 
-Notre base de donnée comprend donc une variable "Location", qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte.
+Notre base de donnée comprend donc une variable "Location", qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte. 
 
 Pour cela, nous allons utiliser le paquet R "rnaturalearth", qui nous offre un moyen simple de dessiner nos propres cartes en utilisant le standard WGS84 (World Geodetic System).
 
@@ -245,8 +253,8 @@ La Latitude est une coordonnée similaire mais qui à pour plan de référence l
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{Ressources/Cartographie/Longitude.png}
-    \includegraphics[width=0.3\textwidth]{Ressources/Cartographie/Latitude.png}
+    \includegraphics[width=0.3\textwidth]{Images/Cartographie/Longitude.png}
+    \includegraphics[width=0.3\textwidth]{Images/Cartographie/Latitude.png}
     \caption{Illustration du système de coordonnées de Longitude et Latitude}
 \end{figure}
 
@@ -268,13 +276,15 @@ Le plus gros inconvénient de cette pratique est la distorsion des surfaces lors
 
 \subsection{Affichage sur une carte}
 
-Nous avons désormais tous les éléments pour placer les lieux sur une carte. Le paquet "rnaturalearth" nous permet donc d'avoir une liste de polygone de pays. Le paquet "ozmaps" nous permet d'avoir les polygones des états australiens. Pour les lieux, nous récupérons les latitudes et longitudes manuellement grâce à n'importe quelle base que nous pouvons trouver sur internet. Au final nous pouvons afficher notre carte grâce à ggplot2 : 
+Nous avons désormais tous les éléments pour placer les lieux sur une carte. Le paquet "rnaturalearth" nous permet donc d'avoir une liste de polygone de pays. Le paquet "ozmaps" nous permet d'avoir les polygones des états australiens. Pour les lieux, nous récupérons les latitudes et longitudes manuellement grâce à n'importe quelle base que nous pouvons trouver sur internet et nous les rajoutons à chaque observation en ajoutant deux colonnes. Au final nous pouvons afficher notre carte grâce à ggplot2 : 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Ressources/Australia_full_map.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cartographie/Australia_full_map.png}
     \caption{Carte de l'Australie et villes dont la météo est observée}
 \end{figure}
+
+Nous pouvons desormais utiliser les colonnes de longitude et latitude à la place de la colonne localisation. 
 
 \section{Etude des climats}
 
@@ -284,7 +294,7 @@ Comme on peut le voir sur la carte précédente, la plupart des observations ont
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Ressources/Australia_climates.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cartographie/Australia_climates.png}
     \caption{Carte de l'Australie et climat des villes}
 \end{figure}
 
@@ -294,7 +304,7 @@ Nous avons donc les observations de 4 lieux tropicaux, 3 lieux désertiques, 2 l
 
 Les données étant étalées sur 10 ans, on peut trouver une périodicité dans les mesures à l'année. Nous pouvons alors, pour chaque ville, faire un graphique comprenant les moyennes des température maximales, minimales et moyennes de chaque jour sur 10 ans. Et faire de même pour les précipitations. 
 
-Nous pouvons afficher ces données en fonction des saisons. Nous pourrons ainsi remplacer la variable date par une variable avec uniquement 4 niveaux différents, à savoir les saisons. Nous prendrons comme saisons : 
+Nous pouvons afficher ces données en fonction des saisons. Nous pourrons ainsi remplacer la variable date par une variable avec uniquement 4 niveaux différents comme expliqué précédemment, à savoir les saisons. Nous prendrons comme saisons : 
 
 \begin{itemize}
     \item L’été, de décembre à février
@@ -303,15 +313,16 @@ Nous pouvons afficher ces données en fonction des saisons. Nous pourrons ainsi 
     \item Le printemps, de septembre à novembre
 \end{itemize}
 
+
 Nous obtenons des graphiques comme suit : 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[page=1,width=0.45\textwidth]{Ressources/Temp_and_Rainfall.pdf}
-    \includegraphics[page=11,width=0.45\textwidth]{Ressources/Temp_and_Rainfall.pdf}
-    \includegraphics[page=14,width=0.45\textwidth]{Ressources/Temp_and_Rainfall.pdf}
-    \includegraphics[page=49,width=0.45\textwidth]{Ressources/Temp_and_Rainfall.pdf}
-    \includegraphics[page=32,width=0.45\textwidth]{Ressources/Temp_and_Rainfall.pdf}
+    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfalldesert.pdf}
+    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfallplaine.pdf}
+    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfallsubtropical.pdf}
+    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfalltempere.pdf}
+    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfalltropical.pdf}
     \caption{Température Minimale et Maximale ainsi que pluviométrie au cours d'une année pour certaines des villes des données (une par climat)}
 \end{figure}
 
@@ -323,13 +334,34 @@ Du côté des régions dans les plaines, il pleut moins tout au long de l'année
 
 A l'opposé, dans les régions tropicales, la température tout au long de l'année évolue moins et reste plus proche de 30 degrés tout au long de l'année (avec une légère baisse en hiver). Dans ces régions, il pleut énormément pendant l'hiver et quasiment pas pendant l'été.
 
+Le choix de ne garder que les saisons et pas les dates se justifie par le fait que si nous voulons prédire s'il pleut le lendemain, nous n'avons pas besoin de savoir précisemment quel jour nous sommes, voire quel mois. On remarque sur les graphiques des différences notables entre les saisons, et celle-ci suffiront sûrement pour nous aider à prédire ce que nous voulons. De plus, nous nous débarassons d'une variable avec beaucoup de facteurs différents, ce qui nous sera bénéfique lors de la mise en place de modèle de prédictions.
+
+Nous nous retrouvons au final avec les variables suivantes : 
+\begin{itemize}
+    \item MinTemp, MaxTemp
+    \item Rainfall
+    \item Evaporation
+    \item Sunshine
+    \item WindGustDir, WindGustSpeed, WindDir9am, WindDir3pm, WindSpeed9am, WindSpeed3pm
+    \item Humidity9am, Humidity3pm
+    \item Pressure9am, Pressure3pm
+    \item Cloud9am, Cloud3pm
+    \item Temp9am, Temp3pm
+    \item RainToday
+    \item RainTomorrow
+    \item Season
+    \item Latitude, Longitude
+    \item Climate
+\end{itemize}
+Qui sont toutes des variables quantitative ou des variables qualitatives avec moins de 16 niveaux (numérotés en entier).
+
 \section{Complétion des données}
 
 Si l'on regarde les valeurs manquantes, on obtient la distribution suivante : 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Ressources/missmap.png}
+    \includegraphics[width=0.8\textwidth]{Images/missmap.png}
     \caption{Missingness Map des données}
 \end{figure}
 
@@ -339,12 +371,12 @@ La manière dont nous allons procéder est la suivante : pour chaque variable de
 
 En effet, avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'une ville pour une autre ville. Nous pouvons afficher quelles données de quelles villes vont compléter quelle autre villes sur des cartes comme celle-ci :
 
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\textwidth,page=1]{Ressources/Australia_map_segments_complete-1.jpg}
-    \includegraphics[width=0.48\textwidth,page=2]{Ressources/Australia_map_segments_complete-2.jpg}
-    \includegraphics[width=0.48\textwidth,page=3]{Ressources/Australia_map_segments_complete-3.jpg}
-    \includegraphics[width=0.48\textwidth,page=4]{Ressources/Australia_map_segments_complete-4.jpg}
+    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg}
+    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg}
+    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg}
+    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg}
     \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour les variables à compléter.}
 \end{figure}
 
@@ -354,8 +386,8 @@ Il reste cependant un problème. Si nous essayons d'afficher le nombre d'observa
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\textwidth,page=1]{Ressources/Australia_map_segments_complete-5.jpg}
-    \includegraphics[width=0.48\textwidth,page=2]{Ressources/Australia_map_segments_complete-6.jpg}
+    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg}
+    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg}
     \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour les deux dernières variables à compléter.}
 \end{figure}
 
@@ -363,7 +395,7 @@ Au final, nous avons un minimum d'observations par ville :
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Ressources/completed_hist_observations_cities.png}
+    \includegraphics[width=\textwidth]{Images/completed_hist_observations_cities.png}
     \caption{Nombre d'observations par ville.}
 \end{figure}
 
@@ -371,6 +403,5 @@ et nous avons atteint les $111593$ observations, soit le minimum que nous voulio
 
 \newpage
 \printbibliography
-
 
 \end{document}

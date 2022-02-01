@@ -1,6 +1,6 @@
 data <- na.omit(data.completed[c(-25,-26,-27)])
 
-data = upSample(data[-23], data$RainTomorrow, yname="RainTomorrow")
+# data = upSample(data[-23], data$RainTomorrow, yname="RainTomorrow")
 
 data$RainToday <- as.numeric(data$RainToday) - 1
 data$RainTomorrow <- as.numeric(data$RainTomorrow) - 1
