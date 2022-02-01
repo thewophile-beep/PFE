@@ -1,4 +1,4 @@
-Ville,Latitude,Longitude,Climat
+Location,Latitude,Longitude,Climate
 Adelaide,-34.926340,138.604640,tempere
 Albany,-35.023819,117.884727,subtropical
 Albury,-36.073730,146.913544,tempere

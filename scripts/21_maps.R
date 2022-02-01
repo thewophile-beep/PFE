@@ -9,8 +9,8 @@ states <- st_as_sf(ozmap("states", quiet=T))
 
     geom_sf(data=states,fill=NA) +
     
-    geom_point(data=coords, aes(x=Longitude, y=Latitude), size=2, shape=23, fill="darkred")+
-    geom_text_repel(data = coords, aes(x = Longitude, y = Latitude, label = Ville), fontface = "bold", size=5) +
+    geom_point(data = coords, aes(x=Longitude, y=Latitude), size=2, shape=23, fill="darkred")+
+    geom_text_repel(data = coords, aes(x = Longitude, y = Latitude, label = Location), fontface = "bold", size=5) +
     coord_sf(xlim = c(112, 170), ylim = c(-47, -8), expand = T) +
     
     annotation_scale(location = "bl", width_hint = 0.2) +
@@ -22,12 +22,12 @@ states <- st_as_sf(ozmap("states", quiet=T))
   dev.off()
 }
 
-ggplot(data = world) +
-  stat_density_2d(data=Temp_by_cities, aes(x=Longitude, y=Latitude, fill = after_stat(density)), geom = "raster", contour=F) +
-  geom_sf(data=states,fill=NA,color="darkgray") +
-  geom_point(data=coords, aes(x=Longitude, y=Latitude), size=2, shape=23, fill="red")+
-  geom_text_repel(data = coords, aes(x = Longitude, y = Latitude, label = Ville), fontface = "bold", size=5, color="white") +
-  coord_sf(xlim = c(min(coords$Longitude), max(coords$Longitude)), ylim = c(min(coords$Latitude), max(coords$Latitude)), expand = F)
+# ggplot(data = world) +
+#   stat_density_2d(data=Temp_by_cities, aes(x=Longitude, y=Latitude, fill = after_stat(density)), geom = "raster", contour=F) +
+#   geom_sf(data=states,fill=NA,color="darkgray") +
+#   geom_point(data=coords, aes(x=Longitude, y=Latitude), size=2, shape=23, fill="red")+
+#   geom_text_repel(data = coords, aes(x = Longitude, y = Latitude, label = Ville), fontface = "bold", size=5, color="white") +
+#   coord_sf(xlim = c(min(coords$Longitude), max(coords$Longitude)), ylim = c(min(coords$Latitude), max(coords$Latitude)), expand = F)
 
 {
   png(paste(plots_path, "Australia_climates.png", sep=""),width=1000,height=800)
@@ -35,7 +35,7 @@ ggplot(data = world) +
           geom_sf(fill="antiquewhite1") +
           geom_sf(data=states,fill=NA) +
           
-          geom_point(data=coords, aes(x=Longitude, y=Latitude, fill=climates$Climat), size=3, shape=23)+
+          geom_point(data=coords, aes(x=Longitude, y=Latitude, fill=Climate), size=3, shape=23)+
           coord_sf(xlim = c(112, 170), ylim = c(-47, -8), expand = T) +
           
           annotation_scale(location = "bl", width_hint = 0.2) +

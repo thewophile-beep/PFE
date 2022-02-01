@@ -1,28 +1,3 @@
-str(data.raw)
-
-# statbse of numerical and factorial variables ----
-statbase <- NULL
-numeric_names <- c()
-other_names <- c()
-for (i in names(data.raw)) {
-  if (class(data.raw[[i]]) %in% c("numeric", "integer")) {
-    statbase <- cbind(statbase, c(round(summary(data.raw[[i]]), 2), "sd"=round(sd(data.raw[[i]],na.rm=T), 2)))
-    numeric_names <- c(numeric_names, i)
-  }
-  else {
-    other_names <- c(other_names, i)
-  }
-}
-attr(statbase,"dimnames")[[2]] <- numeric_names
-
-print("Summary of numerical values : ")
-print(statbase)
-
-lvls <- list()
-for (i in other_names) {
-  lvls[i] <- list(as.matrix(summary(data.raw[[i]])))
-}
-
 # Nb of obs per cities & missmap ----
 
 cities_obs <- data.frame(lvls$Location, check.names=T)
@@ -40,7 +15,7 @@ summary(data.raw %>% filter(Location == "Uluru") %>% select(Date))
 summary(data.raw %>% filter(Location == "Katherine") %>% select(Date))
 summary(data.raw %>% filter(Location == "Nhil") %>% select(Date))
 
-# Direction du vent
+# Direction du vent ----
 ggplot(data.raw, aes(x=WindGustDir)) +
   geom_bar()
 ggplot(data.raw, aes(x=WindDir9am)) +
@@ -75,3 +50,63 @@ ggcorrplot(
 )
 dev.off()  
 
+
+# Periodicity ----
+data_by_season <- data.frame(
+  data.raw %>%
+    group_by(Location, Season, Climate) %>%
+    summarise(
+      MinTemp = round(mean(MinTemp, na.rm=T),2),
+      MaxTemp = round(mean(MaxTemp, na.rm=T),2),
+      Rainfall = mean(Rainfall, na.rm=T),
+      MeanTemp = mean(cbind(Temp9am, Temp3pm), na.rm=T),
+      Humidity9am = mean(Humidity9am, na.rm=T),
+      Humidity3pm = mean(Humidity3pm, na.rm=T)
+    ) 
+)
+
+{
+  for (c in climates) {
+    tmp.name = sprintf("%sTemp_and_Rainfall%s.pdf",plots_path,c)
+    pdf(tmp.name)
+    tmp.cities = coords$Location[coords$Climate == c]
+    for (i in tmp.cities) {
+      print(
+        ggplot(data = data_by_season %>% filter(Location == i), aes(x = Season))+
+          geom_col(aes(y=MeanTemp, group=3, fill="Température Moyenne")) +
+          geom_col(aes(y=Rainfall, fill="Rainfall")) +
+          geom_text(aes(label=MaxTemp, y=MaxTemp), vjust=-.5) +
+          geom_text(aes(label=MinTemp, y=MinTemp), vjust=1.5) +
+          geom_errorbar(aes(y=MeanTemp, ymax=MaxTemp, ymin=MinTemp), width = 0.25) +
+          labs(x="Season", y="Temperature", title=paste(i,c,sep=" : "), fill="Barplots", colour="Temperature") +
+          scale_fill_manual(values = c("lightblue", "lightsalmon1")) +
+          theme(legend.position="right") + 
+          scale_y_continuous(name="Température (°C)", sec.axis=sec_axis(~.*1, name="Rainfall (mm)"))
+      )
+    }
+    dev.off()
+  }
+  }
+
+tmp.df = pivot_wider(data_by_season, names_from=c(Season), values_from=c(Rainfall, MinTemp, MaxTemp, MeanTemp, Humidity9am, Humidity3pm))
+
+tmp.kmeans <- kmeans(tmp.df %>% select(-c(Location, Climate)), centers = 5, nstart = 20)
+
+print(ggplot(data = world) +
+        geom_sf(fill="antiquewhite1") +
+        geom_sf(data=states,fill=NA) +
+        
+        geom_point(data=coords, aes(x=Longitude, y=Latitude, fill=as.factor(tmp.kmeans$cluster)), size=3, shape=23)+
+        coord_sf(xlim = c(112, 170), ylim = c(-47, -8), expand = T) +
+        
+        annotation_scale(location = "bl", width_hint = 0.2) +
+        annotation_north_arrow(location = "bl", which_north = "true", pad_x = unit(0.1, "in"), pad_y = unit(0.3, "in"), style = north_arrow_fancy_orienteering) +
+        theme(panel.grid.major = element_line(color = gray(0.5), linetype = "dashed", size = 0.5), 
+              panel.background = element_rect(fill = "aliceblue"),
+              text=element_text(size=20))
+      + labs(fill="Climats")
+)
+
+
+pca_res <- prcomp(data_by_cities %>% select(-c(Location, Climate)), scale. = TRUE)
+autoplot(pca_res, col=as.numeric(tmp.kmeans$cluster))

@@ -11,3 +11,19 @@ ggplot(data, aes(x=Location)) +
   scale_x_discrete(limits = cities)
 dev.off()
 
+
+numeric_var <- c()
+factor_var <- c()
+for (i in names(data)) {
+  if (class(data[[i]]) %in% c("numeric", "integer")) {
+    numeric_var <- c(numeric_var, i)
+  }
+  else {
+    factor_var <- c(factor_var, i)
+  }
+}
+
+pca_res <- prcomp(data[numeric_var], scale. = TRUE)
+autoplot(pca_res, data=data, colour="RainTomorrow")
+
+data = SMOTE(data[numeric_var], data$RainTomorrow)
