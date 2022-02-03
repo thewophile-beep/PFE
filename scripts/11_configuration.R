@@ -64,7 +64,7 @@ for (city in cities) {
     data.city.var <- data.city[,var]
     l <- length(data.city.var)
     ratio <- sum(is.na(data.city.var))/l
-    if (as.numeric(ratio) > 0.15) {
+    if (as.numeric(ratio) > 0.2) {
       to.complete[[var]] <- c(to.complete[[var]], city)
     } else if (l > 2500) {
       complete.with[[var]] <- c(complete.with[[var]], city)
