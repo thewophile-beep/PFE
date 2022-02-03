@@ -1,15 +1,14 @@
 # Nb of obs per cities & missmap ----
 
-cities_obs <- data.frame(lvls$Location, check.names=T)
-pdf(paste(plots_path,"hist_observations_cities.pdf",sep=""), width=15, height=8)
-ggplot(data.raw, aes(x=Location)) + 
+cities_obs <- data.frame(coords$Location, check.names=T)
+ggplot(data, aes(x=Location)) + 
   geom_bar(stat='count',aes(fill=..count..)) + 
   scale_fill_gradient(low="midnightblue", high="lightslateblue") +
   geom_text(stat='count', aes(label=..count..), angle=90, hjust=1.5, color="white") + 
   theme(axis.text.x = element_text(angle = 75, vjust = 0.5, hjust=0.5), 
         legend.position="none") +
   labs(title="Nombre d'observations par ville",y="Nombre d'observations",x="Ville")
-dev.off()
+
 # Cities observed
 summary(data.raw %>% filter(Location == "Uluru") %>% select(Date))
 summary(data.raw %>% filter(Location == "Katherine") %>% select(Date))

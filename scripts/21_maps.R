@@ -1,7 +1,3 @@
-world <- ne_countries(scale = "medium", returnclass = "sf")
-
-states <- st_as_sf(ozmap("states", quiet=T))
-
 {
   png(paste(plots_path, "Australia_full_map.png", sep=""),width=1000,height=800)
   print(ggplot(data = world) +

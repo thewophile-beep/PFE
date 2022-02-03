@@ -1,5 +1,3 @@
-data = na.omit(data.completed)
-
 png(paste(plots_path,"completed_hist_observations_cities.png", sep=""), width=1000, height=500)
 ggplot(data, aes(x=Location)) + 
   geom_bar(stat='count', aes(fill=..count..)) + 

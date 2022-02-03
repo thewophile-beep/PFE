@@ -1,15 +1,5 @@
-# Centrage et réduction des données.
-# DataApp
-m = apply(dataApp, 2, mean)
-ec = apply(dataApp, 2, sd)
-dataApp[,-c(1, 2, 8, 10, 11, 22, 23, 24)] = scale(dataApp[,-c(1, 2, 8, 10, 11, 22, 23, 24)])
-# Centrage et réduction de dataTest
-for(j in c(3:7,9,12:21)){
-  dataTest[,j] = (dataTest[,j] - m[j])/ec[j]
-}
-
 # Construction de l’arbre maximal ----
-mod.tmax = rpart(RainTomorrow ~., control=rpart.control(cp=0),data = dataApp)
+mod.tmax = rpart(RainTomorrow ~., control=rpart.control(cp=0),data = dataApp.cent)
 # summary(mod.tmax)
 # print(mod.tmax)
 # plot(mod.tmax, branch = 0.3, uniform = T)
@@ -22,7 +12,7 @@ nf.tmax = max(mod.tmax$cptable[,2]) + 1
 # mod.tmax$variable.importance
 # Construction des prédictions sur Eapp et Etest
 y.tmax = as.vector((predict(mod.tmax) > 0.5) * 1)
-yt.tmax = as.vector((predict(mod.tmax, newdata = dataTest) > 0.5) * 1)
+yt.tmax = as.vector((predict(mod.tmax, newdata = dataTest.cent) > 0.5) * 1)
 # Calcul des performances
 confusionMatrix(table(yt.tmax, y.test))
 
@@ -30,7 +20,7 @@ confusionMatrix(table(yt.tmax, y.test))
 mod.topt <- prune(mod.tmax, cp = 0.0001)
 nf.topt = max(mod.topt$cptable[,2]) + 1
 y.topt = (predict(mod.topt) > 0.5) * 1
-yt.topt = (predict(mod.topt, newdata = dataTest) > 0.5) * 1
+yt.topt = (predict(mod.topt, newdata = dataTest.cent) > 0.5) * 1
 confusionMatrix(table(y.topt, y.app))
 confusionMatrix(table(yt.topt, y.test))
 
