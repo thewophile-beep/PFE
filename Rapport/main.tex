@@ -361,15 +361,27 @@ Si l'on regarde les valeurs manquantes, on obtient la distribution suivante :
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Images/missmap.png}
+    \includegraphics[width=0.7\textwidth]{Images/missmap.png}
     \caption{Missingness Map des données}
 \end{figure}
 
-Si l'on décide de faire un \mintinline{R}{na.omit}, on n'a plus que $56420$ observations sur les $145460$ de base. En retirant les colonnes Sunshine, Evaporation et Cloud 3pm et 9am, le \mintinline{R}{na.omit} nous donne $112925$ observations. Ce sont donc ces variables que l'on va essayer de compléter en premier.
+Afin de faire des prédictions sur nos données, nous avons besoin de nous débarasser des observations avec des valeurs \emph{NA}. Pour cela, on utilise la commande \mintinline{R}{na.omit}. On se retrouve avec $56420$ observations sur les $145460$ de base, ce qui est très peu. De plus, la plupart des lieux ne sont plus représentés :
 
-La manière dont nous allons procéder est la suivante : pour chaque variable des quatre sélectionnées, nous allons compléter les observations manquantes des villes où il manque plus de 40\% des données avec celles de la ville la plus proche \emph{dans la même zone climatique}. Car, nous l'avons vu, tout au long de l'année les villes d'une même région climatique semble se comportait à peu près de la même façon. De plus, prendre la ville la plus proche nous permettra de ne pas trop dupliquer de données. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/distribution_lieux_raw.png}
+    \caption{Distribution des données après un \emph{na.omit}}
+\end{figure}
 
-En effet, avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'une ville pour une autre ville. Nous pouvons afficher quelles données de quelles villes vont compléter quelle autre villes sur des cartes comme celle-ci :
+Nous allons donc chercher un moyen de compléter les valeurs \emph{NA}, et de le faire de façon à ne pas avoir trop de données redondantes et de garder une cohérence vis-à-vis des climats : nous allons copier les données d'une ville à une autre.
+
+Pour cela, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons les villes qui ont plus de 15\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations. En effet, comme nous l'avons vu, certaines villes n'ont d'observations que sur ~1500 jours. Lorsque nous complétons nos données, nous voulons que les dates coincident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observation sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. 
+
+Lorsque nous copions les données d'un lieu à un autre, nous nous soucions donc de la date d'observation. Cependant, cela ne suffira pas. Nous avons vu en effet que les différents lieux observés appartiennet à des zones climatiques très différentes. Pour chaque variable, nous allons donc associer nos deux listes de lieux (ceux à compléter et ceux avec lesquels compléter) en cherchant les lieux les plus proches de la même zone climatique.
+
+Au final, nous nous retrouvons avec une liste de couples pour chaque variable.
+
+Avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'une ville pour une autre ville, et nous le ferons de manière "intelligente", sans perte de cohérence par rapport aux climats des lieux observés. Nous pouvons afficher quelles données de quelles villes vont compléter quelle autre villes sur des cartes comme celle-ci :
 
 \begin{figure}[H]
     \centering
@@ -377,29 +389,29 @@ En effet, avec cette méthode, nous allons copier jusqu'à 5 fois maximum les do
     \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg}
     \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg}
     \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg}
-    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour les variables à compléter.}
+    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées.}
 \end{figure}
 
-Lorsque l'on fait un na.omit à cet instant nous n'atteignons pas les ~110 000 observations que nous voulions : en effet, nous avons encore un problème de données manquantes pour les variables de mesures de pression à 9h et 15h. Pour régler ce problème, nous pouvons compléter les NA avec la moyenne globale de la pression sur toutes les observations. Nous obtenons enfin le nombre d'observations que nous voulions atteindre. 
-
-Il reste cependant un problème. Si nous essayons d'afficher le nombre d'observations par villes, on se rend compte que les deux lieux \emph{Albany} et \emph{NewCastle} ont 0 observations, et pour cause : il n'y a aucune mesure de WindGustDir et WindGustSpeed. Nous complétons ces données de la façon dont nous avons complétées les autres : 
+Au final, le \emph{na.omit} nous donne une base de données avec $105546$ observations. La missingness map et la distribution des observations par lieu sont les suivantes : 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg}
-    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg}
-    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour les deux dernières variables à compléter.}
+    \includegraphics[width=0.7\textwidth]{Images/missmap_completed.png}
+    \caption{Missingness Map des données complétées.}
 \end{figure}
-
-Au final, nous avons un minimum d'observations par ville : 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Images/completed_hist_observations_cities.png}
-    \caption{Nombre d'observations par ville.}
+    \includegraphics[width=0.7\textwidth]{Images/distribution_lieux_completed.png}
+    \caption{Distribution des observations par villes dans notre base de données finale.}
 \end{figure}
 
-et nous avons atteint les $111593$ observations, soit le minimum que nous voulions.
+On remarque que certaines plages de dates n'ont pas été complétées pour certaines variables, il peut y avoir deux raisons à cela : 
+\begin{itemize}
+    \item Le lieu pour cette variable n'a pas été considéré comme à compléter, malgré quelques valeurs \emph{NA};
+    \item Le lieu qui a servi pour la complétion certaines dates en moins que celles du lieu à compléter.
+\end{itemize}
+Le nombre d'observations de notre base de données finale reste cependant satisfaisante et tous les lieux y sont représentés.
 
 \newpage
 \printbibliography

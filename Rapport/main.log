@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.1)  1 FEB 2022 18:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.2.1)  4 FEB 2022 12:06
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -958,7 +958,7 @@ Package pdftex.def Info: Images/Temp_and_Rainfalltropical.pdf , page1 used on in
 File: Images/missmap.png Graphic file (type png)
 <use Images/missmap.png>
 Package pdftex.def Info: Images/missmap.png  used on input line 364.
-(pdftex.def)             Requested size: 276.00105pt x 201.21167pt.
+(pdftex.def)             Requested size: 241.49895pt x 176.06172pt.
  [10]
 \openout4 = `main.pyg'.
 
@@ -972,53 +972,50 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineMonoT-TLF/m/n' in size <10> not
 LaTeX Font Info:    Font shape `T1/LinuxLibertineMonoT-TLF/regular/n' will be
 (Font)              scaled to size 10.0pt on input line 1.
 )
-\openout4 = `main.pyg'.
-
- (./_minted-main/BAE173C9437D1CD52CB095BF95EFE593582FCEF3F1330378E83A89C03A544711.pygtex)
-<Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg, id=184, 2007.5pt x 1606.0pt>
+<Images/distribution_lieux_raw.png, id=184, 553.31718pt x 399.74344pt>
+File: Images/distribution_lieux_raw.png Graphic file (type png)
+<use Images/distribution_lieux_raw.png>
+Package pdftex.def Info: Images/distribution_lieux_raw.png  used on input line 372.
+(pdftex.def)             Requested size: 241.49895pt x 174.46645pt.
+ [11 <./Images/missmap.png (PNG copy)> <./Images/distribution_lieux_raw.png (PNG copy)>]
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg, id=193, 2007.5pt x 1606.0pt>
 File: Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg Graphic file (type jpg)
 <use Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg>
-Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg  used on input line 376.
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg  used on input line 388.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg, id=185, 2007.5pt x 1606.0pt>
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg, id=194, 2007.5pt x 1606.0pt>
 File: Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg Graphic file (type jpg)
 <use Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg>
-Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg  used on input line 377.
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg  used on input line 389.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg, id=186, 2007.5pt x 1606.0pt>
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg, id=195, 2007.5pt x 1606.0pt>
 File: Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg Graphic file (type jpg)
 <use Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg>
-Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg  used on input line 378.
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg  used on input line 390.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg, id=187, 2007.5pt x 1606.0pt>
+<Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg, id=196, 2007.5pt x 1606.0pt>
 File: Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg Graphic file (type jpg)
 <use Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg>
-Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg  used on input line 379.
+Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg  used on input line 391.
 (pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
- [11 <./Images/missmap.png (PNG copy)>]
-<Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg, id=195, 2007.5pt x 1606.0pt>
-File: Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg Graphic file (type jpg)
-<use Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg>
-Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg  used on input line 389.
-(pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
-<Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg, id=196, 2007.5pt x 1606.0pt>
-File: Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg Graphic file (type jpg)
-<use Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg>
-Package pdftex.def Info: Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg  used on input line 390.
-(pdftex.def)             Requested size: 165.59853pt x 132.47702pt.
+<Images/missmap_completed.png, id=197, 553.31718pt x 399.74344pt>
+File: Images/missmap_completed.png Graphic file (type png)
+<use Images/missmap_completed.png>
+Package pdftex.def Info: Images/missmap_completed.png  used on input line 399.
+(pdftex.def)             Requested size: 241.49895pt x 174.46645pt.
  [12 <./Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg>]
-<Images/completed_hist_observations_cities.png, id=203, 1003.75pt x 501.875pt>
-File: Images/completed_hist_observations_cities.png Graphic file (type png)
-<use Images/completed_hist_observations_cities.png>
-Package pdftex.def Info: Images/completed_hist_observations_cities.png  used on input line 398.
-(pdftex.def)             Requested size: 345.0pt x 172.50378pt.
- [13 <./Images/Australia_map_segments_complete/Australia_map_segments_complete-5.jpg> <./Images/Australia_map_segments_complete/Australia_map_segments_complete-6.jpg> <./Images/completed_hist_observations_cities.png (PNG copy)>]
-Overfull \hbox (4.48967pt too wide) in paragraph at lines 406--406
+<Images/distribution_lieux_completed.png, id=204, 553.31718pt x 399.74344pt>
+File: Images/distribution_lieux_completed.png Graphic file (type png)
+<use Images/distribution_lieux_completed.png>
+Package pdftex.def Info: Images/distribution_lieux_completed.png  used on input line 405.
+(pdftex.def)             Requested size: 241.49895pt x 174.46645pt.
+ [13 <./Images/missmap_completed.png (PNG copy)> <./Images/distribution_lieux_completed.png (PNG copy)>]
+Overfull \hbox (4.48967pt too wide) in paragraph at lines 418--418
 \T1/LinuxLibertineMonoT-TLF/regular/n/10 wikipedia . org / w / index . php ? title = Latitude & oldid =
  []
 
 
-Overfull \hbox (0.799pt too wide) in paragraph at lines 406--406
+Overfull \hbox (0.799pt too wide) in paragraph at lines 418--418
 \T1/LinuxLibertineT-TLF/m/it/10 pé-die libre\T1/LinuxLibertineT-TLF/m/n/10 . [En ligne ; Page dis-po-nible le 9-avril-2021]. 2021. \T1/LinuxLibertineT-TLF/m/sc/10 url \T1/LinuxLibertineT-TLF/m/n/10 : [][]$\T1/LinuxLibertineMonoT-TLF/regular/n/10 https :
  []
 
@@ -1032,18 +1029,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 27065 strings out of 478287
- 490214 string characters out of 5846765
- 1238956 words of memory out of 5000000
+ 27064 strings out of 478287
+ 489446 string characters out of 5846765
+ 1238883 words of memory out of 5000000
  44821 multiletter control sequences out of 15000+600000
  555981 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  74i,10n,117p,779b,1850s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_dhi6qf.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_naooyc.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/libertine/lbtn_omcwp2.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineMT.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on main.pdf (15 pages, 1816803 bytes).
+Output written on main.pdf (15 pages, 1651885 bytes).
 PDF statistics:
- 285 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 47 named destinations out of 1000 (max. 500000)
+ 286 PDF objects out of 1000 (max. 8388607)
+ 221 compressed objects within 3 object streams
+ 48 named destinations out of 1000 (max. 500000)
  184 words of extra memory for PDF output out of 10000 (max. 10000000)
 

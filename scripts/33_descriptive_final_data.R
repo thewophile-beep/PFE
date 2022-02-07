@@ -24,4 +24,3 @@ for (i in names(data)) {
 pca_res <- prcomp(data[numeric_var], scale. = TRUE)
 autoplot(pca_res, data=data, colour="RainTomorrow")
 
-data = SMOTE(data[numeric_var], data$RainTomorrow)

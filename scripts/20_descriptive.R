@@ -1,7 +1,7 @@
 # Nb of obs per cities & missmap ----
 
 cities_obs <- data.frame(coords$Location, check.names=T)
-ggplot(data, aes(x=Location)) + 
+ggplot(na.omit(data.raw), aes(x=Location)) + 
   geom_bar(stat='count',aes(fill=..count..)) + 
   scale_fill_gradient(low="midnightblue", high="lightslateblue") +
   geom_text(stat='count', aes(label=..count..), angle=90, hjust=1.5, color="white") + 
@@ -71,7 +71,7 @@ data.season <- data.frame(
 
 tmp.df = pivot_wider(data.season, names_from=c(Season), values_from=c(Rainfall, MinTemp, MaxTemp, MeanTemp, Humidity9am, Humidity3pm))
 
-tmp.kmeans <- kmeans(tmp.df %>% select(-c(Climate)), centers = 5, nstart = 5)
+tmp.kmeans <- kmeans(tmp.df %>% select(-c(Climate)), centers = 5, nstart = 10)
 
 print(ggplot(data = world) +
         geom_sf(fill="antiquewhite1") +
