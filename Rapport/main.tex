@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{float}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -88,11 +89,11 @@ Ces données contient 10 années d'observations de la météo australienne sur 4
     \item MaxTemp : température maximale dans les 24h jusqu'à 9h du matin (en °C).
     \item Rainfall : précipitation dans les 24h jusqu'à 9h du matin (en mm).
     \item Evaporation : bac d'évaporation de classe A dans les 24h jusqu'à 9h du matin (en mm).
-    \item Sunshine : ensolleillement en heure dans les 24h jusqu'à minuit.
+    \item Sunshine : ensoleillement en heure dans les 24h jusqu'à minuit.
     \item WindGustDir : direction de la plus forte rafale dans les 24 heures jusqu'à minuit (16 points cardinaux/intercardinaux).   
     \item WindGustSpeed : vitesse de la plus forte rafale dans les 24 heures jusqu'à minuit (16 points cardinaux/intercardinaux).
     \item WindDir9am : direction du vent à 9h du matin.
-    \item WindDir3pm : idem mais à 15h.
+    \item WindDir3pm : idem à 15h.
     \item WindSpeed9am : vitesse du vent à 9h.
     \item WindSpeed3pm : idem à 15h.
     \item Humidity9am : taux d'humidité relative à 9h.
@@ -109,131 +110,167 @@ Ces données contient 10 années d'observations de la météo australienne sur 4
 
 Jetons tout d'abord un coup d'oeil aux variables numériques de nos données. 
 
-\begin{table}[H]
+\subsection{Variables numériques}
+
+\begin{table}[ht]
     \centering
-    \begin{tabular}{*{5}{|c}|}
-        \hline
-        & MinTemp & MaxTemp & Rainfall & Evaporation \\ 
-        \hline
-        Min. & -8.50 & -4.80 & 0.00 & 0.00 \\ 
-        1st Qu. & 7.60 & 17.90 & 0.00 & 2.60 \\ 
-        Median & 12.00 & 22.60 & 0.00 & 4.80 \\ 
-        Mean & 12.19 & 23.22 & 2.36 & 5.47 \\ 
-        3rd Qu. & 16.90 & 28.20 & 0.80 & 7.40 \\ 
-        Max. & 33.90 & 48.10 & 371.00 & 145.00 \\ 
-        NA's & 1485.00 & 1261.00 & 3261.00 & 62790.00 \\ 
-        sd & 6.40 & 7.12 & 8.48 & 4.19 \\ 
-        \hline
-        \hline
-        & Sunshine & WindGustSpeed & WindSpeed9am & WindSpeed3pm \\ 
-        \hline
-        Min. & 0.00 & 6.00 & 0.00 & 0.00 \\ 
-        1st Qu. & 4.80 & 31.00 & 7.00 & 13.00 \\ 
-        Median & 8.40 & 39.00 & 13.00 & 19.00 \\ 
-        Mean & 7.61 & 40.04 & 14.04 & 18.66 \\ 
-        3rd Qu. & 10.60 & 48.00 & 19.00 & 24.00 \\ 
-        Max. & 14.50 & 135.00 & 130.00 & 87.00 \\ 
-        NA's & 69835.00 & 10263.00 & 1767.00 & 3062.00 \\ 
-        sd & 3.79 & 13.61 & 8.92 & 8.81 \\ 
-        \hline
-    \end{tabular}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|r||rrrrrrrr|}
+            \hline
+            & Min. & 1st Qu. & Median & Mean & 3rd Qu. & Max. & NA's & Std. \\ 
+            \hline
+            \hline
+            MinTemp & -8.50 & 7.60 & 12.00 & 12.19 & 16.90 & 33.90 & 1485.00 & 6.40 \\ 
+            MaxTemp & -4.80 & 17.90 & 22.60 & 23.22 & 28.20 & 48.10 & 1261.00 & 7.12 \\ 
+            Rainfall & 0.00 & 0.00 & 0.00 & 2.36 & 0.80 & 371.00 & 3261.00 & 8.48 \\ 
+            Evaporation & 0.00 & 2.60 & 4.80 & 5.47 & 7.40 & 145.00 & 62790.00 & 4.19 \\ 
+            Sunshine & 0.00 & 4.80 & 8.40 & 7.61 & 10.60 & 14.50 & 69835.00 & 3.79 \\ 
+            WindGustSpeed & 6.00 & 31.00 & 39.00 & 40.04 & 48.00 & 135.00 & 10263.00 & 13.61 \\ 
+            WindSpeed9am & 0.00 & 7.00 & 13.00 & 14.04 & 19.00 & 130.00 & 1767.00 & 8.92 \\ 
+            WindSpeed3pm & 0.00 & 13.00 & 19.00 & 18.66 & 24.00 & 87.00 & 3062.00 & 8.81 \\ 
+            Humidity9am & 0.00 & 57.00 & 70.00 & 68.88 & 83.00 & 100.00 & 2654.00 & 19.03 \\ 
+            Humidity3pm & 0.00 & 37.00 & 52.00 & 51.54 & 66.00 & 100.00 & 4507.00 & 20.80 \\ 
+            Pressure9am & 980.50 & 1012.90 & 1017.60 & 1017.65 & 1022.40 & 1041.00 & 15065.00 & 7.11 \\ 
+            Pressure3pm & 977.10 & 1010.40 & 1015.20 & 1015.26 & 1020.00 & 1039.60 & 15028.00 & 7.04 \\ 
+            Cloud9am & 0.00 & 1.00 & 5.00 & 4.45 & 7.00 & 9.00 & 55888.00 & 2.89 \\ 
+            Cloud3pm & 0.00 & 2.00 & 5.00 & 4.51 & 7.00 & 9.00 & 59358.00 & 2.72 \\ 
+            Temp9am & -7.20 & 12.30 & 16.70 & 16.99 & 21.60 & 40.20 & 1767.00 & 6.49 \\ 
+            Temp3pm & -5.40 & 16.60 & 21.10 & 21.68 & 26.40 & 46.70 & 3609.00 & 6.94 \\ 
+                \hline
+        \end{tabular}
+    }
+    \caption{Résumé des variables numériques}
+    \label{table:summary}
 \end{table}
 
-Comme nous pouvons le constater, pour certaines d'entre elles, il manque beaucoup d'observations (voir la ligne "NA's"). Nous allons devoir remédier à cela dans les futures parties, et principalement sur les variables \emph{Sunshine} et \emph{Evaporation}, dont nous n'avons respectivement que 52 et 57\% des observations.
+Comme nous pouvons le constater dans la Table \ref{table:summary}, pour certaines d'entre elles, il manque beaucoup d'observations (voir la ligne \emph{NA's}). Nous allons devoir remédier à cela dans les futures parties, et principalement sur les variables \emph{Sunshine}, \emph{Evaporation}, \emph{Cloud9am} et \emph{Cloud3pm}, dont nous avons moins de 60\% des observations.
 
-Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, vont du 2007-11-01 au 2017-06-25, ce qui représente 3524 jours. 
+Nous pouvons de plus noter certaines choses : comme on pouvait s'y attendre, il fait en général moins froid à 15h qu'à 9h, et il fait aussi moins humide. 
+
+\subsection{Variables factorielles}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Images/hist_observations_cities.pdf}
     \caption{Nombre d'observations pour chaque ville}
+    \label{fig:obs_per_cities}
 \end{figure}
 
-On voit déjà qu'il manque certaines dates d'observations pour la plupart des villes, et pour 3 d'entre elles : Katherine, Nhil et Uluru, nous avons moins de la moitié. En regardant de plus près, ceci est dû au fait que les observations démarrent à ces endroits en 2013.
+Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, vont du 2007-11-01 au 2017-06-25, ce qui représente 3524 jours. Si l'on regarde la distribution du nombre d'observations par ville, on devrait donc voir que chacune d'entre elles en ont 3524 (voir Figure \ref{fig:obs_per_cities}). On voit déjà qu'il manque certaines dates d'observations pour la plupart des villes, et pour 3 d'entre elles : Katherine, Nhil et Uluru, nous avons moins de la moitié. Ceci est dû au fait que les observations démarrent à ces endroits en 2013.
 
-Penchons-nous désormais sur les variables de direction du vent : 
+Penchons-nous désormais sur les variables de direction du vent en regardant la distribution de leur facteurs dans les Tables \ref{table:wind_gust_dir}, \ref{table:wind_dir_9am} et \ref{table:wind_dir_3pm}.
 
-\begin{table}[H]
+\begin{table}[p]
     \centering
     \resizebox{\textwidth}{!}{
-        \begin{tabular}{*{17}{|c}|}
+        \begin{tabular}{|r||*{17}{r}|}
             \hline
-            E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
+            & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
             \hline
-            9181 & 8104 & 7372 & 9313 & 7133 & 6548 & 6620 & 8122 & 9168 & 9418 & 9216 & 8736 & 8967 & 9915 & 8252 & 9069 & 10326 \\
+            \hline
+            Count & 9181 & 8104 & 7372 & 9313 & 7133 & 6548 & 6620 & 8122 & 9168 & 9418 & 9216 & 8736 & 8967 & 9915 & 8252 & 9069 & 10326 \\
+            \% & 6.31 & 5.57 & 5.07 & 6.40 & 4.90 & 4.50 & 4.55 & 5.58 & 6.30 & 6.47 & 6.34 & 6.01 & 6.16 & 6.82 & 5.67 & 6.23 & 7.10 \\
             \hline
         \end{tabular}
     }
     \caption{Variable WindGustDir}
+    \label{table:wind_gust_dir}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[p]
     \centering
     \resizebox{\textwidth}{!}{
-        \begin{tabular}{*{17}{|c}|}
+        \begin{tabular}{|r||*{17}{r}|}
             \hline
-            E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
+            & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
             \hline
-            9176 & 7836 & 7630 & 11758 & 7671 & 8129 & 7980 & 8749 & 8659 & 9287 & 9112 & 7587 & 8423 & 8459 & 7414 & 7024 & 10566  \\
+            \hline
+            Count & 9176 & 7836 & 7630 & 11758 & 7671 & 8129 & 7980 & 8749 & 8659 & 9287 & 9112 & 7587 & 8423 & 8459 & 7414 & 7024 & 10566  \\
+            \% & 6.31 & 5.39 & 5.25 & 8.08 & 5.27 & 5.59 & 5.49 & 6.01 & 5.95 & 6.38 & 6.26 & 5.22 & 5.79 & 5.82 & 5.10 & 4.83 & 7.26 \\
             \hline
         \end{tabular}
     }
     \caption{Variable WindDir9am}
+    \label{table:wind_dir_9am}
 \end{table}
  
-\begin{table}[H]
+\begin{table}[p]
     \centering
     \resizebox{\textwidth}{!}{
-        \begin{tabular}{*{17}{|c}|}
+        \begin{tabular}{|r||*{17}{r}|}
             \hline
-            E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
+            & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
             \hline
-            8472 & 7857 & 8505 & 8890 & 8263 & 6590 & 7870 & 8610 & 9926 & 10838 & 9399 & 8156 & 9354 & 10110 & 8874 & 9518 & 4228   \\
+            \hline
+            Count & 8472 & 7857 & 8505 & 8890 & 8263 & 6590 & 7870 & 8610 & 9926 & 10838 & 9399 & 8156 & 9354 & 10110 & 8874 & 9518 & 4228   \\
+            \% & 5.82 & 5.40 & 5.85 & 6.11 & 5.68 & 4.53 & 5.41 & 5.92 & 6.82 & 7.45 & 6.46 & 5.61 & 6.43 & 6.95 & 6.10 & 6.54 & 2.91 \\
             \hline
         \end{tabular}
     }
     \caption{Variable WindDir3pm}
+    \label{table:wind_dir_3pm}
 \end{table}
 
-Les 16 niveaux utilisés pour ces variables sont tous représentés, on peut donc considérer cette variable comme un entier allant de 1 à 16. Avec 1 la direction Est et 16 la direction Ouest-Sud-Ouest (dans l'ordre alphabétique). Ici aussi, on remarque qu'il manque plus de  10 000 observations pour les deux premières variables et 4 000 pour la dernière. 
-
-Enfin, nous avons les deux dernières variables : 
+Les 16 niveaux utilisés pour ces variables sont tous représentés avec à peu près la même distribution. Nous souhaitons changer ces facteurs en valeurs numériques, pour cela, nous allons remplacer chaque direction par sa valeur en degrés : utiliser l'angle pour la directions nous servira peut-être lorsque nous utiliserons des modèles de prédiction comme des arbres CART. En effet, baisser le nombre de facteurs que nous avons nous permettra sûrement de réduire le nombre de feuilles que nous aurions pu avoir. Nous utiliserons les valeurs indiquée dans la Table \ref{table:deg}.
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|r||*{16}{r}|}
+            \hline
+            & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW \\
+            \hline
+            Degré & 0.0 & 22.5 & 45.0 & 67.5 & 90.0 & 112.5 & 135.0 & 157.5 & 180.0 & 202.5 & 225.0 & 247.5 & 270.0 & 292.5 & 315.0 & 337.5 \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Les 16 points cardinaux en degrés}
+    \label{table:deg}
+\end{table}
+
+On remarque une fois de plus qu'une partie de ses observations sons manquantes (plus de 7\% pour \emph{WindGustDir} et \emph{WindDir9am} et un peu moins de 3\% pour \emph{WindDir3pm})
+
+
+\begin{table}[p]
+    \centering
+    \begin{tabular}{|r||rrr|}
         \hline
-            No &    Yes &   NA's \\
+        &    No &    Yes &   NA's \\
         \hline
-        110319 &  31880 &   3261 \\
+        \hline
+        Count & 110319 &  31880 &   3261 \\
+        \% & 75.84 & 21.92 & 2.24 \\
         \hline
     \end{tabular}
     \caption{Variable RainToday}
+    \label{table:rain_today}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[p]
     \centering
-    \begin{tabular}{|c|c|c|}
+    \begin{tabular}{|r||rrr|}
         \hline
-            No &    Yes &   NA's \\
+        &    No &    Yes &   NA's \\
         \hline
-        110316 &  31877 &   3267 \\
+        \hline
+        Count & 110316 &  31877 &   3267 \\
+        \% & 75.84 & 21.91 & 2.25 \\
         \hline
     \end{tabular}
     \caption{Variable RainTomorrow}
+    \label{table:rain_tomorrow}
 \end{table}
 
-Maintenant que nous connaissons nos variables, nous allons pouvoir les "simplifier" afin de les rendre plus facilement utilisables. 
+Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire étant \emph{RainTomorrow}, nous voulons avoir une équilibre entre les observations \emph{Yes} et les observations \emph{No}. Pour veiller à ceci, nous utiliserons des méthodes de resampling telle que SMOTE. 
+On remarque de plus que nous avons ~2.25\% des variables manquantes pour ces deux variables. Ceci s'explique par le fait qu'il manque ~2.25\% des observations de la variable \emph{Rainfall}, sur laquelle sont basées ces deux variables.
 
-Dans un premier temps, nous allons transformer les valeurs des points cardinaux des directions de vent avec une valeur de 1 à 16 pour chaque niveau. Au vu de la distribution de ces 16 variables différentes, nous devons toutes les garder. 
+Enfin, nous avons la variables \emph{Location} qui contient tous les lieux d'observations de la base de données. Nous nous pencherons sur celle-ci dans la section Cartographie. 
 
-Nous allons ensuite remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Ainsi, nous utiliserons la localisation géographique des lieux à la place de leur nom. 
-
-Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. 
+Avant de nous lancer dans la prédiction, nous allons tout d'abord modifier la base de données pour la rendre utilisable. Pour cela, nous devons nous occuper des variables qui contiennent des facteurs et les changer en numériques, comme nous avons fait pour les variables de direciton du vent. Nous allons ensuite remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. Au final, nous pourrons nous occuper du traitement des observations manquantes. 
 
 \section{Cartographie}
 
-Notre base de donnée comprend donc une variable "Location", qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte. 
+Notre base de donnée comprend donc une variable \emph{Location}, qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte. 
 
 Pour cela, nous allons utiliser le paquet R "rnaturalearth", qui nous offre un moyen simple de dessiner nos propres cartes en utilisant le standard WGS84 (World Geodetic System).
 

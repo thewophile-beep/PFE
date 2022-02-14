@@ -12,12 +12,14 @@ plots_path <- "Rapport/Images/"
 world <- ne_countries(scale = "medium", returnclass = "sf")
 states <- st_as_sf(ozmap("states"))
 
-directions <- levels(data.read$WindGustDir)
+direction = seq(0,360,22.5)
+names(directions) = c(N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW, N)
 saisons = as.factor(c("Ete", "Automne", "Hiver", "Printemps"))
 climates = as.factor(c("tempere", "subtropical", "desert", "tropical", "plaine"))
 cities = unique(data.read$Location)
 
 # Modifying values ----
+
 
 
 data.raw = data.read %>% 
