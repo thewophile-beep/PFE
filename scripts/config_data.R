@@ -12,15 +12,13 @@ plots_path <- "Rapport/Images/"
 world <- ne_countries(scale = "medium", returnclass = "sf")
 states <- st_as_sf(ozmap("states"))
 
-direction = seq(0,360,22.5)
-names(directions) = c(N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW, N)
+directions = seq(0,337.5,22.5)
+names(directions) = c("N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW")
 saisons = as.factor(c("Ete", "Automne", "Hiver", "Printemps"))
 climates = as.factor(c("tempere", "subtropical", "desert", "tropical", "plaine"))
 cities = unique(data.read$Location)
 
 # Modifying values ----
-
-
 
 data.raw = data.read %>% 
   mutate(
@@ -42,9 +40,9 @@ data.raw = data.read %>%
       Climate == "tropical" ~ 4,
       Climate == "plaine" ~ 5
     ),
-    WindGustDir = as.numeric(WindGustDir),
-    WindDir9am = as.numeric(WindDir9am),
-    WindDir3pm = as.numeric(WindDir3pm)
+    WindGustDir = directions[WindGustDir],
+    WindDir9am = directions[WindDir9am],
+    WindDir3pm = directions[WindDir3pm]
   ) %>%
   select(-c(Month))
 

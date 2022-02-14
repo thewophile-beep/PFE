@@ -317,7 +317,7 @@ Nous avons désormais tous les éléments pour placer les lieux sur une carte. L
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Images/Cartographie/Australia_full_map.png}
+    \includegraphics[width=0.7\textwidth]{Images/Cartographie/Australia_full_map.png}
     \caption{Carte de l'Australie et villes dont la météo est observée}
 \end{figure}
 
@@ -331,7 +331,7 @@ Comme on peut le voir sur la carte précédente, la plupart des observations ont
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Images/Cartographie/Australia_climates.png}
+    \includegraphics[width=0.7\textwidth]{Images/Cartographie/Australia_climates.png}
     \caption{Carte de l'Australie et climat des villes}
 \end{figure}
 
@@ -350,17 +350,17 @@ Nous pouvons afficher ces données en fonction des saisons. Nous pourrons ainsi 
     \item Le printemps, de septembre à novembre
 \end{itemize}
 
+Nous obtenons les graphiques de la Figure \ref{fig:temp_and_rainfall}
 
-Nous obtenons des graphiques comme suit : 
-
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
-    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfalldesert.pdf}
-    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfallplaine.pdf}
-    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfallsubtropical.pdf}
-    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfalltempere.pdf}
-    \includegraphics[page=1,width=0.45\textwidth]{Images/Temp_and_Rainfalltropical.pdf}
+        \includegraphics[page=1,width=0.4\textwidth]{Images/Temp_and_Rainfalldesert.pdf}
+        \includegraphics[page=1,width=0.4\textwidth]{Images/Temp_and_Rainfallplaine.pdf}
+        \includegraphics[page=1,width=0.4\textwidth]{Images/Temp_and_Rainfallsubtropical.pdf}
+        \includegraphics[page=1,width=0.4\textwidth]{Images/Temp_and_Rainfalltempere.pdf}
+        \includegraphics[page=1,width=0.4\textwidth]{Images/Temp_and_Rainfalltropical.pdf}
     \caption{Température Minimale et Maximale ainsi que pluviométrie au cours d'une année pour certaines des villes des données (une par climat)}
+    \label{fig:temp_and_rainfall}
 \end{figure}
 
 On remarque tout de suite que les températures les plus élevées sont aux alentours de décembre / janvier; l'Australie étant dans l'hémisphère Sud, il s'agit de l'été. 
@@ -375,72 +375,71 @@ Le choix de ne garder que les saisons et pas les dates se justifie par le fait q
 
 Nous nous retrouvons au final avec les variables suivantes : 
 \begin{itemize}
-    \item MinTemp, MaxTemp
-    \item Rainfall
-    \item Evaporation
-    \item Sunshine
+    \item MinTemp, MaxTemp, Temp9am, Temp3pm
+    \item Rainfall, RainToday, RainTomorrow, Evaporation
+    \item Sunshine, Cloud9am, Cloud3pm
     \item WindGustDir, WindGustSpeed, WindDir9am, WindDir3pm, WindSpeed9am, WindSpeed3pm
     \item Humidity9am, Humidity3pm
     \item Pressure9am, Pressure3pm
-    \item Cloud9am, Cloud3pm
-    \item Temp9am, Temp3pm
-    \item RainToday
-    \item RainTomorrow
-    \item Season
+    \item Season, Climate
     \item Latitude, Longitude
-    \item Climate
 \end{itemize}
-Qui sont toutes des variables quantitative ou des variables qualitatives avec moins de 16 niveaux (numérotés en entier).
+Qui sont toutes des variables numériques (0 ou 1 pour les variables booléennes RainToday et RainTomorrow).
 
 \section{Complétion des données}
 
-Si l'on regarde les valeurs manquantes, on obtient la distribution suivante : 
+Afin de se rendre compte de la distribution des valeurs manquantes, on affiche ce qu'on appelle la missingness map de nos données (Figure \ref{fig:missingness_raw}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/missmap.png}
+    \caption{Missingness Map des données avant la complétion.}
+    \label{fig:missingness_raw}
+\end{figure}
+
+Afin de faire des prédictions sur nos données, nous avons besoin de nous débarasser des observations avec des valeurs \emph{NA}. Pour cela, on utilise la commande \mintinline{R}{na.omit}. On se retrouve avec $56420$ observations sur les $145460$ de base, ce qui est très peu. De plus, la plupart des lieux ne sont plus représentés comme nous l'indique la Figure \ref{fig:distrib_raw}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Images/missmap.png}
-    \caption{Missingness Map des données}
+    \includegraphics[width=0.6\textwidth]{Images/distribution_lieux_raw.png}
+    \caption{Distribution du nombre d'observations après un \emph{na.omit}.}
+    \label{fig:distrib_raw}
 \end{figure}
 
-Afin de faire des prédictions sur nos données, nous avons besoin de nous débarasser des observations avec des valeurs \emph{NA}. Pour cela, on utilise la commande \mintinline{R}{na.omit}. On se retrouve avec $56420$ observations sur les $145460$ de base, ce qui est très peu. De plus, la plupart des lieux ne sont plus représentés :
+Nous allons donc chercher un moyen de compléter les valeurs \emph{NA}, et de le faire de façon à ne pas avoir trop de données redondantes et de garder une cohérence vis-à-vis des climats : nous allons copier les données d'un lieu à l'autre d'une certaine façon.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Images/distribution_lieux_raw.png}
-    \caption{Distribution des données après un \emph{na.omit}}
-\end{figure}
-
-Nous allons donc chercher un moyen de compléter les valeurs \emph{NA}, et de le faire de façon à ne pas avoir trop de données redondantes et de garder une cohérence vis-à-vis des climats : nous allons copier les données d'une ville à une autre.
-
-Pour cela, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons les villes qui ont plus de 15\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations. En effet, comme nous l'avons vu, certaines villes n'ont d'observations que sur ~1500 jours. Lorsque nous complétons nos données, nous voulons que les dates coincident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observation sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. 
+Pour cela, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons ceux qui ont plus de 20\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations et qui ont au moins 80\% de leurs observations complètes. Nous excluons ainsi les lieux dont nous n'avons pas les observations sur les dix années : lorsque nous complétons nos données, nous voulons que les dates coincident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observation sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. Le seuil de 80\% des données est choisi pour avoir un maximum d'observations sans \emph{NA} et pour être sûr d'avoir une ville depuis laquelle copier les données.
 
 Lorsque nous copions les données d'un lieu à un autre, nous nous soucions donc de la date d'observation. Cependant, cela ne suffira pas. Nous avons vu en effet que les différents lieux observés appartiennet à des zones climatiques très différentes. Pour chaque variable, nous allons donc associer nos deux listes de lieux (ceux à compléter et ceux avec lesquels compléter) en cherchant les lieux les plus proches de la même zone climatique.
 
 Au final, nous nous retrouvons avec une liste de couples pour chaque variable.
 
-Avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'une ville pour une autre ville, et nous le ferons de manière "intelligente", sans perte de cohérence par rapport aux climats des lieux observés. Nous pouvons afficher quelles données de quelles villes vont compléter quelle autre villes sur des cartes comme celle-ci :
+Avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'un lieu pour un autre lieu, et nous le ferons de manière "intelligente", sans perte de cohérence par rapport aux climats des lieux observés. Nous pouvons afficher quelles données de quelles villes vont compléter quelle autre villes sur des cartes comme celle de la Figure \ref{fig:path_data}. On peut voir que pour les variables où il y avait le plus de \emph{NA}, beaucoup de lieux sont complétés. Dans d'autre cas moins extrêmes, nous n'avons copié les données que d'un lieu à un autre. 
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-1.jpg}
-    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-2.jpg}
-    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-3.jpg}
-    \includegraphics[width=0.48\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-4.jpg}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-02.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-03.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-04.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-13.png}
     \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées.}
+    \label{fig:path_data}
 \end{figure}
 
-Au final, le \emph{na.omit} nous donne une base de données avec $105546$ observations. La missingness map et la distribution des observations par lieu sont les suivantes : 
+Au final, le \emph{na.omit} nous donne une base de données avec $105546$ observations. On peut réafficher la missingness map et la distribution des observations par lieu (respectivement Figures \ref{fig:missingness_completed} et \ref{fig:distrib_completed})
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{Images/missmap_completed.png}
+    \includegraphics[width=0.5\textwidth]{Images/missmap_completed.png}
     \caption{Missingness Map des données complétées.}
+    \label{fig:missingness_completed}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{Images/distribution_lieux_completed.png}
+    \includegraphics[width=0.6\textwidth]{Images/distribution_lieux_completed.png}
     \caption{Distribution des observations par villes dans notre base de données finale.}
+    \label{fig:distrib_completed}
 \end{figure}
 
 On remarque que certaines plages de dates n'ont pas été complétées pour certaines variables, il peut y avoir deux raisons à cela : 
@@ -449,6 +448,8 @@ On remarque que certaines plages de dates n'ont pas été complétées pour cert
     \item Le lieu qui a servi pour la complétion certaines dates en moins que celles du lieu à compléter.
 \end{itemize}
 Le nombre d'observations de notre base de données finale reste cependant satisfaisante et tous les lieux y sont représentés.
+
+\section{Prédiction}
 
 \newpage
 \printbibliography
