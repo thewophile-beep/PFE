@@ -1,4 +1,4 @@
-# Construction de l’arbre maximal ----
+# tmax ----
 mod.tmax = rpart(RainTomorrow ~., control=rpart.control(cp=0),data = dataApp)
 # summary(mod.tmax)
 # print(mod.tmax)
@@ -24,8 +24,17 @@ yt.topt = (predict(mod.topt, newdata = dataTest) > 0.5) * 1
 confusionMatrix(table(y.topt, y.app))
 confusionMatrix(table(yt.topt, y.test))
 
+# rf ----
 mod.rf = randomForest(RainTomorrow~. , data=dataApp, ntree=100)
 mse.OOB = round(mod.rf$mse[Ntrees],2)
 mse.OOB
 EV.OOB = round(mod.rf$rsq[Ntrees]*100,2)
 EV.OOB
+
+# glm ----
+mod.glm <- glm(RainTomorrow ~ ., gaussian, data = dataApp)
+# Construction des prédictions sur Eapp et Etest
+threshold = 0.5
+y.glm = (predict(mod.glm) > threshold) * 1
+yt.glm = (predict(mod.glm, newdata = dataTest) > threshold) * 1
+confusionMatrix(table(yt.glm, y.test))

@@ -1,3 +1,13 @@
+SMOTE = F
+data.model = data %>% select(-c(Date, Location))
+data.model$RainToday <- as.numeric(data.model$RainToday) - 1
+data.model$RainTomorrow <- as.numeric(data.model$RainTomorrow) - 1
+
+if (SMOTE) {
+  data.model = SMOTE(data.model, data.model$RainTomorrow)
+  data.model = data.model$data
+} 
+
 # define an 80%/20% train/test split of the dataset
 split=0.80
 trainIndex <- createDataPartition(data.model$RainTomorrow, p=split, list=FALSE)
