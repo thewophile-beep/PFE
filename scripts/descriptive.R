@@ -55,7 +55,15 @@ ggcorrplot(
 )
 dev.off()  
 
-# Periodicity ----
+# Plotting RainTomorrow against all others ----
+data.model %>%
+  select(-varlist.not.num[-1]) %>%
+  gather(-RainTomorrow, key = "var", value = "value") %>%
+  ggplot(aes(x = as.factor(RainTomorrow), y = value, color = as.factor(RainTomorrow))) +
+    geom_boxplot() +
+    facet_wrap(~ var, scales = "free")
+
+# Periodicity (data.season) ----
 data.season <- data.frame(
   data.model %>%
     group_by(Longitude, Latitude, Season, Climate) %>%
@@ -92,7 +100,7 @@ data.season <- data.frame(
   }
   }
 
-# k-means climate ----
+# k-means climate (pivot_wider) ----
 tmp.df = pivot_wider(data.season, names_from=c(Season), values_from=c(Rainfall, MinTemp, MaxTemp, MeanTemp, Humidity9am, Humidity3pm))
 
 tmp.kmeans <- kmeans(tmp.df %>% select(-c(Climate)), centers = 5, nstart = 10)
@@ -112,9 +120,6 @@ print(ggplot(data = world) +
       + labs(fill="Climates")
 )
 
-# pca cities ----
-pca_res <- prcomp(data_by_cities %>% select(-c(Location, Climate)), scale. = TRUE)
-autoplot(pca_res, col=as.numeric(tmp.kmeans$cluster))
 # completed distrib per cities ----
 png(paste(plots_path,"completed_hist_observations_cities.png", sep=""), width=1000, height=500)
 ggplot(data, aes(x=Location)) + 
@@ -130,4 +135,5 @@ dev.off()
 # pca data model ----
 pca_res <- prcomp(data.model %>% select(-RainTomorrow), scale. = TRUE)
 autoplot(pca_res, data=data.model %>% mutate(RainTomorrow = as.factor(RainTomorrow)), colour="RainTomorrow") +
-  labs(title="ACP sur les données finales")
+  labs(title="ACP des données")
+

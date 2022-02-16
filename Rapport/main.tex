@@ -462,14 +462,35 @@ Dans cette partie nous allons chercher les relations entre les variables.
 
 \subsection{Corrélations}
 
-Commençons tout d'abord par nous renseigner sur les corrélations entre les variables (Figure \ref{fig:correlations}).
+Commençons tout d'abord par nous renseigner sur les corrélations entre les variables (Figure \ref{fig:correlations}). Comme nos variables en facteurs on été changées en variables numériques, on peut quand même afficher leurs corrélations avec les autres variables (il faut juste interpréter les corrélations différemments, selon les niveaux, etc.).
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.7\textwidth]{Images/correlations_variables.png}
+    \includegraphics[width=\textwidth]{Images/correlations_variables.png}
     \caption{Corrélations des variables deux-à-deux.}
     \label{fig:correlations}
 \end{figure}
+
+Nous pouvons conclure de cette figure les points suivants : 
+\begin{itemize}
+    \item Concernant les variables de températures : 
+    \begin{itemize}
+        \item MinTemp et MaxTemp sont deux variables corrélées (coeff. = 0.73). C'est un résultat attendu car ces deux valeurs sont les températures maximales et minimales de la même journée. 
+        \item Temp9am et Temp3pm sont fortement corrélées (coeff. = 0.83). Ce résultat était attendu pour la même raison qui explique la corrélation entre MinTemp et MaxTemp.
+        \item MinTemp et Temp9am sont très corrélées (coeff. = 0.9). La température minimale d'une journée est atteinte aux alentours de 9h du matin, il est normal d'avoir ce résultat. 
+        \item MaxTemp et Temp3pm sont très corrélées (coeff. = 0.94). La température maximale d'une journée est atteinte aux alentours de 15h, ce résultat était donc attendu. 
+        \item Nous pouvons aussi remarquer que le couple Temp3pm et MinTemp et le couple Temp9am et MaxTemp sont aussi corrélés (coeff. resp. = 0.69 et 0.89). Comme ces variables sont corrélées entre elles deux à deux, il est normal de trouver ces corrélations. La température maximale est cependant plus corrélées à celle à 9h du matin que ne l'est la température minimale et la température à 15h. Cela peut s'expliquer par le fait qu'en fonction des saisons, le soleil se lève plus ou moins tôt, et que donc à 9h déjà, il peut faire très chaud. Dans tous les cas, il est normal que ces températures soient corrélées puisqu'il s'agit des écarts de températures d'une même journée. Ces derniers ne sont pas très importants et dépendent énormément de la saison (donc de la journée) comme nous l'avons vu Figure \ref{fig:temp_and_rainfall}. 
+    \end{itemize}
+    \item Nous pouvons remarquer que notre nouvelle variable Climat est corrélée poditivement à la Latitude (0.7) : l'australie à plusieurs "couches" de climat, et plus l'on se rapproche de l'équateur (au nord), plus le climat est tropical. A l'inverse lorsque l'on s'éloigne on trouve les climats subtropical et tempéré. Une dernière couche au milieu de l'Australie est composée des climats desertiques et de plaine. 
+    \item Cette même Latitude est donc corrélées positivement aux variables de températures (la température dépend des climats).
+    \item Comme énoncé pour les variables de températures, ces dernières dépendent de la saison. C'est pourquoi ces saisons sont négativement corrélées aux températures (le signe de la corrélation est une conséquence de la numérotation de ces saisons).
+    \item Pression3am et Pression9pm sont très corrélées (coeff. = 0.96) pour les même raisons que les variables de température. Il en va de même pour Humidity3pm et Humidity9am (coeff = 0.66) et WindSpeed3pm et WindSpeed9am (0.49).
+    \item WindSpeed3pm est corrélées positivement avec WindGustDir (coeff. = 0.59).
+    \item Les variables Cloud9am et Cloud3pm sont corrélées négativement avec la variable Sunshine (-0.57 et -0.55) ce qui est logique car ils mesurent à peu près la même chose. 
+    \item Les variables d'humidité sont corrélées négativement à MaxTemp (-0.48 et -0.5).
+    \item RainToday est corrélée avec Rainfall (coeff. = 0.54). Cette valeur est due au fait que RainToday qui est une variable booléenne est considérée ici comme numérique. RainToday est en réalité à "1" dès que Rainfall est supérieur à 0.
+    \item On peut voir que Raintomorrow (en lz considérant comme une variable numérique) est semble corrélée à Humidity3pm le plus (0.43). La seconde variable avec laquelle elle est le plus corrélée est RainToday (0.32). 
+\end{itemize}
 
 \part{Prédiction}
 

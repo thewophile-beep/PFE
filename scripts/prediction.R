@@ -25,7 +25,7 @@ text(mod.topt, digit = 4,col=2, cex=0.4)
 threshold = 0.7
 y.topt = predict(mod.topt)
 # hist(y.topt, probability = T)
-y.topt = (y.opt > threshold) * 1
+y.topt = (y.topt > threshold) * 1
 yt.topt = predict(mod.topt, newdata = dataTest)
 yt.topt = (yt.topt > threshold) * 1
 confusionMatrix(table(y.topt, y.app))
