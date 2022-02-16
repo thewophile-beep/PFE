@@ -168,7 +168,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
             & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
             \hline
             \hline
-            Count & 9181 & 8104 & 7372 & 9313 & 7133 & 6548 & 6620 & 8122 & 9168 & 9418 & 9216 & 8736 & 8967 & 9915 & 8252 & 9069 & 10326 \\
+            Compte & 9181 & 8104 & 7372 & 9313 & 7133 & 6548 & 6620 & 8122 & 9168 & 9418 & 9216 & 8736 & 8967 & 9915 & 8252 & 9069 & 10326 \\
             \% & 6.31 & 5.57 & 5.07 & 6.40 & 4.90 & 4.50 & 4.55 & 5.58 & 6.30 & 6.47 & 6.34 & 6.01 & 6.16 & 6.82 & 5.67 & 6.23 & 7.10 \\
             \hline
         \end{tabular}
@@ -185,7 +185,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
             & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
             \hline
             \hline
-            Count & 9176 & 7836 & 7630 & 11758 & 7671 & 8129 & 7980 & 8749 & 8659 & 9287 & 9112 & 7587 & 8423 & 8459 & 7414 & 7024 & 10566  \\
+            Compte & 9176 & 7836 & 7630 & 11758 & 7671 & 8129 & 7980 & 8749 & 8659 & 9287 & 9112 & 7587 & 8423 & 8459 & 7414 & 7024 & 10566  \\
             \% & 6.31 & 5.39 & 5.25 & 8.08 & 5.27 & 5.59 & 5.49 & 6.01 & 5.95 & 6.38 & 6.26 & 5.22 & 5.79 & 5.82 & 5.10 & 4.83 & 7.26 \\
             \hline
         \end{tabular}
@@ -202,7 +202,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
             & E & ENE & ESE & N & NE & NNE & NNW & NW & S & SE & SSE & SSW & SW & W & WNW & WSW & NA's \\
             \hline
             \hline
-            Count & 8472 & 7857 & 8505 & 8890 & 8263 & 6590 & 7870 & 8610 & 9926 & 10838 & 9399 & 8156 & 9354 & 10110 & 8874 & 9518 & 4228   \\
+            Compte & 8472 & 7857 & 8505 & 8890 & 8263 & 6590 & 7870 & 8610 & 9926 & 10838 & 9399 & 8156 & 9354 & 10110 & 8874 & 9518 & 4228   \\
             \% & 5.82 & 5.40 & 5.85 & 6.11 & 5.68 & 4.53 & 5.41 & 5.92 & 6.82 & 7.45 & 6.46 & 5.61 & 6.43 & 6.95 & 6.10 & 6.54 & 2.91 \\
             \hline
         \end{tabular}
@@ -238,7 +238,7 @@ On remarque une fois de plus qu'une partie de ses observations sons manquantes (
         &    No &    Yes &   NA's \\
         \hline
         \hline
-        Count & 110319 &  31880 &   3261 \\
+        Compte & 110319 &  31880 &   3261 \\
         \% & 75.84 & 21.92 & 2.24 \\
         \hline
     \end{tabular}
@@ -253,7 +253,7 @@ On remarque une fois de plus qu'une partie de ses observations sons manquantes (
         &    No &    Yes &   NA's \\
         \hline
         \hline
-        Count & 110316 &  31877 &   3267 \\
+        Compte & 110316 &  31877 &   3267 \\
         \% & 75.84 & 21.91 & 2.25 \\
         \hline
     \end{tabular}
@@ -262,11 +262,12 @@ On remarque une fois de plus qu'une partie de ses observations sons manquantes (
 \end{table}
 
 Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire étant \emph{RainTomorrow}, nous voulons avoir une équilibre entre les observations \emph{Yes} et les observations \emph{No}. Pour veiller à ceci, nous utiliserons des méthodes de resampling telle que SMOTE. 
+
 On remarque de plus que nous avons ~2.25\% des variables manquantes pour ces deux variables. Ceci s'explique par le fait qu'il manque ~2.25\% des observations de la variable \emph{Rainfall}, sur laquelle sont basées ces deux variables.
 
 Enfin, nous avons la variables \emph{Location} qui contient tous les lieux d'observations de la base de données. Nous nous pencherons sur celle-ci dans la section Cartographie. 
 
-Avant de nous lancer dans la prédiction, nous allons tout d'abord modifier la base de données pour la rendre utilisable. Pour cela, nous devons nous occuper des variables qui contiennent des facteurs et les changer en numériques, comme nous avons fait pour les variables de direciton du vent. Nous allons ensuite remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. Au final, nous pourrons nous occuper du traitement des observations manquantes. 
+Avant de nous lancer plus loin, nous allons tout d'abord modifier la base de données pour la rendre utilisable. Pour cela, nous devons nous occuper des variables qui contiennent des facteurs et les changer en numériques, comme nous avons fait pour les variables de direciton du vent. Nous allons ensuite remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. Au final, nous pourrons nous occuper du traitement des observations manquantes. 
 
 \section{Cartographie}
 
@@ -388,6 +389,8 @@ Qui sont toutes des variables numériques (0 ou 1 pour les variables booléennes
 
 \section{Complétion des données}
 
+\subsection{Pourquoi compléter ?}
+
 Afin de se rendre compte de la distribution des valeurs manquantes, on affiche ce qu'on appelle la missingness map de nos données (Figure \ref{fig:missingness_raw}).
 
 \begin{figure}[ht]
@@ -408,7 +411,9 @@ Afin de faire des prédictions sur nos données, nous avons besoin de nous déba
 
 Nous allons donc chercher un moyen de compléter les valeurs \emph{NA}, et de le faire de façon à ne pas avoir trop de données redondantes et de garder une cohérence vis-à-vis des climats : nous allons copier les données d'un lieu à l'autre d'une certaine façon.
 
-Pour cela, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons ceux qui ont plus de 20\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations et qui ont au moins 80\% de leurs observations complètes. Nous excluons ainsi les lieux dont nous n'avons pas les observations sur les dix années : lorsque nous complétons nos données, nous voulons que les dates coincident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observation sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. Le seuil de 80\% des données est choisi pour avoir un maximum d'observations sans \emph{NA} et pour être sûr d'avoir une ville depuis laquelle copier les données.
+\subsection{Comment compléter ?}
+
+Pour compléter nos données, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons ceux qui ont plus de 20\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations et qui ont au moins 80\% de leurs observations complètes. Nous excluons ainsi les lieux dont nous n'avons pas les observations sur les dix années : lorsque nous complétons nos données, nous voulons que les dates coincident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observation sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. Le seuil de 80\% des données est choisi pour avoir un maximum d'observations sans \emph{NA} et pour être sûr d'avoir une ville depuis laquelle copier les données.
 
 Lorsque nous copions les données d'un lieu à un autre, nous nous soucions donc de la date d'observation. Cependant, cela ne suffira pas. Nous avons vu en effet que les différents lieux observés appartiennet à des zones climatiques très différentes. Pour chaque variable, nous allons donc associer nos deux listes de lieux (ceux à compléter et ceux avec lesquels compléter) en cherchant les lieux les plus proches de la même zone climatique.
 
@@ -425,6 +430,8 @@ Avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'u
     \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées.}
     \label{fig:path_data}
 \end{figure}
+
+\subsection{Après complétion}
 
 Au final, le \emph{na.omit} nous donne une base de données avec $105546$ observations. On peut réafficher la missingness map et la distribution des observations par lieu (respectivement Figures \ref{fig:missingness_completed} et \ref{fig:distrib_completed})
 
@@ -449,9 +456,47 @@ On remarque que certaines plages de dates n'ont pas été complétées pour cert
 \end{itemize}
 Le nombre d'observations de notre base de données finale reste cependant satisfaisante et tous les lieux y sont représentés.
 
-\section{Prédiction}
+\section{Relations entre les variables}
 
-Maintenant que notre base de données est prête que nous la connaissons plus en détail, nous pouvons commencer à créer nos modèles de prédiction. 
+Dans cette partie nous allons chercher les relations entre les variables.
+
+\subsection{Corrélations}
+
+Commençons tout d'abord par nous renseigner sur les corrélations entre les variables (Figure \ref{fig:correlations}).
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/correlations_variables.png}
+    \caption{Corrélations des variables deux-à-deux.}
+    \label{fig:correlations}
+\end{figure}
+
+\part{Prédiction}
+
+Maintenant que notre base de données est prête que nous la connaissons plus en détail, nous pouvons commencer à créer nos modèles de prédiction. Commençons tout d'abord par faire une analyse en composantes principales, pour avoir une meilleure idée de la distribution des observations.
+
+\section{ACP}
+
+Rappelons tout d'abord la distribution des observations où il pleut le lendemain et où il ne pleut pas : 
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{|rrr|}
+            \hline
+            RainTomorrow & Compte & \% \\ 
+            \hline
+            \hline
+            0 & 82367 & 78.04 \\
+            1 & 23179 & 21.96 \\
+            \hline
+        \end{tabular}
+    \caption{Distribution des valeurs de la variable RainTomorrow dans nos données finales.}
+\end{table}
+
+Et lorsque l'on affiche une analyse en composantes principales de ces observations, et en les colorant en fonction de leur valeur de RainTomorrow, on obtient le graphique de la Figure \ref{fig:pca_rain_tomorrow}.
+
+
+
 
 \newpage
 \printbibliography
