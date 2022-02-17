@@ -1,27 +1,16 @@
-# statbase of read data ----
-numeric_var <- c()
-factor_var <- c()
-for (i in names(data.read)) {
-  if (class(data.read[[i]]) %in% c("numeric", "integer")) {
-    numeric_var <- c(numeric_var, i)
-  }
-  else {
-    factor_var <- c(factor_var, i)
-  }
-}
-
+# statbase of data ----
 statbase = NULL
 Std = NULL
-for (var in numeric_var) {
-  statbase = rbind(statbase, summary(data.read[,var]))
-  Std = c(Std, sd(data.read[,var], na.rm=T))
+for (var in varlist.num) {
+  statbase = rbind(statbase, summary(data.model[,var]))
+  Std = c(Std, sd(data.model[,var], na.rm=T))
 }
-rownames(statbase) = numeric_var
+rownames(statbase) = varlist.num
 statbase = cbind(statbase, "Std."=Std)
 xtable(statbase, type='latex')
 
 var = "RainTomorrow"
-round(table(data.read[,var], useNA = "always") / length(data.read[,var]) * 100, 2)
+round(table(data.model[,var], useNA = "always") / length(data.model[,var]) * 100, 2)
 
 # Nb of obs per cities & missmap of raw (after changing) ----
 cities_obs <- data.frame(coords$Location, check.names=T)
@@ -143,9 +132,9 @@ ggplot(data, aes(x=Location)) +
 dev.off()
 
 # pca data model ----
-pca_res <- prcomp(data.model %>% select(-RainTomorrow), scale. = TRUE)
-autoplot(pca_res, 
-         data=data.model %>% mutate(RainTomorrow = as.factor(RainTomorrow)), 
+pca_res <- prcomp(data.model %>% select(-all_of(varlist.not.num)), scale. = TRUE)
+autoplot(pca_res, x=2, y=3,
+         data=data.model, 
          colour="RainTomorrow",
          loadings = TRUE, loadings.colour = 'royalblue',
          loadings.label = TRUE, loadings.label.size = 3, loadings.label.colour = "black") +

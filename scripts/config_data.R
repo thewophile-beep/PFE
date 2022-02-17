@@ -47,7 +47,7 @@ data.raw = data.read %>%
 # Checking cities to complete ----
 
 varlist = names(data.raw)
-varlist.not.num = c("RainTomorrow", "RainToday", "Climate", "Season", "WindDir9am", "WindDir3pm", "WindGustDir")
+varlist.not.num = c("RainTomorrow", "RainToday", "Climate", "Season")
 
 # Villes avec variables à compléter -> il manque au moins 20% des observations
 to.complete <- vector(mode = "list", length = length(varlist))
@@ -109,7 +109,7 @@ data.completed <- data.raw
 for (var in varlist) {
   for (city.to.complete in couples.var[[var]][,2]) {
     for (city.complete.with in couples.var[[var]][,1]) {
-      data.complete.with = data.raw %>% filter(Location == city.complete.with) %>% select(Date, var)
+      data.complete.with = data.raw %>% filter(Location == city.complete.with) %>% select(Date, all_of(var))
       tmp.dates = as.Date(intersect(data.completed[data.completed$Location == city.to.complete, "Date"], data.complete.with$Date), origin = lubridate::origin)
       data.completed[data.completed$Date %in% tmp.dates & data.completed$Location == city.to.complete, var] = data.complete.with[data.complete.with$Date %in% tmp.dates, var]
     }
@@ -120,7 +120,19 @@ rm(l, ratio, data.city, complete.with, to.complete, couples, distance, city2, cl
 
 data = na.omit(data.completed)
 
-data.model = data %>% 
+data = data %>% 
   select(-c(Date, Location)) %>%
-  mutate(RainToday = as.numeric(RainToday) - 1,
-         RainTomorrow = as.numeric(RainTomorrow) - 1)
+  mutate(RainToday = as.factor(as.numeric(RainToday) - 1),
+         RainTomorrow = as.factor(as.numeric(RainTomorrow) - 1),
+         Season = as.factor(Season),
+         Climate = as.factor(Climate))
+
+varlist = names(data)
+varlist.num = varlist[!varlist %in% varlist.not.num]
+
+
+dmy = dummyVars(" ~ Season + Climate + RainToday", data = data)
+trsf = data.frame(predict(dmy, newdata = data))
+data.onehot = cbind(data %>% select(-Season, -Climate, -RainToday,), trsf)
+
+rm(data.raw, data.read, dmy, trsf)

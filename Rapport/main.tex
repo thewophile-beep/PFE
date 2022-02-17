@@ -559,9 +559,9 @@ Et lorsque l'on affiche une analyse en composantes principales de ces observatio
     \label{fig:pca_raintomorrow}
 \end{figure}
 
-Nous allons donc chercher un moyen de séparer ces deux groupes pour faire des prédictions. On voit déjà (avec 35\% de l'information, l'axe 1 représentant 22.77\% et l'axe 2 13.45\%) que les observations pour lesquelles il pleut le lendemain sont un peu séparées de celles ou il ne pleut pas. On voit d'ailleurs bien le déséquilibre de nos données sur ce graphique.
+Nous allons donc chercher un moyen de séparer ces deux groupes pour faire des prédictions. On voit déjà (avec 44.06\% de l'information, l'axe 1 représentant 27.94\% et l'axe 2 16.12\%) que les observations pour lesquelles il pleut le lendemain sont un peu séparées de celles ou il ne pleut pas. On voit d'ailleurs bien le déséquilibre de nos données sur ce graphique.
 
-On peut noter par ailleurs que les variables d'humidité et RainToday sont importantes pour différencier ces deux groupes. En effet les valeurs de ces variables sont plus élevées pour RainTomorrow = 1. A l'inverse, lorsque la valeur de Sunshine est élevée on va plutôt vers le groupe RainTomorrow = 0. On peut aussi s'amuser à regarder les 2 composantes principales suivantes pour avoir un autre point de vue (on a cette fois-ci 23\% de l'information, Figure \ref{fig:pca_raintomorrow2}).
+On peut noter par ailleurs que les variables d'humidité et les nuages sont importantes pour différencier ces deux groupes. En effet les valeurs de ces variables sont plus élevées pour RainTomorrow = 1. A l'inverse, lorsque la valeur de Sunshine est élevée on va plutôt vers le groupe RainTomorrow = 0. On peut aussi s'amuser à regarder les 2 composantes principales suivantes pour avoir un autre point de vue (on a cette fois-ci 28.51\% de l'information, Figure \ref{fig:pca_raintomorrow2}).
 
 \begin{figure}[htp]
     \centering
@@ -572,9 +572,15 @@ On peut noter par ailleurs que les variables d'humidité et RainToday sont impor
 
 Il semble aussi que les variables de pression sont importantes pour différencier ces deux groupes. 
 
-\subsection{Premières prédictions}
+\section{Premières prédictions}
 
-\subsubsection{Régression linéaires logistique}
+Dans cette partie nous allons prendre telle quelle la base de données, sans nous soucier de son déséquilibre. Nous allons mettre en place plusieurs modèles de prédiction : 
+\begin{itemize}
+    \item Un modèle de régression linéaire
+    \item Un arbre CART
+\end{itemize}
+
+\subsection{Régression linéaires logistique}
 
 \newpage
 \printbibliography
