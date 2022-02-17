@@ -42,7 +42,7 @@ ggplot(data.raw, aes(x=Date))+
   stat_bin(data=data.raw[which(is.na(data.raw$RainTomorrow)),], aes(y=cumsum(..count..)), geom="line") 
 
 # Correlation between variables of raw ----
-correlations <- cor(data.model,use="na.or.complete")
+correlations <- cor(data.model %>% select(-all_of(varlist.not.num)),use="na.or.complete")
 pdf(paste(plots_path,"corr.pdf",sep=""),width=8,height=8)
 ggcorrplot(
   correlations,
@@ -55,13 +55,23 @@ ggcorrplot(
 )
 dev.off()  
 
-# Plotting RainTomorrow against all others ----
+# Plotting continuous against continuous ----
 data.model %>%
-  select(-varlist.not.num[-1]) %>%
+  ggplot(aes(x=Latitude, y=Temp9am)) +
+    geom_smooth()
+
+# Plotting factor variables against all others ----
+# varlist.not.num
+# [1] "RainTomorrow" "RainToday"    "Climate"      "Season"       "WindDir9am"   "WindDir3pm"   "WindGustDir" 
+data.model %>%
+  select(-varlist.not.num[c(2,3,4)]) %>%
+  mutate(RainTomorrow = as.factor(RainTomorrow)) %>%
   gather(-RainTomorrow, key = "var", value = "value") %>%
-  ggplot(aes(x = as.factor(RainTomorrow), y = value, color = as.factor(RainTomorrow))) +
+  ggplot(aes(x = RainTomorrow, y = value, color = RainTomorrow)) +
     geom_boxplot() +
-    facet_wrap(~ var, scales = "free")
+    facet_wrap(~ var, scales = "free") +
+    theme(legend.position = "none") +
+    ggtitle(paste("Boxplot des variables continues en fonction de RainTomorrow"))
 
 # Periodicity (data.season) ----
 data.season <- data.frame(
@@ -134,6 +144,10 @@ dev.off()
 
 # pca data model ----
 pca_res <- prcomp(data.model %>% select(-RainTomorrow), scale. = TRUE)
-autoplot(pca_res, data=data.model %>% mutate(RainTomorrow = as.factor(RainTomorrow)), colour="RainTomorrow") +
+autoplot(pca_res, 
+         data=data.model %>% mutate(RainTomorrow = as.factor(RainTomorrow)), 
+         colour="RainTomorrow",
+         loadings = TRUE, loadings.colour = 'royalblue',
+         loadings.label = TRUE, loadings.label.size = 3, loadings.label.colour = "black") +
   labs(title="ACP des données")
 

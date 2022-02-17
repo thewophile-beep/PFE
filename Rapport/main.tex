@@ -460,9 +460,9 @@ Le nombre d'observations de notre base de données finale reste cependant satisf
 
 Dans cette partie nous allons chercher les relations entre les variables.
 
-\subsection{Corrélations}
+\subsection{Corrélations entre les variables numériques}
 
-Commençons tout d'abord par nous renseigner sur les corrélations entre les variables (Figure \ref{fig:correlations}). Comme nos variables en facteurs on été changées en variables numériques, on peut quand même afficher leurs corrélations avec les autres variables (il faut juste interpréter les corrélations différemments, selon les niveaux, etc.).
+Commençons tout d'abord par nous renseigner sur les corrélations entre les variables numériques (Figure \ref{fig:correlations}). 
 
 \begin{figure}[htp]
     \centering
@@ -481,16 +481,52 @@ Nous pouvons conclure de cette figure les points suivants :
         \item MaxTemp et Temp3pm sont très corrélées (coeff. = 0.94). La température maximale d'une journée est atteinte aux alentours de 15h, ce résultat était donc attendu. 
         \item Nous pouvons aussi remarquer que le couple Temp3pm et MinTemp et le couple Temp9am et MaxTemp sont aussi corrélés (coeff. resp. = 0.69 et 0.89). Comme ces variables sont corrélées entre elles deux à deux, il est normal de trouver ces corrélations. La température maximale est cependant plus corrélées à celle à 9h du matin que ne l'est la température minimale et la température à 15h. Cela peut s'expliquer par le fait qu'en fonction des saisons, le soleil se lève plus ou moins tôt, et que donc à 9h déjà, il peut faire très chaud. Dans tous les cas, il est normal que ces températures soient corrélées puisqu'il s'agit des écarts de températures d'une même journée. Ces derniers ne sont pas très importants et dépendent énormément de la saison (donc de la journée) comme nous l'avons vu Figure \ref{fig:temp_and_rainfall}. 
     \end{itemize}
-    \item Nous pouvons remarquer que notre nouvelle variable Climat est corrélée poditivement à la Latitude (0.7) : l'australie à plusieurs "couches" de climat, et plus l'on se rapproche de l'équateur (au nord), plus le climat est tropical. A l'inverse lorsque l'on s'éloigne on trouve les climats subtropical et tempéré. Une dernière couche au milieu de l'Australie est composée des climats desertiques et de plaine. 
-    \item Cette même Latitude est donc corrélées positivement aux variables de températures (la température dépend des climats).
-    \item Comme énoncé pour les variables de températures, ces dernières dépendent de la saison. C'est pourquoi ces saisons sont négativement corrélées aux températures (le signe de la corrélation est une conséquence de la numérotation de ces saisons).
+    \item La variable Latitude est corrélées positivement aux variables de températures (la température dépend des climats et ces climats sont très dépendants de la latitude comme on a pu le voir dans la partie cartographie).
     \item Pression3am et Pression9pm sont très corrélées (coeff. = 0.96) pour les même raisons que les variables de température. Il en va de même pour Humidity3pm et Humidity9am (coeff = 0.66) et WindSpeed3pm et WindSpeed9am (0.49).
-    \item WindSpeed3pm est corrélées positivement avec WindGustDir (coeff. = 0.59).
-    \item Les variables Cloud9am et Cloud3pm sont corrélées négativement avec la variable Sunshine (-0.57 et -0.55) ce qui est logique car ils mesurent à peu près la même chose. 
+    \item WindSpeed3pm est corrélées positivement avec WindGustDir (coeff. = 0.66).
+    \item Les variables Cloud9am et Cloud3pm sont corrélées négativement avec la variable Sunshine (-0.57 et -0.55 respectivement) ce qui est logique car ils mesurent à peu près la même chose. 
     \item Les variables d'humidité sont corrélées négativement à MaxTemp (-0.48 et -0.5).
-    \item RainToday est corrélée avec Rainfall (coeff. = 0.54). Cette valeur est due au fait que RainToday qui est une variable booléenne est considérée ici comme numérique. RainToday est en réalité à "1" dès que Rainfall est supérieur à 0.
-    \item On peut voir que Raintomorrow (en lz considérant comme une variable numérique) est semble corrélée à Humidity3pm le plus (0.43). La seconde variable avec laquelle elle est le plus corrélée est RainToday (0.32). 
 \end{itemize}
+
+\subsection{Boxplots pour les variables à facteurs}
+
+Affichons maintenant les boxplots des valeurs des différents variables continues en fonction de nos variables à facteurs. 
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/boxplots/boxplot_Climate.png}
+    \caption{Boxplots pour la variable Climate}
+    \label{fig:bp_climate}
+\end{figure}
+
+Pour la variable Climate (Figure \ref{fig:bp_climate}), on voit une fois de plus la différence entre les climats de désert et de plaine et les autres au niveau de leur humidité, cela se voit aussi avec les grandes valeurs de Rainfall. On peut aussi voir que les climats sont arrangés en couche du nord au sud de l'Australie, comme on pouvait voir sur la carte plus haut. En effet, la région tropicale est au nord du pays, comme l'indique la boîte à moustache concernant la Latitude. Tout au sud on trouve la région tempérée. On peut aussi trouver une différence de températures entre ces 5 climats, avec une distribution ressemblant celle de la Latitude : la région tropicale est la plus chaude, et la moins chauds est la région tempérée. 
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/boxplots/boxplot_Season.png}
+    \caption{Boxplots pour la variable Season}
+    \label{fig:bp_season}
+\end{figure}
+
+Penchons-nous désormais sur les boîtes à moustache de la variable Season (Figure \ref{fig:bp_season}). On trouve la ditribution des températures auxquelles nous nous attendions : il fait plus chaud au été et moins en hiver. Ce même schéma est visible pour le taux d'ensolleillement (et donc un peu pour les variables des nuages). Les variables de pression et d'humidité évolues similairement : elles augmentent en hiver. En effet la pression peut changer en fonction des dépressions (qui apportent souvent le mauvais temps) ou la vitesse du vent \cite{frwiki:190112465}.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/boxplots/boxplot_RainToday.png}
+    \caption{Boxplots pour la variable RainToday}
+    \label{fig:bp_raintoday}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/boxplots/boxplot_RainTomorrow.png}
+    \caption{Boxplots pour la variable RainTomorrow}
+    \label{fig:bp_raintomorrow}
+\end{figure}
+
+Jetons maintenant un coup d'oeil aux boîtes des variables RainToday (Figure \ref{fig:bp_raintoday}) et RainTomorrow (Figure \ref{fig:bp_raintomorrow}). Comme on peut s'y attendre elles sont très similaires. En effet, d'un jour au lendemain, il n'y a pas de changement énorme. Comme ces deux variables sont liées (Si RainToday alors RainTomorrow pour le jour d'avant), nous avons ces similarités. Une différence notable est celle des boîtes affichées pour la variable Rainfall : par construction de la variable RainToday, il n'y à pas d'observations ou Rainfall a une valeur supérieure à 0 et ou RainToday est à 1. Ça n'est pas le cas pour RainTomorrow évidemment, il y aura toujours un moment ou il pleut aujourd'hui mais il ne pleuvra pas demain (sinon la pluie ne s'arrêterait jamais).
+
+Comme on peut s'y attendre, les variables d'humidité sont plus elevée lorsqu'il pleut (RainToday). On peut voir cependant ces mêmes différences pour RainTomorrow, avec quelques variations : l'humidité à 15h et à 9h est plus elevée lorsqu'il pleut le lendemain (cette différence est surtout notable pour Humidity3pm, les distances inter-quartiles ne se chevauchent presque pas).
 
 \part{Prédiction}
 
@@ -514,10 +550,31 @@ Rappelons tout d'abord la distribution des observations où il pleut le lendemai
     \caption{Distribution des valeurs de la variable RainTomorrow dans nos données finales.}
 \end{table}
 
-Et lorsque l'on affiche une analyse en composantes principales de ces observations, et en les colorant en fonction de leur valeur de RainTomorrow, on obtient le graphique de la Figure \ref{fig:pca_rain_tomorrow}.
+Et lorsque l'on affiche une analyse en composantes principales de ces observations, et en les colorant en fonction de leur valeur de RainTomorrow, on obtient le graphique de la Figure \ref{fig:pca_raintomorrow}.
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/pca.png}
+    \caption{Analyse en Composantes Principales de nos données, points colorés en fonction de RainTomorrow.}
+    \label{fig:pca_raintomorrow}
+\end{figure}
 
+Nous allons donc chercher un moyen de séparer ces deux groupes pour faire des prédictions. On voit déjà (avec 35\% de l'information, l'axe 1 représentant 22.77\% et l'axe 2 13.45\%) que les observations pour lesquelles il pleut le lendemain sont un peu séparées de celles ou il ne pleut pas. On voit d'ailleurs bien le déséquilibre de nos données sur ce graphique.
 
+On peut noter par ailleurs que les variables d'humidité et RainToday sont importantes pour différencier ces deux groupes. En effet les valeurs de ces variables sont plus élevées pour RainTomorrow = 1. A l'inverse, lorsque la valeur de Sunshine est élevée on va plutôt vers le groupe RainTomorrow = 0. On peut aussi s'amuser à regarder les 2 composantes principales suivantes pour avoir un autre point de vue (on a cette fois-ci 23\% de l'information, Figure \ref{fig:pca_raintomorrow2}).
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/pca2.png}
+    \caption{Analyse en Composantes Principales de nos données, axes 2 et 3, points colorés en fonction de RainTomorrow.}
+    \label{fig:pca_raintomorrow2}
+\end{figure}
+
+Il semble aussi que les variables de pression sont importantes pour différencier ces deux groupes. 
+
+\subsection{Premières prédictions}
+
+\subsubsection{Régression linéaires logistique}
 
 \newpage
 \printbibliography
