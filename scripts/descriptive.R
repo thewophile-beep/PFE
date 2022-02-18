@@ -139,4 +139,3 @@ autoplot(pca_res, x=2, y=3,
          loadings = TRUE, loadings.colour = 'royalblue',
          loadings.label = TRUE, loadings.label.size = 3, loadings.label.colour = "black") +
   labs(title="ACP des données")
-

@@ -16,21 +16,25 @@
 \usepackage{color}
 \usepackage[table]{xcolor}
 \usepackage{minted}
+\usepackage{multicol}
 \usepackage{hyperref}
 \usepackage{csquotes}
 \usepackage{url}
-\usepackage[
-    backend=biber,
-    style=alphabetic,
-    sorting=ynt
-    ]{biblatex}
-\addbibresource{references.bib}
-
 \usepackage[center]{caption}
+\usepackage[backend=biber, style=alphabetic, sorting=ynt]{biblatex}
+\addbibresource{references.bib}
+    
+\setminted{frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\footnotesize,
+    linenos,
+    breaklines
+}
 \hypersetup{
     colorlinks=true,
-    pdftitle={PFE - Pluie en Australie},
-    }
+    pdftitle={PFE - Pluie en Australie}
+}
     
 \begin{document}
 
@@ -80,7 +84,7 @@
 
 Les données utilisées pour ce projet peuvent être trouvées sur le site \href{https://www.kaggle.com/jsphyg/weather-dataset-rattle-package}{Kaggle}. Elles ont été récupérées des données du gouvernement australien, dans la partie \href{http://www.bom.gov.au/climate/dwo}{Daily Weather Observations}, et ont été complétées avec les données de la partie :  \href{http://www.bom.gov.au/climate/data}{Climate Data Online}.
 
-Ces données contient 10 années d'observations de la météo australienne sur 49 lieux différents entre 2007 et 2017. Une observation est constituée de (presque) toutes ces variables : 
+Ces données contiennent 10 ans d'observations de la météo australienne sur 49 lieux différents entre 2007 et 2017. Une observation est constituée de (presque) toutes ces variables : 
 
 \begin{itemize}
     \item Date : date de la mesure.
@@ -108,7 +112,7 @@ Ces données contient 10 années d'observations de la météo australienne sur 4
     \item RainTomorrow : s'il a plu le lendemain.   
 \end{itemize}
 
-Jetons tout d'abord un coup d'oeil aux variables numériques de nos données. 
+Jetons tout d'abord un coup d'œil aux variables numériques de nos données. 
 
 \subsection{Variables numériques}
 
@@ -158,7 +162,7 @@ Nous pouvons de plus noter certaines choses : comme on pouvait s'y attendre, il 
 
 Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, vont du 2007-11-01 au 2017-06-25, ce qui représente 3524 jours. Si l'on regarde la distribution du nombre d'observations par ville, on devrait donc voir que chacune d'entre elles en ont 3524 (voir Figure \ref{fig:obs_per_cities}). On voit déjà qu'il manque certaines dates d'observations pour la plupart des villes, et pour 3 d'entre elles : Katherine, Nhil et Uluru, nous avons moins de la moitié. Ceci est dû au fait que les observations démarrent à ces endroits en 2013.
 
-Penchons-nous désormais sur les variables de direction du vent en regardant la distribution de leur facteurs dans les Tables \ref{table:wind_gust_dir}, \ref{table:wind_dir_9am} et \ref{table:wind_dir_3pm}.
+Penchons-nous désormais sur les variables de direction du vent en regardant la distribution de leurs facteurs dans les Tables \ref{table:wind_gust_dir}, \ref{table:wind_dir_9am} et \ref{table:wind_dir_3pm}.
 
 \begin{table}[p]
     \centering
@@ -211,7 +215,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
     \label{table:wind_dir_3pm}
 \end{table}
 
-Les 16 niveaux utilisés pour ces variables sont tous représentés avec à peu près la même distribution. Nous souhaitons changer ces facteurs en valeurs numériques, pour cela, nous allons remplacer chaque direction par sa valeur en degrés : utiliser l'angle pour la directions nous servira peut-être lorsque nous utiliserons des modèles de prédiction comme des arbres CART. En effet, baisser le nombre de facteurs que nous avons nous permettra sûrement de réduire le nombre de feuilles que nous aurions pu avoir. Nous utiliserons les valeurs indiquée dans la Table \ref{table:deg}.
+Les 16 niveaux utilisés pour ces variables sont tous représentés avec à peu près la même distribution. Nous souhaitons changer ces facteurs en valeurs numériques, pour cela, nous allons remplacer chaque direction par sa valeur en degrés : utiliser l'angle pour la directions nous servira peut-être lorsque nous utiliserons des modèles de prédiction comme des arbres CART. En effet, baisser le nombre de facteurs que nous avons nous permettra sûrement de réduire le nombre de feuilles que nous aurions pu avoir. Nous utiliserons les valeurs indiquées dans la Table \ref{table:deg}.
 
 \begin{table}[H]
     \centering
@@ -261,7 +265,7 @@ On remarque une fois de plus qu'une partie de ses observations sons manquantes (
     \label{table:rain_tomorrow}
 \end{table}
 
-Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire étant \emph{RainTomorrow}, nous voulons avoir une équilibre entre les observations \emph{Yes} et les observations \emph{No}. Pour veiller à ceci, nous utiliserons des méthodes de resampling telle que SMOTE. 
+Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire étant \emph{RainTomorrow}, nous voulons avoir un équilibre entre les observations \emph{Yes} et les observations \emph{No}. Pour veiller à ceci, nous utiliserons des méthodes de resampling telle que SMOTE. 
 
 On remarque de plus que nous avons ~2.25\% des variables manquantes pour ces deux variables. Ceci s'explique par le fait qu'il manque ~2.25\% des observations de la variable \emph{Rainfall}, sur laquelle sont basées ces deux variables.
 
@@ -554,7 +558,7 @@ Et lorsque l'on affiche une analyse en composantes principales de ces observatio
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Images/pca.png}
+    \includegraphics[width=0.8\textwidth]{Images/pca/pca.png}
     \caption{Analyse en Composantes Principales de nos données, points colorés en fonction de RainTomorrow.}
     \label{fig:pca_raintomorrow}
 \end{figure}
@@ -565,7 +569,7 @@ On peut noter par ailleurs que les variables d'humidité et les nuages sont impo
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{Images/pca2.png}
+    \includegraphics[width=0.8\textwidth]{Images/pca/pca2.png}
     \caption{Analyse en Composantes Principales de nos données, axes 2 et 3, points colorés en fonction de RainTomorrow.}
     \label{fig:pca_raintomorrow2}
 \end{figure}
@@ -575,12 +579,314 @@ Il semble aussi que les variables de pression sont importantes pour différencie
 \section{Premières prédictions}
 
 Dans cette partie nous allons prendre telle quelle la base de données, sans nous soucier de son déséquilibre. Nous allons mettre en place plusieurs modèles de prédiction : 
+
 \begin{itemize}
     \item Un modèle de régression linéaire
     \item Un arbre CART
+    \item Un modèle de Random Forest
 \end{itemize}
 
-\subsection{Régression linéaires logistique}
+Evidemment, nous séparerons nos données en deux échantillon : un échantillon d'apprentissage (dataApp), correspondant à 80\% des données choisies de manière aléatoire, et un échantillon pour les tests (dataTest) correspondant aux 20\% restants.
+
+Nous allons construire ces modèles sur différentes "versions" de notre base de données : équilibrée ou non, avec du \emph{one-hot encoding} ou non, centrées ou non (à chaque fois séparés en dataApp et dataTest). 
+
+\subsection{Le \emph{One-hot encoding}}
+
+Lorsque nous avons une variable à plusieurs niveaux, dans notre cas les variables Climate et Season, nous pouvons les transformer pour nous servir de l'information qu'elles nous procurent avec des variables numériques. 
+
+Pour chaque niveau de la variable, nous allons créer une variable. Ainsi, comme nous avons 4 saisons, nous aurons 4 nouvelles variables : Season.1, Season.2, Season.3 et Season.4. Comme nous avons déjà fait un travail pour réduire le nombre de niveaux pour les variables avec des facteurs, nous n'aurons pas beacoup plus de colonnes dans notre base de données. 
+
+Pour remplir ces nouvelles variables, nous allons mettre un "1" dans la colonne qui correspond au niveau de la saison de la mesure et "0" dans les autres. Imaginons en effet qu'une observation ai eu lieu en Autmone (c'est-à-dire que sa valeur pour la variable Season est 2), alors les 4 colonnes seront remplies de la façon, suivante : 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|rrrr|}
+        \hline
+        Season.1 & Season.2 & Season.3 & Season.4 \\
+        \hline 
+        0 & 1 & 0 & 0 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Nous faisons de même avec Climate. Ainsi nous passons de 2 colonnes à 9 (extrait du début des variables) : 
+
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|rrrrrrrrr|}
+            \hline
+            Season.1 & Season.2 & Season.3 & Season.4 & Climate.1 & Climate.2 & Climate.3 & Climate.4 & Climate.5 \\ 
+            \hline
+            1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+            1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+            1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+            1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+            1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+            1.00 & 0.00 & 0.00 & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+            \hline
+        \end{tabular}
+    }
+\end{table}
+
+Nous voila maintenant avec une base de données ne contenant que des variables numériques et une variable (RainTomorrow) de facteurs. Nous pouvons utiliser des techniques d'upSampling comme le SMOTE (nous rentrerons dans les détails plus tard), et nous pourrons voir si cela change quelque chose aux performances des modèles.
+
+\subsection{Une première régression linéaire logistique}
+
+Commençons par un modèle de régression logistique. Pour cela, nous allons utiliser la fonction \emph{glm} du paquet \emph{stats} de R. En utilisant le paramètre "family = binomial", nous pouvons faire une régression logistique, qui prend en compte les variables factorielles. Nous ne faisons donc pas encore de \emph{one-hot encoding} et gardons la base de données telle quelle. Notons aussi que nous ne centrons et réduisons pas les données numériques.
+
+Un summary de ce modèle nous montre : 
+\begin{minted}{R}
+    Call:
+    glm(formula = RainTomorrow ~ ., family = binomial, data = dataApp)
+    
+    Deviance Residuals: 
+        Min       1Q   Median       3Q      Max  
+    -3.0799  -0.5630  -0.3302  -0.1500   3.2469  
+    
+    Coefficients:
+                    Estimate Std. Error z value Pr(>|z|)    
+    (Intercept)    4.538e+01  1.790e+00  25.349  < 2e-16 ***
+    MinTemp        1.567e-02  5.504e-03   2.847  0.00442 ** 
+    MaxTemp       -6.312e-02  5.926e-03 -10.652  < 2e-16 ***
+    Rainfall       1.668e-02  1.584e-03  10.526  < 2e-16 ***
+    Evaporation    2.418e-04  3.100e-03   0.078  0.93783    
+    Sunshine      -6.412e-02  3.735e-03 -17.168  < 2e-16 ***
+    WindGustDir    1.754e-04  1.318e-04   1.331  0.18333    
+    WindGustSpeed  5.620e-02  1.162e-03  48.359  < 2e-16 ***
+    WindDir9am    -3.727e-04  1.190e-04  -3.132  0.00174 ** 
+    WindDir3pm    -7.989e-05  1.329e-04  -0.601  0.54767    
+    WindSpeed9am  -1.354e-02  1.573e-03  -8.604  < 2e-16 ***
+    WindSpeed3pm  -3.047e-02  1.639e-03 -18.597  < 2e-16 ***
+    Humidity9am    9.532e-03  1.077e-03   8.852  < 2e-16 ***
+    Humidity3pm    5.313e-02  1.023e-03  51.915  < 2e-16 ***
+    Pressure9am    1.019e-01  5.925e-03  17.192  < 2e-16 ***
+    Pressure3pm   -1.517e-01  5.860e-03 -25.893  < 2e-16 ***
+    Cloud9am       2.585e-03  4.836e-03   0.534  0.59301    
+    Cloud3pm       4.043e-02  5.098e-03   7.931 2.17e-15 ***
+    Temp9am        5.863e-02  8.532e-03   6.872 6.31e-12 ***
+    Temp3pm        3.384e-02  4.235e-03   7.989 1.36e-15 ***
+    RainToday1     5.710e-01  2.791e-02  20.457  < 2e-16 ***
+    Season2        3.692e-01  3.288e-02  11.226  < 2e-16 ***
+    Season3        6.623e-01  4.272e-02  15.505  < 2e-16 ***
+    Season4        4.318e-01  3.324e-02  12.992  < 2e-16 ***
+    Latitude       6.860e-03  4.780e-03   1.435  0.15121    
+    Longitude     -1.338e-02  1.096e-03 -12.205  < 2e-16 ***
+    Climate2      -1.288e-01  3.931e-02  -3.276  0.00105 ** 
+    Climate3      -3.819e-01  8.957e-02  -4.264 2.01e-05 ***
+    Climate4      -1.001e+00  1.026e-01  -9.757  < 2e-16 ***
+    Climate5       1.398e-01  6.631e-02   2.108  0.03502 *  
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    
+    (Dispersion parameter for binomial family taken to be 1)
+    
+        Null deviance: 88900  on 84437  degrees of freedom
+    Residual deviance: 61568  on 84408  degrees of freedom
+    AIC: 61628
+    
+    Number of Fisher Scoring iterations: 5
+\end{minted}
+
+On remarque que la fonction a fait elle-même le \emph{one-hot encoding}, et on retrouve des variables supplémentaires pour les différents niveaux des variables à niveaux. On remarque cependant qu'il y en a à chaque fois une de moins que le nombre de niveaux : en fait, cela suffit à donner l'information du dernier niveau si dans tous ceux déjà présent nous avons "0". En effet, si pour une observation nous avons les variables Climate "2" à "5" égales à "0", alors nous savons que cette observation est dans une région climatique "1". 
+
+Chose intéressante : si d'ailleurs on relançait cette fonction avec nos données après le \emph{one-hot encoding} que nous avons spécifié plus haut, nous verrons devant chacune des colonnes "redondantes" un coefficient égal à \emph{NA} (nous verrons ceci après le SMOTE).
+
+La première chose que nous pouvons remarquer de cette sortie R est que nous avons des coefficients qui ne peuvent pas être jugés comme significativement non nuls. En effet pour les variables Evaporation, WindGustDir, WindDir3pm, Cloud9am et Latitude, la p-value du test de Student est bien supérieure à 0.05. Nous pouvons donc mettre en oeuvre une sélection pas-à-pas de ces régresseurs.  
+
+La fonction \emph{confusionMatrix} du paquet \emph{caret} nous permet de voir rapidement les performances de notre modèle. Sur dataApp (à gauche) et dataTest (à droite) : 
+
+\begin{multicols}{2}
+    \begin{minted}{text}
+    Confusion Matrix and Statistics
+
+        y.app
+    y.glm     0     1
+        0 62377  9722
+        1  3517  8822
+                                            
+                 Accuracy : 0.8432          
+                   95% CI : (0.8407, 0.8457)
+      No Information Rate : 0.7804          
+      P-Value [Acc > NIR] : < 2.2e-16       
+                                           
+                    Kappa : 0.4801          
+                                          
+   Mcnemar's Test P-Value : < 2.2e-16       
+                                          
+              Sensitivity : 0.9466          
+              Specificity : 0.4757          
+           Pos Pred Value : 0.8652          
+           Neg Pred Value : 0.7150          
+               Prevalence : 0.7804          
+           Detection Rate : 0.7387          
+     Detection Prevalence : 0.8539          
+        Balanced Accuracy : 0.7112          
+                                            
+           'Positive' Class : 0
+    \end{minted}
+    \begin{minted}{text}
+    Confusion Matrix and Statistics
+
+        y.test
+  yt.glm     0     1
+       0 15552  2454
+       1   921  2181
+                                           
+                 Accuracy : 0.8401         
+                   95% CI : (0.8351, 0.845)
+      No Information Rate : 0.7804         
+      P-Value [Acc > NIR] : < 2.2e-16      
+                                           
+                    Kappa : 0.4706         
+                                           
+   Mcnemar's Test P-Value : < 2.2e-16      
+                                           
+              Sensitivity : 0.9441         
+              Specificity : 0.4706         
+           Pos Pred Value : 0.8637         
+           Neg Pred Value : 0.7031         
+               Prevalence : 0.7804         
+           Detection Rate : 0.7368         
+     Detection Prevalence : 0.8530         
+        Balanced Accuracy : 0.7073         
+                                           
+         'Positive' Class : 0                             
+    \end{minted}
+\end{multicols}
+
+Analysons ligne à ligne ces sorties : 
+\begin{itemize}
+    \item Nous avons tout en haut la matrice de contingence, qui nous montre la table des valeurs prédites contre les valeurs attendues. On voit que l'on a bien classé 62 377 observations en prédisant qu'il ne pleuvrait pas le lendemain. On retrouve le déséquilibre des données que nous avions déjà remarqué, car nous avons seulement ~17000 observations pour lesquelles il pleut le lendemain dans cet échantillon (idem pour l'échantillon dataTest à droite).
+    \item On peut voir que sur les deux échantillons, nous avons une précision de 84\%, nous ne notons donc pas beaucoup de sur-apprentissage, donc pas de dégradation d'un échantillon à l'autre.
+    \item Le No Information Rate nous indique la précision que nous aurons eu si nous avions prédit "0" pour toutes les observations. On voit que cette précision est très haute, de 78\%, à cause encore une fois du déséquilibre de nos données. 
+    \item Cependant, la p-value donnée en dessous nous fait rejeter l'hypothèse au risque de 5\% que les performances sont les mêmes entre notre régression et le cas où nous n'aurions pas de régresseurs (si nous prenions "0" pour toutes les prédictions). Notre modèle n'est donc pas complètement inutile.
+    \item Plus bas, nous pouvons voir que nous avons une sensitivité d'environ 94\% pour les deux échantillons. Cela correspond au nombre de prédictions de "0" qui sont bien classées sur tous les "0" attendus. En revanche, la spécificité (le taux de bonnes prédictions de "1" sur tous les "1" attendus) est seulement de 47\%. Il s'agit encore une fois d'une conséquence du déséquilibre de nos données : le modèle sait très bien reconnaître les jours où il ne pleuvra pas le lendemain, car ce sont les observations que nous lui avons données en majorité pour s'entraîner.
+    \item La valeur prédictive positive est la probabilité que la condition soit présente lorsque le test est positif, elle est ici de 86\%. La valeur prédictive négative est la probabilité que la condition ne soit pas présente lorsque le test est négatif, elle est ici de 72\% \cite{frwiki:183891886}. "Positif" dans notre cas est la prédiction que RainTomorrow soit à "0", c'est-à-dire qu'on prédise qu'il ne pleut pas. Ainsi lorsque le modèle prédit qu'il va pleuvoir le lendemain d'une observation, il y a 72\% de chance qu'il ait raison.
+    \item La prévalence est le score que nous aurions eu si nous avions prédit "0" pour toutes les observations.
+    \item Afin de prendre en compte ce déséquilibre de nos données, nous devrions plutôt regarder la \emph{Balanced Accuracy}, qui est égale à (sensibilité + spécificité)/2, qui est plus parlante pour comparer les performances de ces modèles. Ici, nous sommes autour de 71\% dans les deux échantillons.
+\end{itemize}
+
+Nous voyons donc bien le problème que posent des données déséquilibrées. Sans plus attendre, essayons de résoudre ce problème. Nous avons ici plusieurs possibilités. Nous pouvons faire de l'up ou down sampling, ou bien utiliser une méthode un peu plus sophistiquée : SMOTE.
+
+\subsection{\emph{up sampling}}
+
+La fonction \emph{upSample} du paquet \emph{caret} nous permet de ré-échantillonner de manière aléatoire notre base de données afin d'avoir le même nombre d'observations avec RainTomorrow égal à 1 et égal à 0. Cependant, cela à pour conséquence de réduire le nombre d'observations total. Comme nous avons 23179 observations avec RainTomorrow = 1, nous n'aurons plus alors que 23719 observations avec RainTomorrow = 0, ce qui nous emmènera loin des initiales ~140000 observations de la base de données initiale. Nous privilégierons donc l'up sampling, qui fait la même chose, mais copie les données en minorité afin d'avoir 50\% de chaque. Cette dernière méthode ajoute néanmoins beaucoup de données redondantes. En effet, à partir des 23179 observations que nous avons avec RainTomorrow égal à 1, nous allons en copier une partie de manière aléatoire. Cela aura pour conséquence d'avoir beaucoup d'informations redondantes. Cependant, nous pouvons utiliser cette méthode sur tout type de variables (quantitatives et qualitatives), et donc n'avons pas besoin d'utiliser le \emph{one-hot encoding} par exemple. 
+
+Au final on voit bien qu'on a beaucoup plus de points bleus sur notre distribution (Figure \ref{fig:pca_raintomorrow_up}).
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/pca/pca_up.png}
+    \caption{Analyse en Composantes Principales de nos données, après upsampling, points colorés en fonction de RainTomorrow.}
+    \label{fig:pca_raintomorrow_up}
+\end{figure}
+
+\subsection{Impact sur les performances de la régression logistique}
+
+Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accuracy} de 77\% pour les deux échantillons (pas trop de surapprentissag encore une fois), pour une sensibilité de 78\% et une spécificité de 76\%. Nous avons donc équilibré les bonnes prédictions des deux classes, et d'ailleurs nous pouvons voir que la prévalence est égale à 0.5, car nous avons exactement 50\% d'observations pour chaque classes. 
+
+\begin{multicols}{2}
+    \begin{minted}{text}
+    Confusion Matrix and Statistics
+
+          y.test
+    yt.glm     0     1
+         0 12874  3919
+         1  3599 12554
+
+                   Accuracy : 0.7718          
+                     95% CI : (0.7672, 0.7763)
+        No Information Rate : 0.5             
+        P-Value [Acc > NIR] : < 2.2e-16       
+
+                      Kappa : 0.5436          
+
+     Mcnemar's Test P-Value : 0.0002341       
+
+                Sensitivity : 0.7815          
+                Specificity : 0.7621          
+             Pos Pred Value : 0.7666          
+             Neg Pred Value : 0.7772          
+                 Prevalence : 0.5000          
+             Detection Rate : 0.3908          
+       Detection Prevalence : 0.5097          
+          Balanced Accuracy : 0.7718          
+
+           'Positive' Class : 0
+    \end{minted}
+\end{multicols}
+
+\subsection{SMOTE}
+
+\subsubsection{Principe de la méthode}
+
+Penchons-nous alors sur la méthode SMOTE (Synthetic Minority Oversampling Technique). Cette méthode a pour but de créer de nouvelles observations dans le groupe de celles en minorité. Elle va faire en cela en traçant des lignes entre des observations proches au niveau de leur modalité et prendre un point sur cette ligne, créant ainsi une nouvelle observations. 
+
+On peut imaginer cela en 2D sur le graphe de l'ACP. On trace une droite entre deux points très proches, et on prend le milieu de cette droite. on peut alors lire la valeurs de chaque variable sur les axes. Evidemment, il s'agit de faire cela en dimension n (n étant le nombre de modalités -de variables- que nous avons).
+
+De plus, la méthode fait ça en prenant un échantillon aléatoire dans le groupe minoritaire, et en le faisant plusieurs fois.
+
+Cette méthode est efficace car elle créé des observations qui sont cohérentes avec la réalité. Un problème qu'il peut y avoir cependant, est que la classe majoritaire n'est pas prise en compte, et cela pose un problème pour les classes qui se superposent beaucoup. 
+
+Nous utiliserons la méthode \emph{SMOTE} du paquet \emph{smotefamily}.
+
+La question que nous devons nous poser avant d'utiliser cette méthode set : que faire des variables à facteurs ? C'est ici que la technique de \emph{one-hot encoding} entre en jeu. Une fois que nous n'aurons plus que des variables à deux niveaux (0 ou 1), nous pourrons les considérer comme des variables numériques. Nous aurons ainsi des valeurs entre 0 et 1 pour ces variables, ce qui peut représenter la ressemblance de la nouvelle observations avec tel ou tel climat, tel ou tel saison. 
+
+Au final nous nous retrouvons avec une base de données avec la distribution suivante : 
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{|rrr|}
+            \hline
+            RainTomorrow & Compte & \% \\ 
+            \hline
+            \hline
+            0 & 82367 & 54.22 \\
+            1 & 69537 & 45.78 \\
+            \hline
+        \end{tabular}
+    \caption{Distribution des valeurs de la variable RainTomorrow après SMOTE.}
+\end{table}
+
+\subsubsection{Impact sur la régression logistique}
+\begin{multicols}{2}
+    \begin{minted}{text}
+    Confusion Matrix and Statistics
+  
+          y.test
+    yt.glm     0     1
+         0 13475  3662
+         1  2998 10245
+                                              
+                   Accuracy : 0.7808          
+                     95% CI : (0.7761, 0.7854)
+        No Information Rate : 0.5422          
+        P-Value [Acc > NIR] : < 2.2e-16       
+                                              
+                      Kappa : 0.5568          
+                                              
+     Mcnemar's Test P-Value : 4.506e-16       
+                                              
+                Sensitivity : 0.8180          
+                Specificity : 0.7367          
+             Pos Pred Value : 0.7863          
+             Neg Pred Value : 0.7736          
+                 Prevalence : 0.5422          
+             Detection Rate : 0.4435          
+       Detection Prevalence : 0.5641          
+          Balanced Accuracy : 0.7773          
+
+           'Positive' Class : 0 
+                                 
+    \end{minted}
+\end{multicols}
+
+Les performances sont un tout petit peu meilleures (d'un simple \%). Nous privilégions cependant cette méthode car elle créée moins de redondances dans nos données que l'upsampling. 
+
+\subsection{Limites de la régression linéaire}
+
+Il semblerait donc que l'on ne puisse pas faire beaucoup mieux avec la régression linéaire tout en gardant une cohérence dans les données par rapport à la réalité. Nous pouvons cependant avoir une idée des variables moins importantes dans la prédiction de la pluie en faisant une backward selection. 
 
 \newpage
 \printbibliography

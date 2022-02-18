@@ -131,8 +131,9 @@ varlist = names(data)
 varlist.num = varlist[!varlist %in% varlist.not.num]
 
 
-dmy = dummyVars(" ~ Season + Climate + RainToday", data = data)
+dmy = dummyVars(" ~ Season + Climate", data = data)
 trsf = data.frame(predict(dmy, newdata = data))
-data.onehot = cbind(data %>% select(-Season, -Climate, -RainToday,), trsf)
+data.onehot = cbind(data %>% select(-Season, -Climate,), trsf)
+data.onehot = data.onehot %>% mutate(RainToday = as.numeric(RainToday) - 1)
 
 rm(data.raw, data.read, dmy, trsf)

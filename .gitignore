@@ -231,3 +231,7 @@ Rapport/*.lpz
 
 # xwatermark package
 Rapport/*.xwm
+.vscode/ltex.dictionary.fr.txt
+.vscode/ltex.hiddenFalsePositives.fr.txt
+Rapport/main.bcf
+Rapport/main.synctex.gz
