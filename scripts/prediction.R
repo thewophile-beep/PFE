@@ -21,15 +21,16 @@ confusionMatrix(table(yt.tmax, y.test))
 mod.topt <- prune(mod.tmax, cp = 0.001)
 max(mod.topt$cptable[,2]) + 1
 plot(mod.topt, branch = 0.3, uniform = T)
-text(mod.topt, digit = 4,col=2)
-threshold = 0.3
+text(mod.topt, digit = 4, col=3, cex=0.7)
+title("Arbre optimal avec cp=0.001 (42 feuilles)")
+threshold = 0.5
 y.topt = apply(predict(mod.topt), 1,  which.max) - 1
 yt.topt = apply(predict(mod.topt, newdata = dataTest), 1,  which.max) - 1
 confusionMatrix(table(y.topt, y.app))
 confusionMatrix(table(yt.topt, y.test))
 
 # rf ----
-mod.rf = randomForest(RainTomorrow~., data=dataApp, maxnodes = 500)
+mod.rf = randomForest(RainTomorrow~., data=dataApp)
 y.rf = as.vector((predict(mod.rf) > 0.5) * 1)
 yt.rf = as.vector((predict(mod.rf, newdata = dataTest) > 0.5) * 1)
 confusionMatrix(table(y.rf, y.app))
@@ -61,7 +62,13 @@ plot_distrib = function(x) {
     xlab("predicted probability")
 }
 
-plot_distrib(as.vector(predict(mod.glm, newdata = dataTest, type="response")))
+plot_distrib(as.vector(predict(mod.glm, newdata = dataTest, type='link')))
 plot_distrib(as.vector(predict(mod.tmax, newdata = dataTest)[,2]))
 plot_distrib(as.vector(predict(mod.topt, newdata = dataTest)[,2]))
 
+# res vs fitted ----
+x = predict(mod.glm.r, newdata = dataTest)
+y = residuals(mod.glm.r)
+ggplot() +
+  geom_point(aes(x=x, y=y))
+autoplot(mod.glm.r, colour="RainTomorrow")

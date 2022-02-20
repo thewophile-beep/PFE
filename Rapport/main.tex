@@ -888,6 +888,110 @@ Les performances sont un tout petit peu meilleures (d'un simple \%). Nous privil
 
 Il semblerait donc que l'on ne puisse pas faire beaucoup mieux avec la régression linéaire tout en gardant une cohérence dans les données par rapport à la réalité. Nous pouvons cependant avoir une idée des variables moins importantes dans la prédiction de la pluie en faisant une backward selection. 
 
+On fait cette selection grâce à la fonction \emph{step}. Cette dernière utilise pour cela le score AIC (Akaike information criterion). Au final, nous nous sommes débarassés des regresseurs suivants : 
+\begin{itemize}
+    \item Les variables de Climats et de Season qui étaient "superflues" (dû à notre façon d'avoir fait le \emph{one-hot encoding}, nous avions une classe supplémentaire comme expliqué plus haut), soient les variables Season.4 et Climate.4. 
+    \item Cloud9am
+    \item Latitude
+\end{itemize}
+
+Le paquet \emph{ggplot2} nous offre une fonction \emph{autoplot} qui nous permet d'afficher des graphiques utiles à l'analyse de notre modèle. Nous l'utilisons sur le modèle de régression réduit (Figure \ref{fig:autoplot_glm})
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\textwidth]{Images/autoplot_glm.png}
+    \caption{Grpahiques obtenus avec \emph{autoplot}, de haut en bas de gauche à droite : Résidus vs Valeurs prédites, Q-Q plot, }
+    \label{fig:autoplot_glm}
+\end{figure}
+
+On peut voir déjà pour les graphiques Residuals vs Fitted et Scale-Location, nous avons deux "lignes" qui aparraissent : ceci est du au fait que nous cherchons à prédire une variable binaire. 
+
+\section{Autres modèles de prédiction}
+
+Dans cette partie nous garderons la base de données modifiée avec la méthode SMOTE. Nous le rappelons, nous avons modifié avant cela les variables à niveaux en plusieurs variables numériques. 
+
+\subsection{Arbres CART}
+
+Commençons par créer l'arbre maximal. Il est composé de 2690 feuilles, ce qui en fait un arbre très très dense. 
+\begin{multicols}{2}
+    \begin{minted}{text}
+        Confusion Matrix and Statistics
+
+        y.app
+  y.tmax     0     1
+       0 61726  5712
+       1  4168 49918
+                                            
+                 Accuracy : 0.9187          
+                   95% CI : (0.9171, 0.9202)
+      No Information Rate : 0.5422          
+      P-Value [Acc > NIR] : < 2.2e-16       
+                                            
+                    Kappa : 0.8359          
+                                            
+   Mcnemar's Test P-Value : < 2.2e-16       
+                                            
+              Sensitivity : 0.9367          
+              Specificity : 0.8973          
+           Pos Pred Value : 0.9153          
+           Neg Pred Value : 0.9229          
+               Prevalence : 0.5422          
+           Detection Rate : 0.5079          
+     Detection Prevalence : 0.5549          
+        Balanced Accuracy : 0.9170          
+                                            
+         'Positive' Class : 0    
+    \end{minted}
+    \begin{minted}{text}
+        Confusion Matrix and Statistics
+
+       y.test
+yt.tmax     0     1
+      0 14211  2659
+      1  2262 11248
+                                          
+               Accuracy : 0.838           
+                 95% CI : (0.8338, 0.8421)
+    No Information Rate : 0.5422          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.673           
+                                          
+ Mcnemar's Test P-Value : 1.651e-08       
+                                          
+            Sensitivity : 0.8627          
+            Specificity : 0.8088          
+         Pos Pred Value : 0.8424          
+         Neg Pred Value : 0.8326          
+             Prevalence : 0.5422          
+         Detection Rate : 0.4678          
+   Detection Prevalence : 0.5553          
+      Balanced Accuracy : 0.8357          
+                                          
+       'Positive' Class : 0               
+                              
+    \end{minted}
+\end{multicols}
+     
+On voit tout de suite que les performances sont bien meilleures : pour l'échantillon test nous avons une \emph{balanced Accuracy} de 83.57\%. 
+
+On peut élaguer cet arbre afin d'en avoir un à 42 feuilles (avec une valeur de $cp=0.001$). On peut donc l'afficher (Figure \ref{fig:topt}). 
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\textwidth]{Images/topt.png}
+    \caption{Arbre élagué.}
+    \label{fig:topt}
+\end{figure}
+
+Avec ce nombre de feuille, on garde quand même une \emph{Balanced Accuracy} de 81.47\%, pour une sensibilité de 86.89\% et une spécificité de 76.05\%. On peut aussi classer les variables par ordre d'importance pour ces prédictions : on voit que la plus importante de loin est Humidity3pm (comme on avait vu sur les boîtes à moustaches), Rainfall et RainToday. Les trois suivantes ont un score d'importance plus faible : il s'agit de Humidity9am, Sunshine et Temp3pm.
+
+Les variables les moins importantes sont : Cloud9am, Season.2 (l'automne), Longitude, Evaporation, WindDir3pm, WindDir9am, Latitude, WindGustDir et toutes les variables des climats.
+
+On retrouve les deux variables écartées par la backward selection de la régression linéaire. 
+
+\subsection{Random Forest}
+
 \newpage
 \printbibliography
 
