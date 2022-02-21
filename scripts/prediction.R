@@ -106,7 +106,7 @@ ggplot() +
   geom_point(aes(x=x, y=y))
 autoplot(mod.glm.r, colour="RainTomorrow")
 # McNemar test ----
-mcnemar.test(table((y.test==yt.rf),(y.test==yt.rf.big)))
+mcnemar.test(table((y.test==yt.qda),(y.test==yt.glm.r)))
 
 # Big Comparison ----
 {
