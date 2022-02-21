@@ -20,14 +20,14 @@ data.model = data
   trainIndex = createDataPartition(data.model$RainTomorrow, p=split, list=FALSE)
   dataApp = data.model[trainIndex,]
   dataTest = data.model[-trainIndex,] 
-  y.app = dataApp$RainTomorrow
-  y.test = dataTest$RainTomorrow
+  y.app = as.numeric(dataApp$RainTomorrow) - 1
+  y.test = as.numeric(dataTest$RainTomorrow) - 1
 }
 
 # Centrage et réduction des données. ----
 {
   # DataApp
-  idx = (names(dataApp) %in% varlist.num)
+  idx = !(names(dataApp) %in% "RainTomorrow")
   m = apply(dataApp[,idx], 2, mean)
   ec = apply(dataApp[,idx], 2, sd)
   dataApp[,idx] = scale(dataApp[,idx])

@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \usepackage{float}
-\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{geometry}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -17,13 +17,12 @@
 \usepackage[table]{xcolor}
 \usepackage{minted}
 \usepackage{multicol}
-\usepackage{hyperref}
 \usepackage{csquotes}
-\usepackage{url}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
 \usepackage[center]{caption}
-\usepackage[backend=biber, style=alphabetic, sorting=ynt]{biblatex}
+\usepackage[backend=biber, style=alphabetic, sorting=ynt, block=ragged]{biblatex}
 \addbibresource{references.bib}
-    
 \setminted{frame=lines,
     framesep=2mm,
     baselinestretch=1.2,
@@ -33,7 +32,8 @@
 }
 \hypersetup{
     colorlinks=true,
-    pdftitle={PFE - Pluie en Australie}
+    pdftitle={PFE - Pluie en Australie},
+    breaklinks = true
 }
     
 \begin{document}
@@ -304,7 +304,7 @@ Lorsque l'on combine ce système de coordonnées et une représentation de la Te
 
 \subsubsection{Le WSG84}
 
-Le World Geodetic System 84 (WGS84) est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard à été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des Etats-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
+Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard à été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des Etats-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
 
 Nous avons maintenant un moyen de localiser précisément un point sur Terre grâce à deux valeurs numériques. Pour pouvoir les afficher sur une carte, il nous faut cependant une projection.
 
@@ -821,7 +821,7 @@ Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accur
 
 \subsubsection{Principe de la méthode}
 
-Penchons-nous alors sur la méthode SMOTE (Synthetic Minority Oversampling Technique). Cette méthode a pour but de créer de nouvelles observations dans le groupe de celles en minorité. Elle va faire en cela en traçant des lignes entre des observations proches au niveau de leur modalité et prendre un point sur cette ligne, créant ainsi une nouvelle observations. 
+Penchons-nous alors sur la méthode SMOTE (Synthetic Minority Oversampling Technique). Cette méthode a pour but de créer de nouvelles observations dans le groupe de celles en minorité. Elle va faire en cela en traçant des lignes entre des observations proches au niveau de leur modalité et prendre un point sur cette ligne, créant ainsi une nouvelle observations \cite{smote}. 
 
 On peut imaginer cela en 2D sur le graphe de l'ACP. On trace une droite entre deux points très proches, et on prend le milieu de cette droite. on peut alors lire la valeurs de chaque variable sur les axes. Evidemment, il s'agit de faire cela en dimension n (n étant le nombre de modalités -de variables- que nous avons).
 
@@ -889,11 +889,14 @@ Les performances sont un tout petit peu meilleures (d'un simple \%). Nous privil
 Il semblerait donc que l'on ne puisse pas faire beaucoup mieux avec la régression linéaire tout en gardant une cohérence dans les données par rapport à la réalité. Nous pouvons cependant avoir une idée des variables moins importantes dans la prédiction de la pluie en faisant une backward selection. 
 
 On fait cette selection grâce à la fonction \emph{step}. Cette dernière utilise pour cela le score AIC (Akaike information criterion). Au final, nous nous sommes débarassés des regresseurs suivants : 
+
 \begin{itemize}
     \item Les variables de Climats et de Season qui étaient "superflues" (dû à notre façon d'avoir fait le \emph{one-hot encoding}, nous avions une classe supplémentaire comme expliqué plus haut), soient les variables Season.4 et Climate.4. 
     \item Cloud9am
     \item Latitude
 \end{itemize}
+
+Pour un modèle ayant les même valeurs de Null deviance et Residual deviance (respectivement 167600 et 111918) et pour un AIC passant de 111978 à 111975. Par ailleurs, si on effectue un test de McNemar sur les deux modèles, on a une p-value de 0.04, on rejette donc l'hypothèse H0 est on peut dire au risque de 5\% que les deux modèles ont des performances différentes. Cette selection à pas descendante nous a donc un tout petit peu coûté en performances (on passe d'une \emph{Balanced Accuracy} de 0.7769 à 0.7767).
 
 Le paquet \emph{ggplot2} nous offre une fonction \emph{autoplot} qui nous permet d'afficher des graphiques utiles à l'analyse de notre modèle. Nous l'utilisons sur le modèle de régression réduit (Figure \ref{fig:autoplot_glm})
 
@@ -977,9 +980,9 @@ On voit tout de suite que les performances sont bien meilleures : pour l'échant
 
 On peut élaguer cet arbre afin d'en avoir un à 42 feuilles (avec une valeur de $cp=0.001$). On peut donc l'afficher (Figure \ref{fig:topt}). 
 
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Images/topt.png}
+    \includegraphics[width=0.8\textwidth]{Images/topt.png}
     \caption{Arbre élagué.}
     \label{fig:topt}
 \end{figure}
@@ -992,7 +995,106 @@ On retrouve les deux variables écartées par la backward selection de la régre
 
 \subsection{Random Forest}
 
+Afin de ne pas avoir de trop gros arbres lors de la construction d'un modèle de random forest, nous utilisons le paramètre \emph{maxnode}. \emph{yt.rf} correspond aux valeurs prédites sur dataTest avec \emph{maxnode = 1000} et \emph{yt.rf.big} avec \emph{maxnode = 2000}. 
+
+\begin{multicols}{2}
+    \begin{minted}{text}
+Confusion Matrix and Statistics
+
+     y.test
+yt.rf     0     1
+    0 14770  2516
+    1  1703 11391
+                                         
+               Accuracy : 0.8611         
+                 95% CI : (0.8572, 0.865)
+    No Information Rate : 0.5422         
+    P-Value [Acc > NIR] : < 2.2e-16      
+                                         
+                  Kappa : 0.719          
+                                         
+ Mcnemar's Test P-Value : < 2.2e-16      
+                                         
+            Sensitivity : 0.8966         
+            Specificity : 0.8191         
+         Pos Pred Value : 0.8544         
+         Neg Pred Value : 0.8699         
+             Prevalence : 0.5422         
+         Detection Rate : 0.4862         
+   Detection Prevalence : 0.5690         
+      Balanced Accuracy : 0.8579         
+                                         
+       'Positive' Class : 0  
+    \end{minted}
+    \begin{minted}{text}
+        Confusion Matrix and Statistics
+
+        y.test
+yt.rf.big     0     1
+       0 15051  2345
+       1  1422 11562
+                                         
+              Accuracy : 0.876           
+                95% CI : (0.8722, 0.8797)
+   No Information Rate : 0.5422          
+   P-Value [Acc > NIR] : < 2.2e-16       
+                                         
+                 Kappa : 0.7489          
+                                         
+Mcnemar's Test P-Value : < 2.2e-16       
+                                         
+           Sensitivity : 0.9137          
+           Specificity : 0.8314          
+        Pos Pred Value : 0.8652          
+        Neg Pred Value : 0.8905          
+            Prevalence : 0.5422          
+        Detection Rate : 0.4954          
+  Detection Prevalence : 0.5726          
+     Balanced Accuracy : 0.8725          
+                                         
+      'Positive' Class : 0               
+                             
+    \end{minted}
+\end{multicols}
+
+On voit que les performances sont similaires, en effet, un test de McNemar nous donne une p-value de $0.2881$, on ne rejette donc pas l'hypothèse de même taux de bon classement de ces deux modèles (au risque de 5\%).
+
+\subsection{Comparaisons globales}
+
+Nous comparons ici les sensibilité, spécificité et balanced accuracy de tous les modèles que nous avons vu (ainsi que deux supplémentaires, LDA et QDA). 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|r|rrr|}
+        \hline
+        & Sensitivity & Specificity & Balanced Accuracy \\ 
+        \hline
+        glm & 0.82 & 0.74 & 0.78 \\ 
+        glm.r & 0.82 & 0.74 & 0.78 \\ 
+        lda & 0.82 & 0.72 & 0.77 \\ 
+        qda & 0.77 & 0.78 & 0.77 \\ 
+        tmax & 0.94 & 0.90 & 0.92 \\ 
+        topt & 0.88 & 0.76 & 0.82 \\ 
+        rf (maxnodes = 1000) & 0.90 & 0.81 & 0.86 \\ 
+        rf (maxnodes = 2000) & 0.91 & 0.83 & 0.87 \\ 
+        \hline
+        \hline
+        glm test & 0.82 & 0.74 & 0.78 \\ 
+        glm.r test & 0.82 & 0.74 & 0.78 \\ 
+        lda test & 0.83 & 0.73 & 0.78 \\ 
+        qda test & 0.78 & 0.78 & 0.78 \\ 
+        tmax test & 0.87 & 0.81 & 0.84 \\ 
+        topt test & 0.88 & 0.75 & 0.81 \\ 
+        rf (maxnodes = 1000) test & 0.91 & 0.83 & 0.87 \\ 
+        rf (maxnodes = 2000) test & 0.91 & 0.83 & 0.87 \\ 
+        \hline
+    \end{tabular}
+\end{table}
+
+On peut voir que le meilleur modèle est la Random Forest. Comme nous n'avons pas de différence de performances sur dataTest pour les deux types de modèles (avec deux valeurs de maxnodes), nous privilégierons celui avec \emph{maxnodes = 1000}. Au final, ce dernier avait une précision (pas celle \emph{balanced}) de 86.11\%.
+
 \newpage
+\Urlmuskip=0mu plus 2mu
 \printbibliography
 
 \end{document}
