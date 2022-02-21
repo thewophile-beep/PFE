@@ -79,6 +79,13 @@ yt.qda = predict(mod.qda, newdata = dataTest %>% select(-RainTomorrow, -Climate.
 confusionMatrix(table(y.qda, y.app))
 confusionMatrix(table(yt.qda, y.test))
 
+# Neural Network ----
+mod.nn = neuralnet(RainTomorrow ~ ., data=dataApp, hidden=3, act.fct = "logistic", linear.output = FALSE)
+y.nn = as.vector(predict(mod.nn))
+yt.nn = as.vector(predict(mod.nn, newdata = dataTest))
+confusionMatrix(table(y.nn, y.app))
+confusionMatrix(table(yt.nn, y.test))
+
 # Response distribution ----
 plot_distrib = function(x) {
   ggplot() +

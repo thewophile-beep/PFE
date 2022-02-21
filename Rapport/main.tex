@@ -78,6 +78,10 @@
 \tableofcontents
 \newpage
 
+\begin{abstract}
+Le but de ce projet est d'utiliser une base de données trouvée sur Kaggle afin d'utiliser des modèles de prédiction. Nous utiliserons ici le dataset sur la météo en Australie afin de prédire s'il pleut ou pas le lendemain d'une journée. 
+\end{abstract}
+
 \part{Description des données}
 
 \section{Présentation des données}
@@ -116,7 +120,7 @@ Jetons tout d'abord un coup d'œil aux variables numériques de nos données.
 
 \subsection{Variables numériques}
 
-\begin{table}[ht]
+\begin{table}[H]
     \centering
     \resizebox{\textwidth}{!}{
         \begin{tabular}{|r||rrrrrrrr|}
@@ -147,13 +151,13 @@ Jetons tout d'abord un coup d'œil aux variables numériques de nos données.
     \label{table:summary}
 \end{table}
 
-Comme nous pouvons le constater dans la Table \ref{table:summary}, pour certaines d'entre elles, il manque beaucoup d'observations (voir la ligne \emph{NA's}). Nous allons devoir remédier à cela dans les futures parties, et principalement sur les variables \emph{Sunshine}, \emph{Evaporation}, \emph{Cloud9am} et \emph{Cloud3pm}, dont nous avons moins de 60\% des observations.
+Comme nous pouvons le constater dans la Table \ref{table:summary}, pour certaines d'entre elles, il manque beaucoup d'observations (voir la colonne \emph{NA's}). Nous allons devoir remédier à cela dans les futures parties, et principalement sur les variables \emph{Sunshine}, \emph{Evaporation}, \emph{Cloud9am} et \emph{Cloud3pm}, dont nous avons moins de 60\% des observations.
 
-Nous pouvons de plus noter certaines choses : comme on pouvait s'y attendre, il fait en général moins froid à 15h qu'à 9h, et il fait aussi moins humide. 
+Nous pouvons de plus noter certaines choses : les variables à 9h et 15h sont très similaire, et il fait évidemment plus chaud l'après-midi que le matin, il y a aussi en moyenne plus de vent et moins d'humidité. 
 
 \subsection{Variables factorielles}
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=\textwidth]{Images/hist_observations_cities.pdf}
     \caption{Nombre d'observations pour chaque ville}
@@ -164,7 +168,7 @@ Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, v
 
 Penchons-nous désormais sur les variables de direction du vent en regardant la distribution de leurs facteurs dans les Tables \ref{table:wind_gust_dir}, \ref{table:wind_dir_9am} et \ref{table:wind_dir_3pm}.
 
-\begin{table}[p]
+\begin{table}[htp]
     \centering
     \resizebox{\textwidth}{!}{
         \begin{tabular}{|r||*{17}{r}|}
@@ -181,7 +185,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
     \label{table:wind_gust_dir}
 \end{table}
 
-\begin{table}[p]
+\begin{table}[htp]
     \centering
     \resizebox{\textwidth}{!}{
         \begin{tabular}{|r||*{17}{r}|}
@@ -198,7 +202,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
     \label{table:wind_dir_9am}
 \end{table}
  
-\begin{table}[p]
+\begin{table}[htp]
     \centering
     \resizebox{\textwidth}{!}{
         \begin{tabular}{|r||*{17}{r}|}
@@ -215,9 +219,9 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
     \label{table:wind_dir_3pm}
 \end{table}
 
-Les 16 niveaux utilisés pour ces variables sont tous représentés avec à peu près la même distribution. Nous souhaitons changer ces facteurs en valeurs numériques, pour cela, nous allons remplacer chaque direction par sa valeur en degrés : utiliser l'angle pour la directions nous servira peut-être lorsque nous utiliserons des modèles de prédiction comme des arbres CART. En effet, baisser le nombre de facteurs que nous avons nous permettra sûrement de réduire le nombre de feuilles que nous aurions pu avoir. Nous utiliserons les valeurs indiquées dans la Table \ref{table:deg}.
+Les 16 niveaux utilisés pour ces variables sont tous représentés avec à peu près la même distribution. Nous souhaitons changer ces facteurs en valeurs numériques, pour cela, nous allons remplacer chaque direction par sa valeur en degrés : utiliser l'angle pour la directions nous servira peut-être lorsque nous utiliserons des modèles de prédiction comme des arbres CART ou encore lorsque nous utiliserons des méthodes. En effet, baisser le nombre de facteurs que nous avons nous permettra sûrement de réduire le nombre de feuilles que nous aurions pu avoir. Nous utiliserons les valeurs indiquées dans la Table \ref{table:deg}.
 
-\begin{table}[H]
+\begin{table}[htp]
     \centering
     \resizebox{\textwidth}{!}{
         \begin{tabular}{|r||*{16}{r}|}
@@ -232,10 +236,9 @@ Les 16 niveaux utilisés pour ces variables sont tous représentés avec à peu 
     \label{table:deg}
 \end{table}
 
-On remarque une fois de plus qu'une partie de ses observations sons manquantes (plus de 7\% pour \emph{WindGustDir} et \emph{WindDir9am} et un peu moins de 3\% pour \emph{WindDir3pm})
+On remarque une fois de plus qu'une partie de ces observations sont manquantes (plus de 7\% pour \emph{WindGustDir} et \emph{WindDir9am} et un peu moins de 3\% pour \emph{WindDir3pm})
 
-
-\begin{table}[p]
+\begin{table}[htp]
     \centering
     \begin{tabular}{|r||rrr|}
         \hline
@@ -250,7 +253,7 @@ On remarque une fois de plus qu'une partie de ses observations sons manquantes (
     \label{table:rain_today}
 \end{table}
 
-\begin{table}[p]
+\begin{table}[htp]
     \centering
     \begin{tabular}{|r||rrr|}
         \hline
@@ -265,17 +268,17 @@ On remarque une fois de plus qu'une partie de ses observations sons manquantes (
     \label{table:rain_tomorrow}
 \end{table}
 
-Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire étant \emph{RainTomorrow}, nous voulons avoir un équilibre entre les observations \emph{Yes} et les observations \emph{No}. Pour veiller à ceci, nous utiliserons des méthodes de resampling telle que SMOTE. 
+Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire étant \emph{RainTomorrow}, nous voulons avoir un équilibre entre les observations \emph{Yes} et les observations \emph{No}. Pour veiller à ceci, nous utiliserons des méthodes de ré-échantillonnage telle que SMOTE. 
 
 On remarque de plus que nous avons ~2.25\% des variables manquantes pour ces deux variables. Ceci s'explique par le fait qu'il manque ~2.25\% des observations de la variable \emph{Rainfall}, sur laquelle sont basées ces deux variables.
 
-Enfin, nous avons la variables \emph{Location} qui contient tous les lieux d'observations de la base de données. Nous nous pencherons sur celle-ci dans la section Cartographie. 
+Enfin, nous avons la variable \emph{Location} qui contient tous les lieux d'observations de la base de données. Nous nous pencherons sur celle-ci dans la section Cartographie. 
 
-Avant de nous lancer plus loin, nous allons tout d'abord modifier la base de données pour la rendre utilisable. Pour cela, nous devons nous occuper des variables qui contiennent des facteurs et les changer en numériques, comme nous avons fait pour les variables de direciton du vent. Nous allons ensuite remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. Au final, nous pourrons nous occuper du traitement des observations manquantes. 
+Avant de nous lancer plus loin, nous allons tout d'abord modifier la base de données pour la rendre plus facilement utilisable. Pour cela, nous devons nous occuper des variables qui contiennent des facteurs et en réduire le nombre de niveaux ou bien les changer en variables numériques, comme nous avons fait pour les variables de direction du vent. Nous allons pour cela remplacer la variable lieu avec une variable de longitude et de latitude, pour des raisons que nous expliquerons dans la section suivante. Enfin, nous allons rajouter une variable correspondant aux climats de chaque lieu (on prendra pour cela une carte des climats et on pourra rentrer à la main chaque climat de chaque lieu). Pour ce qui est de la variable date, nous la remplacerons par une variable saison à seulement 4 niveaux. Ce choix sera expliqué dans une partie sur le climat et sur les périodicités. Finalement, nous pourrons nous occuper du traitement des observations manquantes. 
 
 \section{Cartographie}
 
-Notre base de donnée comprend donc une variable \emph{Location}, qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte. 
+Notre base de données comprend donc une variable \emph{Location}, qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte. 
 
 Pour cela, nous allons utiliser le paquet R "rnaturalearth", qui nous offre un moyen simple de dessiner nos propres cartes en utilisant le standard WGS84 (World Geodetic System).
 
@@ -287,75 +290,78 @@ Afin de localiser avec précision un point sur Terre, nous avons besoin d'un sta
 
 Afin d'avoir une coordonnée pour n'importe quel point sur Terre, nous utilisons des coordonnées de Longitude et de Latitude. Ce sont des valeurs exprimées en degré à partir d'un degré 0 de référence.
 
-La Terre ne peut être représentée comme une sphère car cela rendrait les coordonnées trop imprécises par rapport à la réalité. Elle est de plus arrondie aux pôles et c'est pour ces raisons que nous représentons la Terre par un éllipsoïde. 
+La Terre ne peut être représentée comme une sphère, car cela rendrait les coordonnées trop imprécises par rapport à la réalité. Elle est de plus arrondie aux pôles et c'est pour ces raisons que nous représentons la Terre par un ellipsoïde. 
 
-La Longitude est une coordonnée géographique représentée par une valeur angulaire, expression du positionnement est-ouest d'un point sur Terre \cite{frwiki:188614923}. Tous les points étant situés sur une courbure de l'élipsoïde reliant les pôle Nord et Sud et traversant l'équateur     perpendiculairement ont la même longitude. Une courbure de référence, appelé "méridien" est choisi arbitrairement (le méridien de Greenwich) comme degré 0. Les valeurs de Longitude s'étendent de -180° vers l'ouest à 180° à l'est par rapport à ce méridien. 
+La Longitude est une coordonnée géographique représentée par une valeur angulaire, expression du positionnement est-ouest d'un point sur Terre \cite{frwiki:188614923}. Tous les points étant situés sur une courbure de l'ellipsoïde reliant les pôles Nord et Sud et traversant l'équateur perpendiculairement ont la même longitude. Une courbure de référence, appelé "méridien" est choisi arbitrairement (le méridien de Greenwich) comme degré 0. Les valeurs de Longitude s'étendent de -180° vers l'ouest à 180° à l'est par rapport à ce méridien (voir Figure \ref{fig:longitude_et_latitude}). 
 
-La Latitude est une coordonnée similaire mais qui à pour plan de référence l'équateur. Tous les points sur Terre ayant une même latitude forment un cercle dont le plan est parallèle à celui de l'équateur \cite{frwiki:189341688}. 
+La Latitude est une coordonnée similaire, mais qui à pour plan de référence l'équateur. Tous les points sur Terre ayant une même latitude forment un cercle dont le plan est parallèle à celui de l'équateur \cite{frwiki:189341688} (voir Figure \ref{fig:longitude_et_latitude}). 
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.3\textwidth]{Images/Cartographie/Longitude.png}
     \includegraphics[width=0.3\textwidth]{Images/Cartographie/Latitude.png}
     \caption{Illustration du système de coordonnées de Longitude et Latitude}
+    \label{fig:longitude_et_latitude}
 \end{figure}
 
-Lorsque l'on combine ce système de coordonnées et une représentation de la Terre en ellipsoïde (au travers de mesures précises des dimensions de la planète), on obtient un système géodésique.
+Lorsque l'on combine ce système de coordonnées et une représentation de la Terre en ellipsoïde (au travers de mesures précises des dimensions de la planète), on obtient ce qu'on appelle un système géodésique.
 
 \subsubsection{Le WSG84}
 
-Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard à été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des Etats-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
+Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard a été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des Etats-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
 
 Nous avons maintenant un moyen de localiser précisément un point sur Terre grâce à deux valeurs numériques. Pour pouvoir les afficher sur une carte, il nous faut cependant une projection.
 
 \subsubsection{Projections}
 
-La projection cartographique est "un ensemble de techniques permettant de représenter la surface de la Terre dans son ensemble ou en partie sur la surface plane d'une carte" \cite{frwiki:181713838}. La Terre étant sphérique, afin de l'afficher sur une carte plane, il faut la projeter. Il existe différent types de projections, certaines permettent de conserver localement les surfaces, d'autres les angles ou encore les distances sur les méridiens. 
+La projection cartographique est "un ensemble de techniques permettant de représenter la surface de la Terre dans son ensemble ou en partie sur la surface plane d'une carte" \cite{frwiki:181713838}. La Terre étant sphérique, afin de l'afficher sur une carte plane, il faut la projeter. Il existe différents types de projections, certains permettent de conserver localement les surfaces, d'autres les angles ou encore les distances sur les méridiens. 
 
-Notre paquet utilise de base une projection dite géographique : elle consiste simplement à prendre les valeurs de latitude et de longitude et des les utiliser comme si elles étaient les coordonnées X et Y (respectivement) d'un repère en deux dimensions. Cette "projection" peut avoir des résultats différents en fonction du système géodésique utilisé. 
+Notre paquet utilise de base une projection dite géographique : elle consiste simplement à prendre les valeurs de latitude et de longitude et de les utiliser comme si elles étaient les coordonnées X et Y (respectivement) d'un repère en deux dimensions. Cette "projection" peut avoir des résultats différents en fonction du système géodésique utilisé. 
 
 Le plus gros inconvénient de cette pratique est la distorsion des surfaces lorsque l'on s'éloigne de l'équateur. Cependant, cela est suffisant dans notre cas, où nous voulons avoir seulement une idée globale de la position des lieux observés des uns par rapport aux autres. De plus, comme nous ne prévoyons pas de mesurer précisément la distance entre deux points, ce système de "projection" géographique est le plus pratique.
 
 \subsection{Affichage sur une carte}
 
-Nous avons désormais tous les éléments pour placer les lieux sur une carte. Le paquet "rnaturalearth" nous permet donc d'avoir une liste de polygone de pays. Le paquet "ozmaps" nous permet d'avoir les polygones des états australiens. Pour les lieux, nous récupérons les latitudes et longitudes manuellement grâce à n'importe quelle base que nous pouvons trouver sur internet et nous les rajoutons à chaque observation en ajoutant deux colonnes. Au final nous pouvons afficher notre carte grâce à ggplot2 : 
+Nous avons désormais tous les éléments pour placer les lieux sur une carte. Le paquet \emph{rnaturalearth} nous permet donc d'avoir une liste de polygone de pays. Le paquet \emph{ozmaps} nous permet d'avoir les polygones des états australiens. Pour les lieux, nous récupérons les latitudes et longitudes manuellement grâce à n'importe quelle base que nous pouvons trouver sur internet et nous les rajoutons à chaque observation en ajoutant deux colonnes. Finalement nous pouvons afficher notre carte grâce à \emph{ggplot2} (voir Figure \ref{fig:carte_australie}) 
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{Images/Cartographie/Australia_full_map.png}
     \caption{Carte de l'Australie et villes dont la météo est observée}
+    \label{fig:carte_australie}
 \end{figure}
 
-Nous pouvons desormais utiliser les colonnes de longitude et latitude à la place de la colonne localisation. 
+Nous pouvons désormais utiliser les colonnes de longitude et latitude à la place de la colonne localisation. 
 
-\section{Etude des climats}
+\section{Étude des climats}
 
 Maintenant que nous pouvons afficher les lieux sur une carte, nous pouvons déterminer à quelle zone climatique appartient chaque point.
 
-Comme on peut le voir sur la carte précédente, la plupart des observations ont lieu dans le sud-est du pays, où la concentration d'habitants et de ville est la plus grande. Cette zone correspond à un climat tempéré pour les villes les plus au sud et subtropical pour les villes plus au nord comme Brisbane. Au nord du pays nous avons les villes sur les littoraux dans une zone plus tropicale, et enfin au sud-ouest nous avons d'autre villes subtropicales. Plus à l'intérieur des terres, où il le climat est désertique, nous avons les observations de Uluru, Alice Springs et Woomera. Enfin, nous avons aussi les données de villes sur l'île de Tasmanie et l'île Norfolk. 
+Comme on peut le voir sur la carte précédente, la plupart des observations ont lieu dans le sud-est du pays, où la concentration d'habitants et de ville est la plus grande. Cette zone correspond à un climat tempéré pour les villes les plus au sud et subtropical pour les villes plus au nord comme Brisbane. Au nord du pays nous avons les villes sur les littoraux dans une zone plus tropicale, et enfin au sud-ouest nous avons d'autre villes subtropicales. Plus à l'intérieur des terres, où le climat est désertique, nous avons les observations de Uluru, Alice Springs et Woomera. Enfin, nous avons aussi les données de villes sur l'île de Tasmanie et l'île Norfolk (Figure \ref{fig:carte_climats}). 
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \includegraphics[width=0.7\textwidth]{Images/Cartographie/Australia_climates.png}
+    \includegraphics[width=0.9\textwidth]{Images/Cartographie/Australia_climates.png}
     \caption{Carte de l'Australie et climat des villes}
+    \label{fig:carte_climats}
 \end{figure}
 
-Nous avons donc les observations de 4 lieux tropicaux, 3 lieux désertiques, 2 lieux dans les plaines (le climat de transition entre désertique et tempéré, en quelques sortes), 11 lieux subtropicaux et enfin 29 lieux tempérés. Certaines données sont liées à des villes mais d'autres à des aéroport ou encore des lieux touristiques.
+Nous avons donc les observations de 4 lieux tropicaux, 3 lieux désertiques, 2 lieux dans les plaines (le climat de transition entre désertique et tempéré, en quelque sorte), 11 lieux subtropicaux et enfin 29 lieux tempérés. Certaines données sont liées à des villes, mais d'autres à des aéroports ou encore des lieux touristiques.
 
 \subsection{Particularités des climats et périodicité}
 
-Les données étant étalées sur 10 ans, on peut trouver une périodicité dans les mesures à l'année. Nous pouvons alors, pour chaque ville, faire un graphique comprenant les moyennes des température maximales, minimales et moyennes de chaque jour sur 10 ans. Et faire de même pour les précipitations. 
+Les données étant étalées sur 10 ans, on peut trouver une périodicité dans les mesures à l'année. Nous pouvons alors, pour chaque ville, faire un graphique comprenant les moyennes des températures maximales, minimales et moyennes de chaque jour sur 10 ans. Et faire de même pour les précipitations. 
 
 Nous pouvons afficher ces données en fonction des saisons. Nous pourrons ainsi remplacer la variable date par une variable avec uniquement 4 niveaux différents comme expliqué précédemment, à savoir les saisons. Nous prendrons comme saisons : 
 
 \begin{itemize}
-    \item L’été, de décembre à février
-    \item L’automne, de mars à mai
-    \item L’hiver, de juin à août
-    \item Le printemps, de septembre à novembre
+    \item L’été, de décembre à février (niveau 1)
+    \item L’automne, de mars à mai (niveau 2)
+    \item L’hiver, de juin à août (niveau 3)
+    \item Le printemps, de septembre à novembre (niveau 4)
 \end{itemize}
 
-Nous obtenons les graphiques de la Figure \ref{fig:temp_and_rainfall}
+Nous obtenons les graphiques de la Figure \ref{fig:temp_and_rainfall}.
 
 \begin{figure}[p]
     \centering
@@ -368,17 +374,17 @@ Nous obtenons les graphiques de la Figure \ref{fig:temp_and_rainfall}
     \label{fig:temp_and_rainfall}
 \end{figure}
 
-On remarque tout de suite que les températures les plus élevées sont aux alentours de décembre / janvier; l'Australie étant dans l'hémisphère Sud, il s'agit de l'été. 
+On remarque tout de suite que les températures les plus élevées sont aux alentours de décembre / janvier ; l'Australie étant dans l'hémisphère sud, il s'agit de l'été. 
 
-On remarque ensuite quelques particularité dues aux climats. Dans les régions tempérée et subtropicale tout d'abord, nous avons des températures qui évoluent entre en dessous de 10 degrés et environ 30 degrés, avec en hiver (mai, juin, juillet) plus de pluie que sur le reste de l'année.
+On remarque ensuite quelques particularités dues aux climats. Dans les régions tempérée et subtropicale tout d'abord, nous avons des températures qui évoluent entre en dessous de 10 degrés et environ 30 degrés, avec en hiver (mai, juin, juillet) plus de pluie que sur le reste de l'année.
 
-Du côté des régions dans les plaines, il pleut moins tout au long de l'année et nous n'observons pas de période de pluie comme pour les deux premières régions. Les températures sont en revanche à peu près les même, voire plus chaudes pendant l'été. Lorsque l'on se penche sur les régions désertiques, les températures sont encore plus hautes et les précipitations sont encore moins importantes, avec seulement quelques millimètres tout au long de l'année. 
+Du côté des régions dans les plaines, il pleut moins tout au long de l'année et nous n'observons pas de période de pluie comme pour les deux premières régions. Les températures sont en revanche à peu près les mêmes, voire plus chaudes pendant l'été. Lorsque l'on se penche sur les régions désertiques, les températures sont encore plus hautes et les précipitations sont encore moins importantes, avec seulement quelques millimètres tout au long de l'année. 
 
-A l'opposé, dans les régions tropicales, la température tout au long de l'année évolue moins et reste plus proche de 30 degrés tout au long de l'année (avec une légère baisse en hiver). Dans ces régions, il pleut énormément pendant l'hiver et quasiment pas pendant l'été.
+À l'opposé, dans les régions tropicales, la température tout au long de l'année évolue moins et reste plus proche de 30 degrés tout au long de l'année (avec une légère baisse en hiver). Dans ces régions, il pleut énormément pendant l'hiver et quasiment pas pendant l'été.
 
-Le choix de ne garder que les saisons et pas les dates se justifie par le fait que si nous voulons prédire s'il pleut le lendemain, nous n'avons pas besoin de savoir précisemment quel jour nous sommes, voire quel mois. On remarque sur les graphiques des différences notables entre les saisons, et celle-ci suffiront sûrement pour nous aider à prédire ce que nous voulons. De plus, nous nous débarassons d'une variable avec beaucoup de facteurs différents, ce qui nous sera bénéfique lors de la mise en place de modèle de prédictions.
+Le choix de ne garder que les saisons et pas les dates se justifie par le fait que si nous voulons prédire s'il pleut le lendemain, nous n'avons pas besoin de savoir précisément quel jour nous sommes, voire quel mois. On remarque sur les graphiques des différences notables entre les saisons, et celle-ci suffiront sûrement pour nous aider à prédire ce que nous voulons. De plus, nous nous débarrassons d'une variable avec beaucoup de facteurs différents, ce qui nous sera bénéfique lors de la mise en place de modèle de prédictions.
 
-Nous nous retrouvons au final avec les variables suivantes : 
+Nous nous retrouvons finalement avec les variables suivantes : 
 \begin{itemize}
     \item MinTemp, MaxTemp, Temp9am, Temp3pm
     \item Rainfall, RainToday, RainTomorrow, Evaporation
@@ -389,64 +395,55 @@ Nous nous retrouvons au final avec les variables suivantes :
     \item Season, Climate
     \item Latitude, Longitude
 \end{itemize}
-Qui sont toutes des variables numériques (0 ou 1 pour les variables booléennes RainToday et RainTomorrow).
+Qui sont toutes des variables numériques, sauf pour Season et Climate qui sont à 4 et 5 niveaux, et RainToday et RainTomorrow qui sont des variables booléennes.
 
 \section{Complétion des données}
 
 \subsection{Pourquoi compléter ?}
 
-Afin de se rendre compte de la distribution des valeurs manquantes, on affiche ce qu'on appelle la missingness map de nos données (Figure \ref{fig:missingness_raw}).
+Afin de se rendre compte de la distribution des valeurs manquantes, on affiche ce qu'on appelle la \emph{missingness map} de nos données (Figure \ref{fig:missingness_raw}).
 
-\begin{figure}[ht]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{Images/missmap.png}
     \caption{Missingness Map des données avant la complétion.}
     \label{fig:missingness_raw}
 \end{figure}
 
-Afin de faire des prédictions sur nos données, nous avons besoin de nous débarasser des observations avec des valeurs \emph{NA}. Pour cela, on utilise la commande \mintinline{R}{na.omit}. On se retrouve avec $56420$ observations sur les $145460$ de base, ce qui est très peu. De plus, la plupart des lieux ne sont plus représentés comme nous l'indique la Figure \ref{fig:distrib_raw}.
+Afin de faire des prédictions sur nos données, nous avons besoin de nous débarrasser des observations avec des valeurs \emph{NA}. Pour cela, on utilise la commande \mintinline{R}{na.omit}. On se retrouve avec $56420$ observations sur les $145460$ de base, ce qui est très peu. De plus, la plupart des lieux ne sont plus représentés comme nous l'indique la Figure \ref{fig:distrib_raw}.
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{Images/distribution_lieux_raw.png}
     \caption{Distribution du nombre d'observations après un \emph{na.omit}.}
     \label{fig:distrib_raw}
 \end{figure}
 
-Nous allons donc chercher un moyen de compléter les valeurs \emph{NA}, et de le faire de façon à ne pas avoir trop de données redondantes et de garder une cohérence vis-à-vis des climats : nous allons copier les données d'un lieu à l'autre d'une certaine façon.
+Nous allons donc chercher un moyen de compléter les valeurs \emph{NA}, et de le faire de façon à ne pas avoir trop de données redondantes et de garder une cohérence vis-à-vis des climats.
 
 \subsection{Comment compléter ?}
 
-Pour compléter nos données, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons ceux qui ont plus de 20\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations et qui ont au moins 80\% de leurs observations complètes. Nous excluons ainsi les lieux dont nous n'avons pas les observations sur les dix années : lorsque nous complétons nos données, nous voulons que les dates coincident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observation sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. Le seuil de 80\% des données est choisi pour avoir un maximum d'observations sans \emph{NA} et pour être sûr d'avoir une ville depuis laquelle copier les données.
+Pour compléter nos données, nous allons regarder pour chaque variable quels sont les lieux qui ont besoin de complétion, disons ceux qui ont plus de 20\% de \emph{NA} pour cette variable, et quels sont ceux avec lesquels nous pouvons compléter : les autres qui ont plus de 2500 observations et qui ont au moins 80\% de leurs observations complètes. Nous excluons ainsi les lieux dont nous n'avons pas les observations sur les dix ans : lorsque nous complétons nos données, nous voulons que les dates coïncident pour ne pas perdre en cohérence, ainsi nous voulons compléter les données avec les lieux pour lesquels nous avons des observations sur la période maximale d'observation de notre base de données, soit plus de 2500 jours. Le seuil de 80\% des données est choisi pour avoir un maximum d'observations sans \emph{NA} et pour être sûr d'avoir une ville depuis laquelle copier les données.
 
-Lorsque nous copions les données d'un lieu à un autre, nous nous soucions donc de la date d'observation. Cependant, cela ne suffira pas. Nous avons vu en effet que les différents lieux observés appartiennet à des zones climatiques très différentes. Pour chaque variable, nous allons donc associer nos deux listes de lieux (ceux à compléter et ceux avec lesquels compléter) en cherchant les lieux les plus proches de la même zone climatique.
+Lorsque nous copions les données d'un lieu à un autre, nous nous soucions donc de la date d'observation. Cependant, cela ne suffira pas. Nous avons vu en effet que les différents lieux observés appartiennent à des zones climatiques très différentes. Pour chaque variable, nous allons donc associer nos deux listes de lieux (ceux à compléter et ceux avec lesquels compléter) en cherchant les lieux les plus proches géographiquement de la même zone climatique. 
 
-Au final, nous nous retrouvons avec une liste de couples pour chaque variable.
+Finalement, nous nous retrouvons avec une liste de couples pour chaque variable.
 
-Avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'un lieu pour un autre lieu, et nous le ferons de manière "intelligente", sans perte de cohérence par rapport aux climats des lieux observés. Nous pouvons afficher quelles données de quelles villes vont compléter quelle autre villes sur des cartes comme celle de la Figure \ref{fig:path_data}. On peut voir que pour les variables où il y avait le plus de \emph{NA}, beaucoup de lieux sont complétés. Dans d'autre cas moins extrêmes, nous n'avons copié les données que d'un lieu à un autre. 
+Avec cette méthode, nous allons copier jusqu'à 5 fois maximum les données d'un lieu pour un autre lieu, et nous le ferons de manière "intelligente", sans perte de cohérence par rapport aux climats des lieux observés. Nous pouvons afficher quelles données de quelles villes vont compléter quelles autres villes sur des cartes, cf. les Figures \ref{fig:path_data1} à \ref{fig:path_data4} de l'Annexe. On peut voir que pour les variables où il y avait le plus de \emph{NA}, beaucoup de lieux sont complétés. Dans d'autre cas moins extrêmes, nous n'avons copié les données que d'un seul lieu à un seul autre. 
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-02.png}
-    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-03.png}
-    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-04.png}
-    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-13.png}
-    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées.}
-    \label{fig:path_data}
-\end{figure}
 
 \subsection{Après complétion}
 
-Au final, le \emph{na.omit} nous donne une base de données avec $105546$ observations. On peut réafficher la missingness map et la distribution des observations par lieu (respectivement Figures \ref{fig:missingness_completed} et \ref{fig:distrib_completed})
+Finalement, le \emph{na.omit} nous donne une base de données avec $105546$ observations. On peut réafficher la \emph{missingness map} et la distribution des observations par lieu (respectivement Figures \ref{fig:missingness_completed} et \ref{fig:distrib_completed})
 
-\begin{figure}[ht]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.5\textwidth]{Images/missmap_completed.png}
     \caption{Missingness Map des données complétées.}
     \label{fig:missingness_completed}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{Images/distribution_lieux_completed.png}
     \caption{Distribution des observations par villes dans notre base de données finale.}
@@ -458,11 +455,11 @@ On remarque que certaines plages de dates n'ont pas été complétées pour cert
     \item Le lieu pour cette variable n'a pas été considéré comme à compléter, malgré quelques valeurs \emph{NA};
     \item Le lieu qui a servi pour la complétion certaines dates en moins que celles du lieu à compléter.
 \end{itemize}
-Le nombre d'observations de notre base de données finale reste cependant satisfaisante et tous les lieux y sont représentés.
+Le nombre d'observations de notre base de données finale reste cependant satisfaisant et tous les lieux sont représentés.
 
 \section{Relations entre les variables}
 
-Dans cette partie nous allons chercher les relations entre les variables.
+Dans cette partie nous allons chercher à mettre en lumière les relations entre les variables.
 
 \subsection{Corrélations entre les variables numériques}
 
@@ -479,64 +476,64 @@ Nous pouvons conclure de cette figure les points suivants :
 \begin{itemize}
     \item Concernant les variables de températures : 
     \begin{itemize}
-        \item MinTemp et MaxTemp sont deux variables corrélées (coeff. = 0.73). C'est un résultat attendu car ces deux valeurs sont les températures maximales et minimales de la même journée. 
+        \item MinTemp et MaxTemp sont deux variables corrélées (coeff. = 0.73). C'est un résultat attendu, car ces deux valeurs sont les températures maximales et minimales de la même journée. 
         \item Temp9am et Temp3pm sont fortement corrélées (coeff. = 0.83). Ce résultat était attendu pour la même raison qui explique la corrélation entre MinTemp et MaxTemp.
         \item MinTemp et Temp9am sont très corrélées (coeff. = 0.9). La température minimale d'une journée est atteinte aux alentours de 9h du matin, il est normal d'avoir ce résultat. 
         \item MaxTemp et Temp3pm sont très corrélées (coeff. = 0.94). La température maximale d'une journée est atteinte aux alentours de 15h, ce résultat était donc attendu. 
         \item Nous pouvons aussi remarquer que le couple Temp3pm et MinTemp et le couple Temp9am et MaxTemp sont aussi corrélés (coeff. resp. = 0.69 et 0.89). Comme ces variables sont corrélées entre elles deux à deux, il est normal de trouver ces corrélations. La température maximale est cependant plus corrélées à celle à 9h du matin que ne l'est la température minimale et la température à 15h. Cela peut s'expliquer par le fait qu'en fonction des saisons, le soleil se lève plus ou moins tôt, et que donc à 9h déjà, il peut faire très chaud. Dans tous les cas, il est normal que ces températures soient corrélées puisqu'il s'agit des écarts de températures d'une même journée. Ces derniers ne sont pas très importants et dépendent énormément de la saison (donc de la journée) comme nous l'avons vu Figure \ref{fig:temp_and_rainfall}. 
     \end{itemize}
-    \item La variable Latitude est corrélées positivement aux variables de températures (la température dépend des climats et ces climats sont très dépendants de la latitude comme on a pu le voir dans la partie cartographie).
-    \item Pression3am et Pression9pm sont très corrélées (coeff. = 0.96) pour les même raisons que les variables de température. Il en va de même pour Humidity3pm et Humidity9am (coeff = 0.66) et WindSpeed3pm et WindSpeed9am (0.49).
+    \item La variable Latitude est corrélée positivement aux variables de températures (la température dépend des climats et ces climats sont très dépendants de la latitude comme on a pu le voir dans la partie cartographie).
+    \item Pression9am et Pression3pm sont très corrélées (coeff. = 0.96) pour les mêmes raisons que les variables de température. Il en va de même pour Humidity3pm et Humidity9am (coeff = 0.66) et WindSpeed3pm et WindSpeed9am (0.49).
     \item WindSpeed3pm est corrélées positivement avec WindGustDir (coeff. = 0.66).
-    \item Les variables Cloud9am et Cloud3pm sont corrélées négativement avec la variable Sunshine (-0.57 et -0.55 respectivement) ce qui est logique car ils mesurent à peu près la même chose. 
+    \item Les variables Cloud9am et Cloud3pm sont corrélées négativement avec la variable Sunshine (-0.57 et -0.55 respectivement) ce qui est logique, car ils mesurent à peu près la même chose. 
     \item Les variables d'humidité sont corrélées négativement à MaxTemp (-0.48 et -0.5).
 \end{itemize}
 
-\subsection{Boxplots pour les variables à facteurs}
+\subsection{Boîtes à moustaches pour les variables à facteurs}
 
-Affichons maintenant les boxplots des valeurs des différents variables continues en fonction de nos variables à facteurs. 
+Affichons maintenant les Boîtes à moustaches des valeurs des différents variables continues en fonction de nos variables à facteurs. 
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{Images/boxplots/boxplot_Climate.png}
-    \caption{Boxplots pour la variable Climate}
+    \caption{Boîtes à moustaches pour la variable Climate}
     \label{fig:bp_climate}
 \end{figure}
 
-Pour la variable Climate (Figure \ref{fig:bp_climate}), on voit une fois de plus la différence entre les climats de désert et de plaine et les autres au niveau de leur humidité, cela se voit aussi avec les grandes valeurs de Rainfall. On peut aussi voir que les climats sont arrangés en couche du nord au sud de l'Australie, comme on pouvait voir sur la carte plus haut. En effet, la région tropicale est au nord du pays, comme l'indique la boîte à moustache concernant la Latitude. Tout au sud on trouve la région tempérée. On peut aussi trouver une différence de températures entre ces 5 climats, avec une distribution ressemblant celle de la Latitude : la région tropicale est la plus chaude, et la moins chauds est la région tempérée. 
+Pour la variable Climate (Figure \ref{fig:bp_climate}), on voit une fois de plus la différence entre les climats de désert et de plaine et les autres au niveau de leur humidité, cela se voit aussi avec les grandes valeurs de Rainfall. On peut aussi voir que les climats sont arrangés en couche du nord au sud de l'Australie, comme on pouvait voir sur la carte plus haut. En effet, la région tropicale est au nord du pays, comme l'indique la boîte à moustache concernant la Latitude. Tout au sud on trouve la région tempérée. On peut aussi trouver une différence de températures entre ces 5 climats, avec une distribution ressemblant à celle de la Latitude : la région tropicale est la plus chaude et la moins chaude est la région tempérée. 
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{Images/boxplots/boxplot_Season.png}
-    \caption{Boxplots pour la variable Season}
+    \caption{Boîtes à moustaches pour la variable Season}
     \label{fig:bp_season}
 \end{figure}
 
-Penchons-nous désormais sur les boîtes à moustache de la variable Season (Figure \ref{fig:bp_season}). On trouve la ditribution des températures auxquelles nous nous attendions : il fait plus chaud au été et moins en hiver. Ce même schéma est visible pour le taux d'ensolleillement (et donc un peu pour les variables des nuages). Les variables de pression et d'humidité évolues similairement : elles augmentent en hiver. En effet la pression peut changer en fonction des dépressions (qui apportent souvent le mauvais temps) ou la vitesse du vent \cite{frwiki:190112465}.
+Penchons-nous désormais sur les boîtes à moustaches de la variable Season (Figure \ref{fig:bp_season}). On trouve la distribution des températures auxquelles nous nous attendions : il fait plus chaud en été et moins en hiver. Ce même schéma est visible pour le taux d'ensoleillement (et donc un peu pour les variables des nuages). Les variables de pression et d'humidité évolues similairement : elles augmentent en hiver. En effet, la pression peut changer en fonction des dépressions (qui apportent souvent le mauvais temps) ou la vitesse du vent \cite{frwiki:190112465}.
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{Images/boxplots/boxplot_RainToday.png}
-    \caption{Boxplots pour la variable RainToday}
+    \caption{Boîtes à moustaches pour la variable RainToday}
     \label{fig:bp_raintoday}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{Images/boxplots/boxplot_RainTomorrow.png}
-    \caption{Boxplots pour la variable RainTomorrow}
+    \caption{Boîtes à moustaches pour la variable RainTomorrow}
     \label{fig:bp_raintomorrow}
 \end{figure}
 
-Jetons maintenant un coup d'oeil aux boîtes des variables RainToday (Figure \ref{fig:bp_raintoday}) et RainTomorrow (Figure \ref{fig:bp_raintomorrow}). Comme on peut s'y attendre elles sont très similaires. En effet, d'un jour au lendemain, il n'y a pas de changement énorme. Comme ces deux variables sont liées (Si RainToday alors RainTomorrow pour le jour d'avant), nous avons ces similarités. Une différence notable est celle des boîtes affichées pour la variable Rainfall : par construction de la variable RainToday, il n'y à pas d'observations ou Rainfall a une valeur supérieure à 0 et ou RainToday est à 1. Ça n'est pas le cas pour RainTomorrow évidemment, il y aura toujours un moment ou il pleut aujourd'hui mais il ne pleuvra pas demain (sinon la pluie ne s'arrêterait jamais).
+Jetons maintenant un coup d'œil aux boîtes des variables RainToday (Figure \ref{fig:bp_raintoday}) et RainTomorrow (Figure \ref{fig:bp_raintomorrow}). Comme on peut s'y attendre elles sont très similaires. En effet, d'un jour au lendemain, il n'y a pas de changement énorme. Comme ces deux variables sont liées (Si RainToday alors RainTomorrow pour le jour d'avant), nous avons ces similarités. Une différence notable est celle des boîtes affichées pour la variable Rainfall : par construction de la variable RainToday, il n'y a pas d'observations ou Rainfall a une valeur supérieure à 0 et ou RainToday est à 1. Ça n'est pas le cas pour RainTomorrow évidemment, il y aura toujours un moment ou il pleut aujourd'hui mais il ne pleuvra pas demain (sinon la pluie ne s'arrêterait jamais).
 
-Comme on peut s'y attendre, les variables d'humidité sont plus elevée lorsqu'il pleut (RainToday). On peut voir cependant ces mêmes différences pour RainTomorrow, avec quelques variations : l'humidité à 15h et à 9h est plus elevée lorsqu'il pleut le lendemain (cette différence est surtout notable pour Humidity3pm, les distances inter-quartiles ne se chevauchent presque pas).
+Comme on peut s'y attendre, les variables d'humidité sont plus élevées lorsqu'il pleut (RainToday). On peut voir cependant ces mêmes différences pour RainTomorrow, avec quelques variations : l'humidité à 15h et à 9h est plus élevée lorsqu'il pleut le lendemain (cette différence est surtout notable pour Humidity3pm, les distances interquartiles ne se chevauchent presque pas). Cette variable est peut-être une des plus importantes dans la prévision de RainTomorrow.
 
 \part{Prédiction}
 
 Maintenant que notre base de données est prête que nous la connaissons plus en détail, nous pouvons commencer à créer nos modèles de prédiction. Commençons tout d'abord par faire une analyse en composantes principales, pour avoir une meilleure idée de la distribution des observations.
 
-\section{ACP}
+\section{ACP et déséquilibre}
 
 Rappelons tout d'abord la distribution des observations où il pleut le lendemain et où il ne pleut pas : 
 
@@ -551,7 +548,7 @@ Rappelons tout d'abord la distribution des observations où il pleut le lendemai
             1 & 23179 & 21.96 \\
             \hline
         \end{tabular}
-    \caption{Distribution des valeurs de la variable RainTomorrow dans nos données finales.}
+    \caption{Distribution des valeurs de RainTomorrow.}
 \end{table}
 
 Et lorsque l'on affiche une analyse en composantes principales de ces observations, et en les colorant en fonction de leur valeur de RainTomorrow, on obtient le graphique de la Figure \ref{fig:pca_raintomorrow}.
@@ -565,7 +562,7 @@ Et lorsque l'on affiche une analyse en composantes principales de ces observatio
 
 Nous allons donc chercher un moyen de séparer ces deux groupes pour faire des prédictions. On voit déjà (avec 44.06\% de l'information, l'axe 1 représentant 27.94\% et l'axe 2 16.12\%) que les observations pour lesquelles il pleut le lendemain sont un peu séparées de celles ou il ne pleut pas. On voit d'ailleurs bien le déséquilibre de nos données sur ce graphique.
 
-On peut noter par ailleurs que les variables d'humidité et les nuages sont importantes pour différencier ces deux groupes. En effet les valeurs de ces variables sont plus élevées pour RainTomorrow = 1. A l'inverse, lorsque la valeur de Sunshine est élevée on va plutôt vers le groupe RainTomorrow = 0. On peut aussi s'amuser à regarder les 2 composantes principales suivantes pour avoir un autre point de vue (on a cette fois-ci 28.51\% de l'information, Figure \ref{fig:pca_raintomorrow2}).
+On peut noter par ailleurs que les variables d'humidité et les nuages sont importantes pour différencier ces deux groupes. En effet, les valeurs de ces variables sont plus élevées pour RainTomorrow = 1. À l'inverse, lorsque la valeur de Sunshine est élevée, on va plutôt vers le groupe RainTomorrow = 0. On peut aussi s'amuser à regarder les 2 composantes principales suivantes pour avoir un autre point de vue (on a cette fois-ci 28.51\% de l'information, Figure \ref{fig:pca_raintomorrow2}).
 
 \begin{figure}[htp]
     \centering
@@ -586,17 +583,17 @@ Dans cette partie nous allons prendre telle quelle la base de données, sans nou
     \item Un modèle de Random Forest
 \end{itemize}
 
-Evidemment, nous séparerons nos données en deux échantillon : un échantillon d'apprentissage (dataApp), correspondant à 80\% des données choisies de manière aléatoire, et un échantillon pour les tests (dataTest) correspondant aux 20\% restants.
+Évidemment, nous séparerons nos données en deux échantillons : un échantillon d'apprentissage (dataApp), correspondant à 80\% des données choisies de manière aléatoire et un échantillon pour les tests (dataTest) correspondant aux 20\% restants.
 
-Nous allons construire ces modèles sur différentes "versions" de notre base de données : équilibrée ou non, avec du \emph{one-hot encoding} ou non, centrées ou non (à chaque fois séparés en dataApp et dataTest). 
+Nous allons construire ces modèles sur différentes "versions" de notre base de données : équilibrée ou non, avec du \emph{one-hot encoding} ou non (à chaque fois séparés en dataApp et dataTest), afin de mettre en évidence l'utilité de ces étapes supplémentaires.
 
-\subsection{Le \emph{One-hot encoding}}
+\subsection{Le \emph{one-hot encoding}}
 
 Lorsque nous avons une variable à plusieurs niveaux, dans notre cas les variables Climate et Season, nous pouvons les transformer pour nous servir de l'information qu'elles nous procurent avec des variables numériques. 
 
-Pour chaque niveau de la variable, nous allons créer une variable. Ainsi, comme nous avons 4 saisons, nous aurons 4 nouvelles variables : Season.1, Season.2, Season.3 et Season.4. Comme nous avons déjà fait un travail pour réduire le nombre de niveaux pour les variables avec des facteurs, nous n'aurons pas beacoup plus de colonnes dans notre base de données. 
+Pour chaque niveau de la variable, nous allons créer une variable. Ainsi, comme nous avons 4 saisons, nous aurons 4 nouvelles variables : Season.1, Season.2, Season.3 et Season.4. Comme nous avons déjà fait un travail pour réduire le nombre de niveaux pour les variables avec des facteurs, nous n'aurons pas beaucoup plus de colonnes dans notre base de données. 
 
-Pour remplir ces nouvelles variables, nous allons mettre un "1" dans la colonne qui correspond au niveau de la saison de la mesure et "0" dans les autres. Imaginons en effet qu'une observation ai eu lieu en Autmone (c'est-à-dire que sa valeur pour la variable Season est 2), alors les 4 colonnes seront remplies de la façon, suivante : 
+Pour remplir ces nouvelles variables, nous allons mettre un "1" dans la colonne qui correspond au niveau de la saison de la mesure et "0" dans les autres. Imaginons en effet qu'une observation a eu lieu en automne (c'est-à-dire que sa valeur pour la variable Season est 2), alors les 4 colonnes seront remplies de la façon suivante : 
 
 \begin{table}[H]
     \centering
@@ -607,9 +604,10 @@ Pour remplir ces nouvelles variables, nous allons mettre un "1" dans la colonne 
         0 & 1 & 0 & 0 \\
         \hline
     \end{tabular}
+    \caption{\emph{one-hot encoding} de la variable Season sur une observation d'automne}
 \end{table}
 
-Nous faisons de même avec Climate. Ainsi nous passons de 2 colonnes à 9 (extrait du début des variables) : 
+Nous faisons de même avec Climate. Ainsi nous passons de 2 colonnes à 9 : 
 
 \begin{table}[ht]
     \centering
@@ -627,15 +625,16 @@ Nous faisons de même avec Climate. Ainsi nous passons de 2 colonnes à 9 (extra
             \hline
         \end{tabular}
     }
+    \caption{Extrait du début des variables après \emph{one-hot encoding} des variables Season et Climate.}
 \end{table}
 
-Nous voila maintenant avec une base de données ne contenant que des variables numériques et une variable (RainTomorrow) de facteurs. Nous pouvons utiliser des techniques d'upSampling comme le SMOTE (nous rentrerons dans les détails plus tard), et nous pourrons voir si cela change quelque chose aux performances des modèles.
+Nous voilà maintenant avec une base de données ne contenant que des variables numériques et une variable (RainTomorrow) de facteurs. Nous pouvons utiliser des techniques d'up-sampling comme le SMOTE (nous rentrerons dans les détails plus tard).
 
 \subsection{Une première régression linéaire logistique}
 
-Commençons par un modèle de régression logistique. Pour cela, nous allons utiliser la fonction \emph{glm} du paquet \emph{stats} de R. En utilisant le paramètre "family = binomial", nous pouvons faire une régression logistique, qui prend en compte les variables factorielles. Nous ne faisons donc pas encore de \emph{one-hot encoding} et gardons la base de données telle quelle. Notons aussi que nous ne centrons et réduisons pas les données numériques.
+Commençons par un modèle de régression logistique. Pour cela, nous allons utiliser la fonction \emph{glm} du paquet \emph{stats} de R. En utilisant le paramètre "family = binomial", nous pouvons faire une régression logistique, qui prend en compte les variables factorielles. Nous ne faisons donc pas encore de \emph{one-hot encoding} et gardons la base de données telle quelle. 
 
-Un summary de ce modèle nous montre : 
+Un \emph{summary} de ce modèle nous montre : 
 \begin{minted}{R}
     Call:
     glm(formula = RainTomorrow ~ ., family = binomial, data = dataApp)
@@ -690,9 +689,9 @@ Un summary de ce modèle nous montre :
 
 On remarque que la fonction a fait elle-même le \emph{one-hot encoding}, et on retrouve des variables supplémentaires pour les différents niveaux des variables à niveaux. On remarque cependant qu'il y en a à chaque fois une de moins que le nombre de niveaux : en fait, cela suffit à donner l'information du dernier niveau si dans tous ceux déjà présent nous avons "0". En effet, si pour une observation nous avons les variables Climate "2" à "5" égales à "0", alors nous savons que cette observation est dans une région climatique "1". 
 
-Chose intéressante : si d'ailleurs on relançait cette fonction avec nos données après le \emph{one-hot encoding} que nous avons spécifié plus haut, nous verrons devant chacune des colonnes "redondantes" un coefficient égal à \emph{NA} (nous verrons ceci après le SMOTE).
+Chose intéressante : si d'ailleurs on relançait cette fonction avec nos données après le \emph{one-hot encoding} que nous avons spécifié plus haut, nous verrons devant chacune des colonnes "redondantes" un coefficient égal à \emph{NA} (nous verrons ceci après la méthode SMOTE).
 
-La première chose que nous pouvons remarquer de cette sortie R est que nous avons des coefficients qui ne peuvent pas être jugés comme significativement non nuls. En effet pour les variables Evaporation, WindGustDir, WindDir3pm, Cloud9am et Latitude, la p-value du test de Student est bien supérieure à 0.05. Nous pouvons donc mettre en oeuvre une sélection pas-à-pas de ces régresseurs.  
+La première chose que nous pouvons remarquer de cette sortie R est que nous avons des coefficients qui ne peuvent pas être jugés comme significativement non nuls. En effet, pour les variables Evaporation, WindGustDir, WindDir3pm, Cloud9am et Latitude, la p-value du test de Student est bien supérieure à 0.05. Nous pouvons donc mettre en œuvre une sélection pas-à-pas de ces régresseurs.  
 
 La fonction \emph{confusionMatrix} du paquet \emph{caret} nous permet de voir rapidement les performances de notre modèle. Sur dataApp (à gauche) et dataTest (à droite) : 
 
@@ -757,10 +756,10 @@ La fonction \emph{confusionMatrix} du paquet \emph{caret} nous permet de voir ra
 
 Analysons ligne à ligne ces sorties : 
 \begin{itemize}
-    \item Nous avons tout en haut la matrice de contingence, qui nous montre la table des valeurs prédites contre les valeurs attendues. On voit que l'on a bien classé 62 377 observations en prédisant qu'il ne pleuvrait pas le lendemain. On retrouve le déséquilibre des données que nous avions déjà remarqué, car nous avons seulement ~17000 observations pour lesquelles il pleut le lendemain dans cet échantillon (idem pour l'échantillon dataTest à droite).
-    \item On peut voir que sur les deux échantillons, nous avons une précision de 84\%, nous ne notons donc pas beaucoup de sur-apprentissage, donc pas de dégradation d'un échantillon à l'autre.
-    \item Le No Information Rate nous indique la précision que nous aurons eu si nous avions prédit "0" pour toutes les observations. On voit que cette précision est très haute, de 78\%, à cause encore une fois du déséquilibre de nos données. 
-    \item Cependant, la p-value donnée en dessous nous fait rejeter l'hypothèse au risque de 5\% que les performances sont les mêmes entre notre régression et le cas où nous n'aurions pas de régresseurs (si nous prenions "0" pour toutes les prédictions). Notre modèle n'est donc pas complètement inutile.
+    \item Nous avons tout en haut la matrice de contingence, qui nous montre la table des valeurs prédites contre les valeurs attendues. On voit que l'on a bien classé $62377$ observations en prédisant qu'il ne pleuvrait pas le lendemain. On retrouve le déséquilibre des données que nous avions déjà remarqué, car nous avons seulement $~17000$ observations pour lesquelles il pleut le lendemain dans cet échantillon (idem pour l'échantillon dataTest à droite).
+    \item On peut voir que sur les deux échantillons, nous avons une précision de 84\%, nous ne notons donc pas beaucoup de sur-apprentissage : pas beaucoup de dégradation d'un échantillon à l'autre.
+    \item Le \emph{No Information Rate} nous indique la précision que nous aurons eu si nous avions prédit "0" pour toutes les observations. On voit que cette précision est très haute, de 78\%, à cause encore une fois du déséquilibre de nos données. 
+    \item Cependant, la p-value donnée en dessous nous fait rejeter l'hypothèse au risque de 5\% que les performances sont les mêmes entre notre régression et le cas où nous n'aurions pas de régresseurs (si nous prenions "0" pour toutes les prédictions). Notre modèle prédit donc tout de même quelque chose.
     \item Plus bas, nous pouvons voir que nous avons une sensitivité d'environ 94\% pour les deux échantillons. Cela correspond au nombre de prédictions de "0" qui sont bien classées sur tous les "0" attendus. En revanche, la spécificité (le taux de bonnes prédictions de "1" sur tous les "1" attendus) est seulement de 47\%. Il s'agit encore une fois d'une conséquence du déséquilibre de nos données : le modèle sait très bien reconnaître les jours où il ne pleuvra pas le lendemain, car ce sont les observations que nous lui avons données en majorité pour s'entraîner.
     \item La valeur prédictive positive est la probabilité que la condition soit présente lorsque le test est positif, elle est ici de 86\%. La valeur prédictive négative est la probabilité que la condition ne soit pas présente lorsque le test est négatif, elle est ici de 72\% \cite{frwiki:183891886}. "Positif" dans notre cas est la prédiction que RainTomorrow soit à "0", c'est-à-dire qu'on prédise qu'il ne pleut pas. Ainsi lorsque le modèle prédit qu'il va pleuvoir le lendemain d'une observation, il y a 72\% de chance qu'il ait raison.
     \item La prévalence est le score que nous aurions eu si nous avions prédit "0" pour toutes les observations.
@@ -769,11 +768,11 @@ Analysons ligne à ligne ces sorties :
 
 Nous voyons donc bien le problème que posent des données déséquilibrées. Sans plus attendre, essayons de résoudre ce problème. Nous avons ici plusieurs possibilités. Nous pouvons faire de l'up ou down sampling, ou bien utiliser une méthode un peu plus sophistiquée : SMOTE.
 
-\subsection{\emph{up sampling}}
+\subsection{\emph{up-sampling}}
 
-La fonction \emph{upSample} du paquet \emph{caret} nous permet de ré-échantillonner de manière aléatoire notre base de données afin d'avoir le même nombre d'observations avec RainTomorrow égal à 1 et égal à 0. Cependant, cela à pour conséquence de réduire le nombre d'observations total. Comme nous avons 23179 observations avec RainTomorrow = 1, nous n'aurons plus alors que 23719 observations avec RainTomorrow = 0, ce qui nous emmènera loin des initiales ~140000 observations de la base de données initiale. Nous privilégierons donc l'up sampling, qui fait la même chose, mais copie les données en minorité afin d'avoir 50\% de chaque. Cette dernière méthode ajoute néanmoins beaucoup de données redondantes. En effet, à partir des 23179 observations que nous avons avec RainTomorrow égal à 1, nous allons en copier une partie de manière aléatoire. Cela aura pour conséquence d'avoir beaucoup d'informations redondantes. Cependant, nous pouvons utiliser cette méthode sur tout type de variables (quantitatives et qualitatives), et donc n'avons pas besoin d'utiliser le \emph{one-hot encoding} par exemple. 
+La fonction \emph{upSample} du paquet \emph{caret} nous permet de ré-échantillonner de manière aléatoire notre base de données afin d'avoir le même nombre d'observations avec RainTomorrow égal à 1 et égal à 0. Cependant, cela à pour conséquence de réduire le nombre d'observations total. Comme nous avons 23179 observations avec RainTomorrow = 1, nous n'aurons plus alors que $23719$ observations avec RainTomorrow = 0, ce qui nous emmènera loin des initiales $~140000$ observations de la base de données initiale. Nous privilégierons donc l'up-sampling, qui fait la même chose, mais copie les données en minorité afin d'avoir 50\% de chaque. Cette dernière méthode ajoute néanmoins beaucoup de données redondantes. En effet, à partir des 23179 observations que nous avons avec RainTomorrow égal à 1, nous allons en copier une partie de manière aléatoire. Cela aura pour conséquence d'avoir beaucoup d'informations redondantes. Cependant, nous pouvons utiliser cette méthode sur tout type de variables (quantitatives et qualitatives), et donc n'avons pas besoin d'utiliser le \emph{one-hot encoding} par exemple. 
 
-Au final on voit bien qu'on a beaucoup plus de points bleus sur notre distribution (Figure \ref{fig:pca_raintomorrow_up}).
+Finalement, on voit bien qu'on a beaucoup plus de points bleus sur notre distribution (Figure \ref{fig:pca_raintomorrow_up}).
 
 \begin{figure}[htp]
     \centering
@@ -784,7 +783,7 @@ Au final on voit bien qu'on a beaucoup plus de points bleus sur notre distributi
 
 \subsection{Impact sur les performances de la régression logistique}
 
-Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accuracy} de 77\% pour les deux échantillons (pas trop de surapprentissag encore une fois), pour une sensibilité de 78\% et une spécificité de 76\%. Nous avons donc équilibré les bonnes prédictions des deux classes, et d'ailleurs nous pouvons voir que la prévalence est égale à 0.5, car nous avons exactement 50\% d'observations pour chaque classes. 
+Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accuracy} de 77\% pour les deux échantillons (pas trop de surapprentissage encore une fois), pour une sensibilité de 78\% et une spécificité de 76\%. Nous avons donc équilibré les bonnes prédictions des deux classes, et d'ailleurs nous pouvons voir que la prévalence est égale à 0.5, car nous avons exactement 50\% d'observations pour chaque classe. 
 
 \begin{multicols}{2}
     \begin{minted}{text}
@@ -821,19 +820,19 @@ Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accur
 
 \subsubsection{Principe de la méthode}
 
-Penchons-nous alors sur la méthode SMOTE (Synthetic Minority Oversampling Technique). Cette méthode a pour but de créer de nouvelles observations dans le groupe de celles en minorité. Elle va faire en cela en traçant des lignes entre des observations proches au niveau de leur modalité et prendre un point sur cette ligne, créant ainsi une nouvelle observations \cite{smote}. 
+Penchons-nous alors sur la méthode SMOTE (Synthetic Minority Oversampling Technique). Cette méthode a pour but de créer de nouvelles observations dans le groupe de celles en minorité. Elle va faire en cela en traçant des lignes entre des observations proches au niveau de leur modalité et prendre un point sur cette ligne, créant ainsi une nouvelle observation \cite{smote}. 
 
-On peut imaginer cela en 2D sur le graphe de l'ACP. On trace une droite entre deux points très proches, et on prend le milieu de cette droite. on peut alors lire la valeurs de chaque variable sur les axes. Evidemment, il s'agit de faire cela en dimension n (n étant le nombre de modalités -de variables- que nous avons).
+On peut imaginer cela en 2D sur le graphe de l'ACP. On trace une droite entre deux points très proches, et on prend le milieu de cette droite. On peut alors lire la valeur de chaque variable sur les axes. Évidemment, il s'agit de faire cela en dimension n (n étant le nombre de modalités -de variables- que nous avons).
 
-De plus, la méthode fait ça en prenant un échantillon aléatoire dans le groupe minoritaire, et en le faisant plusieurs fois.
+De plus, la méthode fait ceci en prenant un échantillon aléatoire dans le groupe minoritaire, et en le faisant plusieurs fois.
 
-Cette méthode est efficace car elle créé des observations qui sont cohérentes avec la réalité. Un problème qu'il peut y avoir cependant, est que la classe majoritaire n'est pas prise en compte, et cela pose un problème pour les classes qui se superposent beaucoup. 
+Cette méthode est efficace, car elle créé des observations qui sont cohérentes avec la réalité. Un problème qu'il peut y avoir cependant, est que la classe majoritaire n'est pas prise en compte, et cela pose un problème pour les classes qui se superposent beaucoup. 
 
 Nous utiliserons la méthode \emph{SMOTE} du paquet \emph{smotefamily}.
 
-La question que nous devons nous poser avant d'utiliser cette méthode set : que faire des variables à facteurs ? C'est ici que la technique de \emph{one-hot encoding} entre en jeu. Une fois que nous n'aurons plus que des variables à deux niveaux (0 ou 1), nous pourrons les considérer comme des variables numériques. Nous aurons ainsi des valeurs entre 0 et 1 pour ces variables, ce qui peut représenter la ressemblance de la nouvelle observations avec tel ou tel climat, tel ou tel saison. 
+La question que nous devons nous poser avant d'utiliser cette méthode set : que faire des variables à facteurs ? C'est ici que la technique de \emph{one-hot encoding} entre en jeu. Une fois que nous n'aurons plus que des variables à deux niveaux (0 ou 1), nous pourrons les considérer comme des variables numériques. Nous aurons ainsi des valeurs entre 0 et 1 pour ces variables, ce qui peut représenter la ressemblance de la nouvelle observation avec tel ou tel climat, telle ou telle saison. 
 
-Au final nous nous retrouvons avec une base de données avec la distribution suivante : 
+Nous nous retrouvons avec une base de données avec la distribution suivante : 
 
 \begin{table}[H]
     \centering
@@ -882,36 +881,44 @@ Au final nous nous retrouvons avec une base de données avec la distribution sui
     \end{minted}
 \end{multicols}
 
-Les performances sont un tout petit peu meilleures (d'un simple \%). Nous privilégions cependant cette méthode car elle créée moins de redondances dans nos données que l'upsampling. 
+Les performances sont un tout petit peu meilleures (d'un simple \%) qu'avec l'up-sampling. Nous privilégions cependant cette méthode, car elle créé moins de redondances dans nos données. 
 
 \subsection{Limites de la régression linéaire}
 
 Il semblerait donc que l'on ne puisse pas faire beaucoup mieux avec la régression linéaire tout en gardant une cohérence dans les données par rapport à la réalité. Nous pouvons cependant avoir une idée des variables moins importantes dans la prédiction de la pluie en faisant une backward selection. 
 
-On fait cette selection grâce à la fonction \emph{step}. Cette dernière utilise pour cela le score AIC (Akaike information criterion). Au final, nous nous sommes débarassés des regresseurs suivants : 
-
+On fait cette sélection grâce à la fonction \emph{step}. Cette dernière utilise pour cela le score AIC (Akaike information criterion). Finalement, nous nous sommes débarrassés des regresseurs suivants : 
 \begin{itemize}
     \item Les variables de Climats et de Season qui étaient "superflues" (dû à notre façon d'avoir fait le \emph{one-hot encoding}, nous avions une classe supplémentaire comme expliqué plus haut), soient les variables Season.4 et Climate.4. 
     \item Cloud9am
     \item Latitude
 \end{itemize}
-
-Pour un modèle ayant les même valeurs de Null deviance et Residual deviance (respectivement 167600 et 111918) et pour un AIC passant de 111978 à 111975. Par ailleurs, si on effectue un test de McNemar sur les deux modèles, on a une p-value de 0.04, on rejette donc l'hypothèse H0 est on peut dire au risque de 5\% que les deux modèles ont des performances différentes. Cette selection à pas descendante nous a donc un tout petit peu coûté en performances (on passe d'une \emph{Balanced Accuracy} de 0.7769 à 0.7767).
-
-Le paquet \emph{ggplot2} nous offre une fonction \emph{autoplot} qui nous permet d'afficher des graphiques utiles à l'analyse de notre modèle. Nous l'utilisons sur le modèle de régression réduit (Figure \ref{fig:autoplot_glm})
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=\textwidth]{Images/autoplot_glm.png}
-    \caption{Grpahiques obtenus avec \emph{autoplot}, de haut en bas de gauche à droite : Résidus vs Valeurs prédites, Q-Q plot, }
-    \label{fig:autoplot_glm}
-\end{figure}
-
-On peut voir déjà pour les graphiques Residuals vs Fitted et Scale-Location, nous avons deux "lignes" qui aparraissent : ceci est du au fait que nous cherchons à prédire une variable binaire. 
+Pour avoir un modèle ayant les mêmes valeurs de \emph{Null deviance} et \emph{Residual deviance} (respectivement 167600 et 111918) et pour un AIC passant de 111978 à 111975. Par ailleurs, si on effectue un test de McNemar sur les deux modèles, on a une p-value de 0.04, on rejette donc l'hypothèse H0 et on peut dire au risque de 5\% que les deux modèles ont des performances différentes. Cette sélection à pas descendante semble donc nous avoir un tout petit peu coûté en performances, on passe cependant d'une \emph{Balanced Accuracy} de 0.7769 à 0.7767.
 
 \section{Autres modèles de prédiction}
 
 Dans cette partie nous garderons la base de données modifiée avec la méthode SMOTE. Nous le rappelons, nous avons modifié avant cela les variables à niveaux en plusieurs variables numériques. 
+
+\subsection{LDA et QDA}
+
+Pour construire ces modèles, nous nous servons de la base de données après SMOTE, mais nous devons retirer les colonnes "superflues" de Climate et Season. En effet, elles sont en réalité des combinaisons linéaires de toutes les autres et sont donc colinéaires. Ceci pose un problème de stabilité pour ces deux méthodes. Nous trouvons les performances suivantes : 
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|r|rrr|}
+        \hline
+        & Sensitivity & Specificity & Balanced Accuracy \\ 
+        \hline
+        lda & 0.82 & 0.72 & 0.77 \\ 
+        qda & 0.77 & 0.78 & 0.77 \\ 
+        \hline
+        \hline
+        lda test & 0.83 & 0.73 & 0.78 \\ 
+        qda test & 0.78 & 0.78 & 0.78 \\ 
+        \hline
+    \end{tabular}
+\end{table}
+
+Un test de McNemar ne nous fait pas rejeter au risque de 5\% l'hypothèse de mêmes performances. On peut donc considérer qu'ils sont autant performants. Cependant, la méthode de QDA semble moins sensible au léger déséquilibre de nos données et prédit mieux les jours pour lesquels il pleut le lendemain. 
 
 \subsection{Arbres CART}
 
@@ -976,7 +983,7 @@ yt.tmax     0     1
     \end{minted}
 \end{multicols}
      
-On voit tout de suite que les performances sont bien meilleures : pour l'échantillon test nous avons une \emph{balanced Accuracy} de 83.57\%. 
+On voit tout de suite que les performances sont bien meilleures : pour l'échantillon test, nous avons une \emph{balanced Accuracy} de 83.57\%. 
 
 On peut élaguer cet arbre afin d'en avoir un à 42 feuilles (avec une valeur de $cp=0.001$). On peut donc l'afficher (Figure \ref{fig:topt}). 
 
@@ -987,7 +994,7 @@ On peut élaguer cet arbre afin d'en avoir un à 42 feuilles (avec une valeur de
     \label{fig:topt}
 \end{figure}
 
-Avec ce nombre de feuille, on garde quand même une \emph{Balanced Accuracy} de 81.47\%, pour une sensibilité de 86.89\% et une spécificité de 76.05\%. On peut aussi classer les variables par ordre d'importance pour ces prédictions : on voit que la plus importante de loin est Humidity3pm (comme on avait vu sur les boîtes à moustaches), Rainfall et RainToday. Les trois suivantes ont un score d'importance plus faible : il s'agit de Humidity9am, Sunshine et Temp3pm.
+Avec ce nombre de feuilles, on garde quand même une \emph{Balanced Accuracy} de 81.47\%, pour une sensibilité de 86.89\% et une spécificité de 76.05\%. On peut aussi classer les variables par ordre d'importance pour ces prédictions : on voit que la plus importante de loin est Humidity3pm (comme on avait vu sur les boîtes à moustaches), Rainfall et RainToday. Les trois suivantes ont un score d'importance plus faible : il s'agit de Humidity9am, Sunshine et Temp3pm.
 
 Les variables les moins importantes sont : Cloud9am, Season.2 (l'automne), Longitude, Evaporation, WindDir3pm, WindDir9am, Latitude, WindGustDir et toutes les variables des climats.
 
@@ -1061,7 +1068,7 @@ On voit que les performances sont similaires, en effet, un test de McNemar nous 
 
 \subsection{Comparaisons globales}
 
-Nous comparons ici les sensibilité, spécificité et balanced accuracy de tous les modèles que nous avons vu (ainsi que deux supplémentaires, LDA et QDA). 
+Nous comparons ici les sensibilités, spécificités et balanced accuracies de tous les modèles que nous avons vu. 
 
 \begin{table}[ht]
     \centering
@@ -1091,10 +1098,49 @@ Nous comparons ici les sensibilité, spécificité et balanced accuracy de tous 
     \end{tabular}
 \end{table}
 
-On peut voir que le meilleur modèle est la Random Forest. Comme nous n'avons pas de différence de performances sur dataTest pour les deux types de modèles (avec deux valeurs de maxnodes), nous privilégierons celui avec \emph{maxnodes = 1000}. Au final, ce dernier avait une précision (pas celle \emph{balanced}) de 86.11\%.
+On peut voir que le meilleur modèle est la Random Forest. Comme nous n'avons pas de différence de performances sur dataTest pour les deux types de modèles (avec deux valeurs de maxnodes), nous privilégierons celui avec \emph{maxnodes = 1000}. Ce dernier avait une précision "régulière" (pas celle \emph{balanced}) de 86.11\%.
 
 \newpage
 \Urlmuskip=0mu plus 2mu
 \printbibliography
 
+\newpage
+\section{Annexe}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-01.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-02.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-03.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-04.png}
+    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées 1/4.}
+    \label{fig:path_data1}
+\end{figure}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-05.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-06.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-07.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-08.png}
+    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées 2/4.}
+    \label{fig:path_data2}
+\end{figure}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-09.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-10.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-11.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-12.png}
+    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées 3/4.}
+    \label{fig:path_data3}
+\end{figure}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-13.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-14.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-15.png}
+    \includegraphics[width=0.45\textwidth]{Images/Australia_map_segments_complete/Australia_map_segments_complete-16.png}
+    \caption{Chemin des observations copiées (ville de départ et ville(s) d'arrivée(s)) pour certaines des variables complétées 4/4.}
+    \label{fig:path_data4}
+\end{figure}
 \end{document}
