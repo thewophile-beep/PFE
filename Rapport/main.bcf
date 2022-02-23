@@ -2349,9 +2349,10 @@
     <bcf:citekey order="3">wgs84</bcf:citekey>
     <bcf:citekey order="4">enwiki:1065796786</bcf:citekey>
     <bcf:citekey order="5">frwiki:181713838</bcf:citekey>
-    <bcf:citekey order="6">frwiki:190112465</bcf:citekey>
-    <bcf:citekey order="7">frwiki:183891886</bcf:citekey>
-    <bcf:citekey order="8">smote</bcf:citekey>
+    <bcf:citekey order="6">frwiki:190163125</bcf:citekey>
+    <bcf:citekey order="7">frwiki:190112465</bcf:citekey>
+    <bcf:citekey order="8">frwiki:183891886</bcf:citekey>
+    <bcf:citekey order="9">smote</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="ynt">
