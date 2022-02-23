@@ -82,7 +82,7 @@
 \listoftables
 \newpage
 
-\part*{Introduction}
+\part{Introduction}
 Ce projet a été réalisé dans le cadre du PFE (Projet de Fin d'Études), réalisé en 5ème année de la formation de Génie Mathématique à l'INSA Rouen Normandie. Le sujet de ce projet est : "Utilisation d’algorithmes de machines learning pour la résolution d’un challenge Kaggle". Il est encadré par M. Bruno Portier.  
 
 La base de données Kaggle choisie ici est "Rain in Australia", qui regroupe des informations gouvernementales sur la météo en Australie. Le but de ce "challenge" est de réaliser un algorithme de machine learning pour prédire s'il pleut le lendemain d'une journée donnée. 
@@ -1099,18 +1099,18 @@ Nous comparons ici les sensibilités, spécificités et balanced accuracies de t
 On peut voir que le meilleur modèle est la Random Forest. Comme nous n'avons pas de différence de performances sur dataTest pour les deux types de modèles (avec deux valeurs de maxnodes), nous privilégierons celui avec \emph{maxnodes = 1000}. Ce dernier avait une précision "régulière" (pas celle \emph{balanced}) de 86.11\%.
 
 \newpage
-\part*{Conclusion}
+\part{Conclusion}
 
 Dans ce projet, nous avons analysé la base de données "Rain in Australia" du site Kaggle. En résumé, nous avons trouvé une manière de compléter nos données incomplètes grâce aux données géographiques que nous avons trouvé sur en ligne. Ensuite, nous avons vu des méthodes de rééchantillonnage pour régler des problèmes de déséquilibrage. Enfin, nous avons construit quelques modèles de prédiction pour en choisir un, le plus performant : la Random Forest avec 1000 nodes maximum pour les arbres des décision, nous donnant ainsi une précision de 86.11\%. 
 
-Sur le site Kaggle, certains obtiennent à peu près le même score que nous, mais d'autres arrivent à de meilleurs résultats. Cela peut être dû à la façon dont nous avons complété et / ou ré-échantilloné nos données. Cela peut aussi être dû au modèle : certains utilisent des réseaux de neurones. Le problème de cette dernière méthode est l'explicabilité. En effet, avec les méthodes que nous avons utilisé, nous pouvons dresser les listes des variables qui sont importantes et moins importantes dans la prédiction de la pluie, ce qui peut être plus compliqué avec un réseau de neurone. 
+Sur le site Kaggle, certains obtiennent à peu près le même score que nous, mais d'autres arrivent à de meilleurs résultats. Cela peut être dû à la façon dont nous avons complété et / ou ré-échantilloné nos données. Cela peut aussi être dû au modèle : certains utilisent des réseaux de neurones. Le problème de cette dernière méthode est l'explicabilité. En effet, avec les méthodes que nous avons utilisé, nous pouvons dresser les listes des variables qui sont importantes et moins importantes dans la prédiction de la pluie, ce qui peut être plus compliqué avec un réseau de neurones. 
 
 \newpage
 \Urlmuskip=0mu plus 2mu
 \printbibliography
 
 \newpage
-\section{Annexes}
+\part{Annexes}
 
 \begin{figure}[htp]
     \centering
