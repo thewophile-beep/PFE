@@ -53,9 +53,9 @@
     \HRule \\[0.4cm]
     { \huge \bfseries Pluie en Australie\\[0.4cm] }
 
-    \HRule \\[1cm]
-    %\includegraphics[width=0.7\textwidth]{Ressources/front.pdf}
-    %\\[1cm]
+    \HRule \\[2cm]
+    \includegraphics[width=\textwidth]{Images/accueil.jpg}
+    \\[1cm]
 
     \begin{minipage}{0.4\textwidth}
       \begin{flushleft} \large
@@ -75,6 +75,15 @@
   \end{sffamily}
 \end{titlepage}
 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\setlength{\headwidth}{15cm}
+\setlength{\headheight}{38pt}
+\setlength{\footskip}{15pt}
+\fancyhead[R]{\includegraphics[scale=0.05]{./Images/logoINSARouen.png}}
+\fancyhead[L]{PFE - Théophile Thierry\\Pluie en Australie}
+
 \newpage
 
 \tableofcontents
@@ -88,6 +97,16 @@ Ce projet a été réalisé dans le cadre du PFE (Projet de Fin d'Études), réa
 La base de données Kaggle choisie ici est "Rain in Australia", qui regroupe des informations gouvernementales sur la météo en Australie. Le but de ce "challenge" est de réaliser un algorithme de machine learning pour prédire s'il pleut le lendemain d'une journée donnée. 
 
 Nous décrirons dans un premier temps la base de données et, dans un espoir de la connaître un peu mieux, nous analyserons les liens et corrélations entre ses variables. Ensuite, après avoir mis en œuvre des outils de complétion des données, nous pourrons construire nos modèles de prédiction et les comparer pour choisir le plus adapté dans notre cas. 
+
+Nous utiliserons pour cela le langage R. Les scripts utilisés seront organisés dans les fichiers suivants : 
+\begin{itemize}
+    \item \mintinline{text}{1-load_librairies.R} : où sont renseignées toutes les librairies utilisées.
+    \item \mintinline{text}{2-config_data.R} : où l'on lit les variables et on les complète.
+    \item \mintinline{text}{3-config_data_app_test.R} : où l'on prépare les données pour la modélisation (on peut choisir quelle "version" de nos données on veut utiliser). Les fichiers numérotés de 1 à 3 sont à exécuter dans cet ordre et avant les autres scripts.
+    \item \mintinline{text}{descriptive.R} : où l'on a les codes utilisés pour la partie descriptive de nos données.
+    \item \mintinline{text}{maps.R} : où l'on a tous les codes utilisés pour dessiner nos cartes.
+    \item \mintinline{text}{prediction.R} : où l'on trouve le code en relation avec la construction et comparaisons de modèles.
+\end{itemize}
 
 \newpage
 \part{Description des données}
@@ -154,7 +173,7 @@ Jetons tout d'abord un coup d'œil aux variables numériques de nos données.
                 \hline
         \end{tabular}
     }
-    \caption{Résumé des variables numériques}
+    \caption{Résumé des variables numériques.}
     \label{table:summary}
 \end{table}
 
@@ -169,11 +188,11 @@ Globalement, ce tableau nous permet de nous rendre compte des distributions de c
 \begin{figure}[htp]
     \centering
     \includegraphics[width=\textwidth]{Images/hist_observations_cities.pdf}
-    \caption{Nombre d'observations pour chaque ville}
+    \caption{Nombre d'observations pour chaque lieu observé.}
     \label{fig:obs_per_cities}
 \end{figure}
 
-Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, vont du 2007-11-01 au 2017-06-25, ce qui représente 3524 jours. Si l'on regarde la distribution du nombre d'observations par lieux observés, on devrait donc voir que chacune d'entre elles en ont 3524 (voir Figure \ref{fig:obs_per_cities}). On voit déjà qu'il manque certaines dates d'observations pour la plupart des villes, et pour 3 d'entre elles (Katherine, Nhil et Uluru) nous en avons moins de la moitié. En effet, dans ces endroits là les observations n'ont commenées qu'en 2013.
+Regardons désormais les variables avec des facteurs. Les dates, tout d'abord, vont du 2007-11-01 au 2017-06-25, ce qui représente 3524 jours. Si l'on regarde la distribution du nombre d'observations par lieux observés, on devrait donc voir que chacune d'entre elles en ont 3524 (voir Figure \ref{fig:obs_per_cities}). On voit déjà qu'il manque certaines dates d'observations pour la plupart des villes, et pour 3 d'entre elles (Katherine, Nhil et Uluru) nous en avons moins de la moitié. En effet, dans ces endroits-là les observations n'ont commencées qu'en 2013.
 
 Penchons-nous désormais sur les variables de direction du vent en regardant la distribution de leurs facteurs dans les Tables \ref{table:wind_gust_dir}, \ref{table:wind_dir_9am} et \ref{table:wind_dir_3pm}.
 
@@ -190,7 +209,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
             \hline
         \end{tabular}
     }
-    \caption{Variable WindGustDir}
+    \caption{Variable WindGustDir.}
     \label{table:wind_gust_dir}
 \end{table}
 
@@ -207,7 +226,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
             \hline
         \end{tabular}
     }
-    \caption{Variable WindDir9am}
+    \caption{Variable WindDir9am.}
     \label{table:wind_dir_9am}
 \end{table}
  
@@ -224,7 +243,7 @@ Penchons-nous désormais sur les variables de direction du vent en regardant la 
             \hline
         \end{tabular}
     }
-    \caption{Variable WindDir3pm}
+    \caption{Variable WindDir3pm.}
     \label{table:wind_dir_3pm}
 \end{table}
 
@@ -241,13 +260,13 @@ Les 16 niveaux utilisés pour ces variables sont tous représentés et nous ne p
             \hline
         \end{tabular}
     }
-    \caption{Les 16 points cardinaux en degrés}
+    \caption{Les 16 points cardinaux en degrés.}
     \label{table:deg}
 \end{table}
 
 On remarque ici aussi qu'une partie de ces observations sont manquantes (plus de 7\% pour \emph{WindGustDir} et \emph{WindDir9am} et un peu moins de 3\% pour \emph{WindDir3pm})
 
-Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire, \emph{RainTomorrow}, a pour valeur \emph{Yes} seulement sur 21.92\% observations. Nous mettrons en évidence plus tard pourquoi cela pose un problème pour nos prédictions et nous prendrons des mesures nécessaire pour pallier à cela (méthodes de ré-échantillonnage).  
+Enfin, nous avons les deux dernières variables booléennes concernant la pluie (Tables \ref{table:rain_today} et \ref{table:rain_tomorrow}). On voit que notre base de données est déséquilibrée : la variable que nous voulons prédire, \emph{RainTomorrow}, a pour valeur \emph{Yes} seulement sur 21.92\% observations. Nous mettrons en évidence plus tard pourquoi cela pose un problème pour nos prédictions et nous prendrons des mesures nécessaires pour pallier cela (méthodes de ré-échantillonnage).  
 
 \begin{table}[htp]
     \centering
@@ -260,7 +279,7 @@ Enfin, nous avons les deux dernières variables booléennes concernant la pluie 
         \% & 75.84 & 21.92 & 2.24 \\
         \hline
     \end{tabular}
-    \caption{Variable RainToday}
+    \caption{Variable RainToday.}
     \label{table:rain_today}
 \end{table}
 
@@ -275,7 +294,7 @@ Enfin, nous avons les deux dernières variables booléennes concernant la pluie 
         \% & 75.84 & 21.91 & 2.25 \\
         \hline
     \end{tabular}
-    \caption{Variable RainTomorrow}
+    \caption{Variable RainTomorrow.}
     \label{table:rain_tomorrow}
 \end{table}
 
@@ -309,7 +328,7 @@ La Latitude est une coordonnée similaire, mais qui à pour plan de référence 
     \centering
     \includegraphics[width=0.3\textwidth]{Images/Cartographie/Longitude.png}
     \includegraphics[width=0.3\textwidth]{Images/Cartographie/Latitude.png}
-    \caption{Illustration du système de coordonnées de Longitude et Latitude}
+    \caption{Illustration du système de coordonnées de Longitude et Latitude.}
     \label{fig:longitude_et_latitude}
 \end{figure}
 
@@ -317,7 +336,7 @@ Lorsque l'on combine ce système de coordonnées et une représentation de la Te
 
 \subsubsection{Le WSG84}
 
-Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard a été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des Etats-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
+Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard a été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des États-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
 
 Nous avons maintenant un moyen de localiser précisément un point sur Terre grâce à deux valeurs numériques. Pour pouvoir les afficher sur une carte, il nous faut cependant une projection.
 
@@ -340,7 +359,7 @@ Nous connaissons désormais tous les outils pour dessiner nos propres cartes et 
     \label{fig:carte_australie}
 \end{figure}
 
-Nous utilisons désormais les colonnes de longitude et latitude à la place de la colonne localisation. Ainsi, nous nous "débarassons" d'une variable à 49 niveaux pour deux variables numériques.  
+Nous utilisons désormais les colonnes de longitude et latitude à la place de la colonne localisation. Ainsi, nous nous "débarrassons" d'une variable à 49 niveaux pour deux variables numériques.  
 
 \section{Étude des climats}
 
@@ -375,7 +394,7 @@ Nous obtenons les graphiques de la Figure \ref{fig:temp_and_rainfall}. On remarq
         \includegraphics[page=1,width=0.4\textwidth]{Images/temp_and_rainfall/Temp_and_Rainfallsubtropical.pdf}
         \includegraphics[page=1,width=0.4\textwidth]{Images/temp_and_rainfall/Temp_and_Rainfalltempere.pdf}
         \includegraphics[page=1,width=0.4\textwidth]{Images/temp_and_rainfall/Temp_and_Rainfalltropical.pdf}
-    \caption{Température Minimale et Maximale ainsi que pluviométrie au cours d'une année pour certaines des villes des données (une par climat)}
+    \caption{Température Minimale et Maximale ainsi que pluviométrie au cours d'une année pour certaines des villes des données (une par climat).}
     \label{fig:temp_and_rainfall}
 \end{figure}
 
@@ -499,7 +518,7 @@ Affichons maintenant les Boîtes à moustaches des valeurs des différentes vari
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{Images/boxplots/boxplot_Climate.png}
-    \caption{Boîtes à moustaches pour la variable Climate}
+    \caption{Boîtes à moustaches pour la variable Climate.}
     \label{fig:bp_climate}
 \end{figure}
 
@@ -508,7 +527,7 @@ Pour la variable Climate (Figure \ref{fig:bp_climate}), on voit une fois de plus
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{Images/boxplots/boxplot_Season.png}
-    \caption{Boîtes à moustaches pour la variable Season}
+    \caption{Boîtes à moustaches pour la variable Season.}
     \label{fig:bp_season}
 \end{figure}
 
@@ -517,14 +536,14 @@ Penchons-nous désormais sur les boîtes à moustaches de la variable Season (Fi
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{Images/boxplots/boxplot_RainToday.png}
-    \caption{Boîtes à moustaches pour la variable RainToday}
+    \caption{Boîtes à moustaches pour la variable RainToday.}
     \label{fig:bp_raintoday}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{Images/boxplots/boxplot_RainTomorrow.png}
-    \caption{Boîtes à moustaches pour la variable RainTomorrow}
+    \caption{Boîtes à moustaches pour la variable RainTomorrow.}
     \label{fig:bp_raintomorrow}
 \end{figure}
 
@@ -602,7 +621,7 @@ Pour remplir ces nouvelles variables, nous allons mettre un "1" dans la colonne 
         0 & 1 & 0 & 0 \\
         \hline
     \end{tabular}
-    \caption{\emph{one-hot encoding} de la variable Season sur une observation d'automne}
+    \caption{\emph{one-hot encoding} de la variable Season sur une observation d'automne.}
 \end{table}
 
 Nous faisons de même avec Climate. Ainsi nous passons de 2 colonnes à 9 : 
@@ -691,9 +710,8 @@ Chose intéressante : si d'ailleurs on relançait cette fonction avec nos donné
 
 La première chose que nous pouvons remarquer de cette sortie R est que nous avons des coefficients qui ne peuvent pas être jugés comme significativement non nuls. En effet, pour les variables Evaporation, WindGustDir, WindDir3pm, Cloud9am et Latitude, la p-value du test de Student est bien supérieure à 0.05. Nous pouvons donc mettre en œuvre une sélection pas-à-pas de ces régresseurs.  
 
-La fonction \emph{confusionMatrix} de la librairie \emph{caret} nous permet de voir rapidement les performances de notre modèle. Sur dataApp (à gauche) et dataTest (à droite) : 
+La fonction \emph{confusionMatrix} de la librairie \emph{caret} nous permet de voir rapidement les performances de notre modèle. Sur dataApp puis dataTest : 
 
-\begin{multicols}{2}
     \begin{minted}{text}
     Confusion Matrix and Statistics
 
@@ -750,7 +768,6 @@ La fonction \emph{confusionMatrix} de la librairie \emph{caret} nous permet de v
                                            
          'Positive' Class : 0                             
     \end{minted}
-\end{multicols}
 
 Analysons ligne à ligne ces sorties : 
 \begin{itemize}
@@ -783,9 +800,8 @@ Finalement, on voit bien qu'on a beaucoup plus de points bleus sur notre distrib
 
 \subsection{Impact sur les performances de la régression logistique}
 
-Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accuracy} de 77\% pour les deux échantillons (pas trop de surapprentissage encore une fois), pour une sensibilité de 78\% et une spécificité de 76\%. Nous avons donc équilibré les bonnes prédictions des deux classes, et d'ailleurs nous pouvons voir que la prévalence est égale à 0.5, car nous avons exactement 50\% d'observations pour chaque classe. 
+Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accuracy} de 77\% pour les deux échantillons (pas trop de sur-apprentissage encore une fois), pour une sensibilité de 78\% et une spécificité de 76\%. Nous avons donc équilibré les bonnes prédictions des deux classes, et d'ailleurs nous pouvons voir que la prévalence est égale à 0.5, car nous avons exactement 50\% d'observations pour chaque classe. 
 
-\begin{multicols}{2}
     \begin{minted}{text}
     Confusion Matrix and Statistics
 
@@ -794,27 +810,26 @@ Cette fois-ci, pour la régression linéaire, on trouve une \emph{Balanced Accur
          0 12874  3919
          1  3599 12554
 
-                   Accuracy : 0.7718          
-                     95% CI : (0.7672, 0.7763)
-        No Information Rate : 0.5             
-        P-Value [Acc > NIR] : < 2.2e-16       
+               Accuracy : 0.7718          
+                 95% CI : (0.7672, 0.7763)
+    No Information Rate : 0.5             
+    P-Value [Acc > NIR] : < 2.2e-16       
 
-                      Kappa : 0.5436          
+                  Kappa : 0.5436 
 
-     Mcnemar's Test P-Value : 0.0002341       
+ Mcnemar's Test P-Value : 0.0002341       
 
-                Sensitivity : 0.7815          
-                Specificity : 0.7621          
-             Pos Pred Value : 0.7666          
-             Neg Pred Value : 0.7772          
-                 Prevalence : 0.5000          
-             Detection Rate : 0.3908          
-       Detection Prevalence : 0.5097          
-          Balanced Accuracy : 0.7718          
+            Sensitivity : 0.7815          
+            Specificity : 0.7621          
+         Pos Pred Value : 0.7666          
+         Neg Pred Value : 0.7772          
+             Prevalence : 0.5000          
+         Detection Rate : 0.3908          
+   Detection Prevalence : 0.5097          
+      Balanced Accuracy : 0.7718          
 
-           'Positive' Class : 0
+       'Positive' Class : 0
     \end{minted}
-\end{multicols}
 
 \subsection{SMOTE}
 
@@ -847,37 +862,36 @@ Nous nous retrouvons avec une base de données avec la distribution suivante :
 \end{table}
 
 \subsubsection{Impact sur la régression logistique}
-\begin{multicols}{2}
-    \begin{minted}{text}
-    Confusion Matrix and Statistics
-  
-          y.test
-    yt.glm     0     1
-         0 13475  3662
-         1  2998 10245
-                                              
-                   Accuracy : 0.7808          
-                     95% CI : (0.7761, 0.7854)
-        No Information Rate : 0.5422          
-        P-Value [Acc > NIR] : < 2.2e-16       
-                                              
-                      Kappa : 0.5568          
-                                              
-     Mcnemar's Test P-Value : 4.506e-16       
-                                              
-                Sensitivity : 0.8180          
-                Specificity : 0.7367          
-             Pos Pred Value : 0.7863          
-             Neg Pred Value : 0.7736          
-                 Prevalence : 0.5422          
-             Detection Rate : 0.4435          
-       Detection Prevalence : 0.5641          
-          Balanced Accuracy : 0.7773          
 
-           'Positive' Class : 0 
+    \begin{minted}{text}
+Confusion Matrix and Statistics
+  
+        y.test
+  yt.glm     0     1
+       0 13475  3662
+       1  2998 10245
+                                          
+               Accuracy : 0.7808          
+                 95% CI : (0.7761, 0.7854)
+    No Information Rate : 0.5422          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.5568          
+                                          
+ Mcnemar's Test P-Value : 4.506e-16       
+                                          
+            Sensitivity : 0.8180          
+            Specificity : 0.7367          
+         Pos Pred Value : 0.7863          
+         Neg Pred Value : 0.7736          
+             Prevalence : 0.5422          
+         Detection Rate : 0.4435          
+   Detection Prevalence : 0.5641          
+      Balanced Accuracy : 0.7773          
+
+       'Positive' Class : 0 
                                  
     \end{minted}
-\end{multicols}
 
 Les performances sont un tout petit peu meilleures (d'un simple \%) qu'avec l'\emph{up-sampling}. Nous privilégions cependant cette méthode, car elle créé moins de redondances dans nos données. 
 
@@ -885,7 +899,7 @@ Les performances sont un tout petit peu meilleures (d'un simple \%) qu'avec l'\e
 
 Il semblerait donc que l'on ne puisse pas faire beaucoup mieux avec la régression linéaire tout en gardant une cohérence dans les données par rapport à la réalité. Nous pouvons cependant avoir une idée des variables moins importantes dans la prédiction de la pluie en faisant une backward selection. 
 
-On fait cette sélection grâce à la fonction \emph{step}. Cette dernière utilise pour cela le score AIC (Akaike information criterion). Finalement, nous nous sommes débarrassés des regresseurs suivants : 
+On fait cette sélection grâce à la fonction \emph{step}. Cette dernière utilise pour cela le score AIC (Akaike information criterion). Finalement, nous nous sommes débarrassés des régresseurs suivants : 
 \begin{itemize}
     \item Les variables de Climats et de Season qui étaient "superflues" (dû à notre façon d'avoir fait le \emph{one-hot encoding}, nous avions une classe supplémentaire comme expliqué plus haut), soient les variables Season.4 et Climate.4. 
     \item Cloud9am
@@ -920,38 +934,38 @@ Un test de McNemar ne nous fait pas rejeter au risque de 5\% l'hypothèse de mê
 
 \subsection{Arbres CART}
 
-Commençons par créer l'arbre maximal. Il est composé de 2690 feuilles, ce qui en fait un arbre très très dense. 
-\begin{multicols}{2}
-    \begin{minted}{text}
-        Confusion Matrix and Statistics
+Commençons par créer l'arbre maximal. Il est composé de 2690 feuilles, ce qui en fait un arbre très dense. Les performances de ces modèles sont (d'abord dataApp puis dataTest) : 
+\begin{minted}{text}
+Confusion Matrix and Statistics
 
         y.app
   y.tmax     0     1
        0 61726  5712
        1  4168 49918
                                             
-                 Accuracy : 0.9187          
-                   95% CI : (0.9171, 0.9202)
-      No Information Rate : 0.5422          
-      P-Value [Acc > NIR] : < 2.2e-16       
-                                            
-                    Kappa : 0.8359          
-                                            
-   Mcnemar's Test P-Value : < 2.2e-16       
-                                            
-              Sensitivity : 0.9367          
-              Specificity : 0.8973          
-           Pos Pred Value : 0.9153          
-           Neg Pred Value : 0.9229          
-               Prevalence : 0.5422          
-           Detection Rate : 0.5079          
-     Detection Prevalence : 0.5549          
-        Balanced Accuracy : 0.9170          
-                                            
-         'Positive' Class : 0    
-    \end{minted}
-    \begin{minted}{text}
-        Confusion Matrix and Statistics
+               Accuracy : 0.9187          
+                 95% CI : (0.9171, 0.9202)
+    No Information Rate : 0.5422          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.8359          
+                                          
+ Mcnemar's Test P-Value : < 2.2e-16       
+                                          
+            Sensitivity : 0.9367          
+            Specificity : 0.8973          
+         Pos Pred Value : 0.9153          
+         Neg Pred Value : 0.9229          
+             Prevalence : 0.5422          
+         Detection Rate : 0.5079          
+   Detection Prevalence : 0.5549          
+      Balanced Accuracy : 0.9170          
+                                          
+       'Positive' Class : 0    
+
+\end{minted}
+\begin{minted}{text}
+Confusion Matrix and Statistics
 
        y.test
 yt.tmax     0     1
@@ -978,10 +992,9 @@ yt.tmax     0     1
                                           
        'Positive' Class : 0               
                               
-    \end{minted}
-\end{multicols}
+\end{minted}
      
-On voit tout de suite que les performances sont bien meilleures : pour l'échantillon test, nous avons une \emph{balanced Accuracy} de 83.57\%. 
+On voit tout de suite que les performances sont bien meilleures : pour l'échantillon test, nous avons une \emph{Balanced Accuracy} de 83.57\%. 
 
 On peut élaguer cet arbre afin d'en avoir un à 42 feuilles (avec une valeur de $cp=0.001$). On peut donc l'afficher (Figure \ref{fig:topt}). 
 
@@ -1000,10 +1013,9 @@ On retrouve les deux variables écartées par la backward selection de la régre
 
 \subsection{Random Forest}
 
-Afin de ne pas avoir de trop gros arbres lors de la construction d'un modèle de random forest, nous utilisons le paramètre \emph{maxnode}. \emph{yt.rf} correspond aux valeurs prédites sur dataTest avec \emph{maxnode = 1000} et \emph{yt.rf.big} avec \emph{maxnode = 2000}. 
+Afin de ne pas avoir de trop gros arbres lors de la construction d'un modèle de Random Forest, nous utilisons le paramètre \emph{maxnode}. \emph{yt.rf} correspond aux valeurs prédites sur dataTest avec \emph{maxnode = 1000} et \emph{yt.rf.big} avec \emph{maxnode = 2000}. 
 
-\begin{multicols}{2}
-    \begin{minted}{text}
+\begin{minted}{text}
 Confusion Matrix and Statistics
 
      y.test
@@ -1030,9 +1042,10 @@ yt.rf     0     1
       Balanced Accuracy : 0.8579         
                                          
        'Positive' Class : 0  
-    \end{minted}
-    \begin{minted}{text}
-        Confusion Matrix and Statistics
+
+\end{minted}
+\begin{minted}{text}
+Confusion Matrix and Statistics
 
         y.test
 yt.rf.big     0     1
@@ -1059,14 +1072,13 @@ Mcnemar's Test P-Value : < 2.2e-16
                                          
       'Positive' Class : 0               
                              
-    \end{minted}
-\end{multicols}
+\end{minted}
 
 On voit que les performances sont similaires, en effet, un test de McNemar nous donne une p-value de $0.2881$, on ne rejette donc pas l'hypothèse de même taux de bon classement de ces deux modèles (au risque de 5\%).
 
 \subsection{Comparaisons globales}
 
-Nous comparons ici les sensibilités, spécificités et balanced accuracies de tous les modèles que nous avons vu. 
+Nous comparons ici les sensibilités, spécificités et \emph{Balanced Accuracies} de tous les modèles que nous avons vu. 
 
 \begin{table}[ht]
     \centering
@@ -1101,9 +1113,9 @@ On peut voir que le meilleur modèle est la Random Forest. Comme nous n'avons pa
 \newpage
 \part{Conclusion}
 
-Dans ce projet, nous avons analysé la base de données "Rain in Australia" du site Kaggle. En résumé, nous avons trouvé une manière de compléter nos données incomplètes grâce aux données géographiques que nous avons trouvé sur en ligne. Ensuite, nous avons vu des méthodes de rééchantillonnage pour régler des problèmes de déséquilibrage. Enfin, nous avons construit quelques modèles de prédiction pour en choisir un, le plus performant : la Random Forest avec 1000 nodes maximum pour les arbres des décision, nous donnant ainsi une précision de 86.11\%. 
+Dans ce projet, nous avons analysé la base de données "Rain in Australia" du site Kaggle. En résumé, nous avons trouvé une manière de compléter nos données incomplètes grâce aux données géographiques que nous avons trouvé sur en ligne. Ensuite, nous avons vu des méthodes de rééchantillonnage pour régler des problèmes de déséquilibrage. Enfin, nous avons construit quelques modèles de prédiction pour en choisir un, le plus performant : la Random Forest avec 1000 nodes maximum pour les arbres de décision, nous donnant ainsi une précision de 86.11\%. 
 
-Sur le site Kaggle, certains obtiennent à peu près le même score que nous, mais d'autres arrivent à de meilleurs résultats. Cela peut être dû à la façon dont nous avons complété et / ou ré-échantilloné nos données. Cela peut aussi être dû au modèle : certains utilisent des réseaux de neurones. Le problème de cette dernière méthode est l'explicabilité. En effet, avec les méthodes que nous avons utilisé, nous pouvons dresser les listes des variables qui sont importantes et moins importantes dans la prédiction de la pluie, ce qui peut être plus compliqué avec un réseau de neurones. 
+Sur le site Kaggle, certains obtiennent à peu près le même score que nous, mais d'autres arrivent à de meilleurs résultats. Cela peut être dû à la façon dont nous avons complété ou ré-échantillonné nos données. Cela peut aussi être dû au modèle : certains utilisent des réseaux de neurones. Le problème de cette dernière méthode est l'explicabilité. En effet, avec les méthodes que nous avons utilisées, nous pouvons dresser les listes des variables qui sont importantes et moins importantes dans la prédiction de la pluie, ce qui peut être plus compliqué avec un réseau de neurones. 
 
 \newpage
 \Urlmuskip=0mu plus 2mu
