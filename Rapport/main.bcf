@@ -2344,15 +2344,21 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">frwiki:188614923</bcf:citekey>
-    <bcf:citekey order="2">frwiki:189341688</bcf:citekey>
-    <bcf:citekey order="3">wgs84</bcf:citekey>
-    <bcf:citekey order="4">enwiki:1065796786</bcf:citekey>
-    <bcf:citekey order="5">frwiki:181713838</bcf:citekey>
-    <bcf:citekey order="6">frwiki:190163125</bcf:citekey>
-    <bcf:citekey order="7">frwiki:190112465</bcf:citekey>
-    <bcf:citekey order="8">frwiki:183891886</bcf:citekey>
-    <bcf:citekey order="9">smote</bcf:citekey>
+    <bcf:citekey order="1">rnaturalearth</bcf:citekey>
+    <bcf:citekey order="2">frwiki:188614923</bcf:citekey>
+    <bcf:citekey order="3">frwiki:189341688</bcf:citekey>
+    <bcf:citekey order="4">wgs84</bcf:citekey>
+    <bcf:citekey order="5">enwiki:1065796786</bcf:citekey>
+    <bcf:citekey order="6">frwiki:181713838</bcf:citekey>
+    <bcf:citekey order="7">ozmaps</bcf:citekey>
+    <bcf:citekey order="8">ggplot2</bcf:citekey>
+    <bcf:citekey order="9">frwiki:190163125</bcf:citekey>
+    <bcf:citekey order="10">frwiki:190112465</bcf:citekey>
+    <bcf:citekey order="11">stats</bcf:citekey>
+    <bcf:citekey order="12">caret</bcf:citekey>
+    <bcf:citekey order="13">frwiki:183891886</bcf:citekey>
+    <bcf:citekey order="14">smote</bcf:citekey>
+    <bcf:citekey order="15">smotefamily</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="ynt">

@@ -35,7 +35,6 @@
     pdftitle={PFE - Pluie en Australie},
     breaklinks = true
 }
-    
 \begin{document}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
@@ -124,7 +123,7 @@ Ces données contiennent 10 ans d'observations de la météo australienne sur 49
     \item MaxTemp : température maximale dans les 24h jusqu'à 9h du matin (en °C).
     \item Rainfall : précipitation dans les 24h jusqu'à 9h du matin (en mm).
     \item Evaporation : mesure prise sur un bac d'évaporation de classe A dans les 24h jusqu'à 9h du matin (en mm).
-    \item Sunshine : ensoleillement en heure dans les 24h jusqu'à minuit.
+    \item Sunshine : ensoleillement en heure dans les 24h jusqu'à minuit (en heures).
     \item WindGustDir : direction de la plus forte rafale dans les 24 heures jusqu'à minuit (16 points cardinaux/intercardinaux).   
     \item WindGustSpeed : vitesse de la plus forte rafale dans les 24 heures jusqu'à minuit (16 points cardinaux/intercardinaux).
     \item WindDir9am : direction du vent à 9h du matin.
@@ -308,7 +307,7 @@ Avant de nous lancer plus loin, nous allons modifier la base de données pour la
 
 Notre base de données comprend donc une variable \emph{Location}, qui est une variable qualitative avec le nom du lieu de mesure. Nous en avons 49 différentes, et afin de visualiser un peu mieux ces différents points d'observation, nous voulons les afficher sur une carte. 
 
-Pour cela, nous allons utiliser le paquet R "rnaturalearth", qui nous offre un moyen simple de dessiner nos propres cartes en utilisant le standard WGS84 (World Geodetic System).
+Pour cela, nous allons utiliser la librairie R "rnaturalearth" \cite{rnaturalearth}, qui nous offre un moyen simple de dessiner nos propres cartes en utilisant le standard WGS84 (World Geodetic System).
 
 \subsection{Un standard de localisation et une projection}
 
@@ -336,7 +335,7 @@ Lorsque l'on combine ce système de coordonnées et une représentation de la Te
 
 \subsubsection{Le WSG84}
 
-Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce au paquet "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard a été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des États-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
+Le World Geodetic System 84 (WGS84) \cite{wgs84} est un système géodésique, et nous pouvons l'utiliser pour nos cartes grâce à la librairie "rnaturalearth". Il est notamment utilisé par le système GPS (Global Positioning System). Ce standard a été établi et est maintenu par le National Geospatial Intelligence Agency (NGA) des États-Unis \cite{enwiki:1065796786} depuis 1984. Il est basé sur un ellipsoïde de référence raffiné avec le temps pour représenter au mieux la Terre, ainsi que le système de coordonnées en Longitude et Latitude.
 
 Nous avons maintenant un moyen de localiser précisément un point sur Terre grâce à deux valeurs numériques. Pour pouvoir les afficher sur une carte, il nous faut cependant une projection.
 
@@ -344,13 +343,13 @@ Nous avons maintenant un moyen de localiser précisément un point sur Terre gr�
 
 La projection cartographique est "un ensemble de techniques permettant de représenter la surface de la Terre dans son ensemble ou en partie sur la surface plane d'une carte" \cite{frwiki:181713838}. La Terre étant (plus ou moins) sphérique, il faut, afin de l'afficher sur une carte plane, la projeter. Il existe différents types de projections, certains permettent de conserver localement les surfaces, d'autres les angles ou encore les distances sur les méridiens. 
 
-Notre paquet utilise de base une projection dite géographique : elle consiste simplement à prendre les valeurs de latitude et de longitude et de les utiliser comme si elles étaient les coordonnées X et Y (respectivement) d'un repère en deux dimensions. Cette "projection" peut avoir des résultats différents en fonction du système géodésique utilisé. 
+Notre librairie utilise de base une projection dite géographique : elle consiste simplement à prendre les valeurs de latitude et de longitude et de les utiliser comme si elles étaient les coordonnées X et Y (respectivement) d'un repère en deux dimensions. Cette "projection" peut avoir des résultats différents en fonction du système géodésique utilisé. 
 
 Le plus gros inconvénient de cette pratique est la distorsion des surfaces lorsque l'on s'éloigne de l'équateur. Cependant, cela est suffisant dans notre cas, où nous voulons avoir seulement une idée globale de la position des lieux observés des uns par rapport aux autres. De plus, comme nous ne prévoyons pas de mesurer précisément la distance entre deux points, ce système de "projection" géographique est le plus pratique.
 
 \subsection{Affichage sur une carte}
 
-Nous connaissons désormais tous les outils pour dessiner nos propres cartes et y placer les lieux de nos observations. Le paquet \emph{rnaturalearth} nous permet d'avoir une liste de polygone de pays et le paquet \emph{ozmaps} nous permet d'avoir les polygones des états australiens. Pour ce qui est des lieux, nous récupérons les latitudes et longitudes manuellement grâce à n'importe quelle base que nous pouvons trouver sur internet et nous les rajoutons à chaque observation en ajoutant deux variables. Finalement nous pouvons afficher notre carte grâce à \emph{ggplot2} et à tous ces différents éléments (voir Figure \ref{fig:carte_australie}).
+Nous connaissons désormais tous les outils pour dessiner nos propres cartes et y placer les lieux de nos observations. La librairie \emph{rnaturalearth} nous permet d'avoir une liste de polygone de pays et la librairie \emph{ozmaps} \cite{ozmaps} nous permet d'avoir les polygones des états australiens. Pour ce qui est des lieux, nous récupérons les latitudes et longitudes manuellement grâce à n'importe quelle base que nous pouvons trouver sur internet et nous les rajoutons à chaque observation en ajoutant deux variables. Finalement nous pouvons afficher notre carte grâce à \emph{ggplot2} \cite{ggplot2} et à tous ces différents éléments (voir Figure \ref{fig:carte_australie}).
 
 \begin{figure}[htp]
     \centering
@@ -649,7 +648,7 @@ Nous voilà maintenant avec une base de données ne contenant que des variables 
 
 \subsection{Une première régression linéaire logistique}
 
-Construirons donc notre modèle de régression logistique. Pour cela, nous allons utiliser la fonction \emph{glm} de la librairie \emph{stats} de R. En utilisant le paramètre "family = binomial", nous pouvons faire une régression logistique, qui prend en compte les variables factorielles. Nous ne faisons donc pas encore de \emph{one-hot encoding} et gardons la base de données telle quelle. 
+Construirons donc notre modèle de régression logistique. Pour cela, nous allons utiliser la fonction \emph{glm} de la librairie \emph{stats} \cite{stats} de R. En utilisant le paramètre "family = binomial", nous pouvons faire une régression logistique, qui prend en compte les variables factorielles. Nous ne faisons donc pas encore de \emph{one-hot encoding} et gardons la base de données telle quelle. 
 
 Un \emph{summary} de ce modèle nous montre : 
 \begin{minted}{R}
@@ -710,7 +709,7 @@ Chose intéressante : si d'ailleurs on relançait cette fonction avec nos donné
 
 La première chose que nous pouvons remarquer de cette sortie R est que nous avons des coefficients qui ne peuvent pas être jugés comme significativement non nuls. En effet, pour les variables Evaporation, WindGustDir, WindDir3pm, Cloud9am et Latitude, la p-value du test de Student est bien supérieure à 0.05. Nous pouvons donc mettre en œuvre une sélection pas-à-pas de ces régresseurs.  
 
-La fonction \emph{confusionMatrix} de la librairie \emph{caret} nous permet de voir rapidement les performances de notre modèle. Sur dataApp puis dataTest : 
+La fonction \emph{confusionMatrix} de la librairie \emph{caret} \cite{caret} nous permet de voir rapidement les performances de notre modèle. Sur dataApp puis dataTest : 
 
     \begin{minted}{text}
     Confusion Matrix and Statistics
@@ -841,7 +840,7 @@ On peut imaginer cela en 2D sur le graphique de l'ACP. On trace une droite entre
 
 Cette méthode est efficace car elle créé des observations qui sont cohérentes avec la réalité. Un problème qu'il peut y avoir, cependant, est que la classe majoritaire n'est pas prise en compte, et cela pose un problème pour les classes qui se superposent beaucoup. 
 
-Nous utiliserons la méthode \emph{SMOTE} de la librairie \emph{smotefamily}.
+Nous utiliserons la méthode \emph{SMOTE} de la librairie \emph{smotefamily} \cite{smotefamily}.
 
 La question que nous devons nous poser avant d'utiliser cette méthode set : que faire des variables à facteurs ? C'est ici que la technique de \emph{one-hot encoding} entre en jeu. Une fois que nous n'aurons plus que des variables à deux niveaux (0 ou 1), nous pourrons les considérer comme des variables numériques. Nous aurons ainsi des valeurs entre 0 et 1 pour ces variables, ce qui peut représenter la ressemblance de la nouvelle observation avec tel ou tel climat, telle ou telle saison. 
 
@@ -1119,7 +1118,9 @@ Sur le site Kaggle, certains obtiennent à peu près le même score que nous, ma
 
 \newpage
 \Urlmuskip=0mu plus 2mu
-\printbibliography
+\printbibliography[heading=subbibliography,title={Articles},type=article]
+\printbibliography[heading=subbibliography,title={Librairies R}, type=manual]
+\printbibliography[heading=subbibliography,title={Pages Internet}, type=misc]
 
 \newpage
 \part{Annexes}
